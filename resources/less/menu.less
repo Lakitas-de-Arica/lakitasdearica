@@ -1,0 +1,134 @@
+.btn-menu {
+    font-family: 'DM Sans';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 18px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    background-color: #FFCF25;
+    color: #000000;
+    border: 0px;
+
+    img {
+        width: 15px;
+        height: 13px;
+        margin-top: -5px;
+        margin-left: 10px;
+    }
+}
+
+.data-menu {
+    background-color: #FFCF25;
+
+    .nav {
+        a.nav-link {
+            font-family: 'DM Sans';
+            font-style: normal;
+            font-weight: 500;
+            font-size: 20px;
+            line-height: 26px;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            color: #000000;
+
+            &.active {
+                font-weight: 700;
+                background-color: transparent;
+                text-decoration: underline;
+            }
+
+            @media (max-width: 576px) {
+                width: 100%;
+            }
+        }
+    }
+}
+
+.navbar {
+    background-color: #003B93;
+
+    .navbar-brand {
+        img {
+            height: 70px;
+            width: auto;
+        }
+    }
+
+    .nav-link {
+        font-family: 'Galano';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 22px;
+        line-height: 30px;
+        color: #FFFFFF;
+
+        @media (max-width: 1200px) {
+            font-size: 18px;
+        }
+
+        &.active {
+            font-weight: 800;
+            font-size: 22px;
+            line-height: 30px;
+            color: #00CEFF !important;
+            text-decoration: underline;
+
+            @media (max-width: 1200px) {
+                font-size: 18px;
+            }
+        }
+    }
+
+    .btn-primary {
+        background-color: #005BF5;
+        color: #fff;
+        border-radius: 25px;
+        font-family: 'Galano';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 25px;
+        line-height: 34px;
+        padding: 10px 25px;
+
+        @media (max-width: 1200px) {
+            font-size: 20px;
+            padding: 7px 10px;
+        }
+    }
+
+    .dropdown-toggle::after {
+        display: none;
+    }
+
+    .dropdown-menu {
+        background-color: #003B93;
+        border: 0px;
+        padding-right: 20px;
+
+        .dropdown-item {
+            color: #fff;
+            font-family: 'Galano';
+            font-style: normal;
+            font-weight: 400;
+            font-size: 22px;
+            line-height: 30px;
+
+            &.active {
+                color: #00CEFF !important;
+                font-weight: 800;
+            }
+
+            &:hover{
+                background-color: transparent;
+                color: #00CEFF !important;
+            }
+        }
+
+        .dropdown-item.active, .dropdown-item:active {
+            text-decoration: none;
+            background-color: transparent;
+        }
+
+    }
+}
