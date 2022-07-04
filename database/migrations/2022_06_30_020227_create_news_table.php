@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-
+use App\Models\User;
 class CreateNewsTable extends Migration
 {
     /**
@@ -15,6 +15,19 @@ class CreateNewsTable extends Migration
     {
         Schema::create('news', function (Blueprint $table) {
             $table->id();
+            $table->string('title');
+            $table->string('slug');
+            $table->string('image')->nullable();
+            $table->date('date');
+            $table->longText('text');
+            $table->string('link');
+            $table->boolean('publish')->default(true);
+            $table->foreignIdFor(User::class)->nullable();
+            $table->string('contact_name')->nullable();
+            $table->string('contact_phone')->nullable();
+            $table->string('contact_email')->nullable();
+            $table->boolean('contact_validation')->default(false);
+            $table->softDeletes();
             $table->timestamps();
         });
     }
