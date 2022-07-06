@@ -24,8 +24,10 @@
     <body data-url="{{ url('/') }}">
 
         @if (!Request::is('/'))
-        @include('layout.menu')
+            @include('layout.menu')
         @endif
+
+        @include('layout.data-menu')
 
         <main>
             @yield('content')

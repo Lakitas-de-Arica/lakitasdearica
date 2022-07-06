@@ -18,9 +18,10 @@ class NewsFactory extends Factory
         return [
             'title' => $title,
             'slug' => Str::slug($title, '-'),
-            'image' => 'new-img.jpg',
+            'image' => 'new.jpg',
             'date' => $this->faker->date('Y-m-d'),
-            'text' => $this->faker->text(),
+            'introduction' => implode('<br>', $this->faker->paragraphs(2)),
+            'text' => implode('<br>', $this->faker->paragraphs(5)),
             'link' => $this->faker->url(),
             'user_id' => rand(1,2),
             'publish' => 1,

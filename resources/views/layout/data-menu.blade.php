@@ -1,4 +1,4 @@
-<div class="container-fluid position-fixed data-menu d-none overflow-auto h-100">
+<div class="container-fluid position-fixed data-menu d-none overflow-auto h-100 fixed-top">
     <div class="container">
         <div class="row">
             <div class="col-12 text-end my-4 py-md-5">

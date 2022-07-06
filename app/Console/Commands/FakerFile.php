@@ -38,6 +38,7 @@ class FakerFile extends Command
      */
     public function handle()
     {
-        Storage::copy(storage_path('faker-files/new.jpg'), 'app/public/new-img.jpg');
+        Storage::disk('public')->makeDirectory('news');
+        copy(storage_path('fakerfiles/new.jpg'), storage_path('app/public/news/new.jpg'));
     }
 }

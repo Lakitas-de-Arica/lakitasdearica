@@ -12,7 +12,6 @@
 
 @section('content')
 
-@include('layout.data-menu')
 <div class="container-fluid container-head-home">
     <div class="row">
         <div class="col-md-7 px-0 banner-home" style="background-image: url('{{ asset('images/img-home.jpg') }}');"></div>
@@ -52,14 +51,14 @@
 </div>
 
 <div class="container-fluid">
-    <div class="container py-5">
+    <div class="container pt-5">
         <div class="row pt-5 pb-3">
             <div class="col-6">
                 <h2>Noticias</h2>
             </div>
             <div class="col-6 text-end">
-                <a href="#">
-                    CONOCE MÁS
+                <a href="{{ route('news') }}">
+                    TODAS LAS NOTICIAS
                     <i class="fa-solid fa-circle-plus ms-3"></i>
                 </a>
             </div>
@@ -67,28 +66,7 @@
                 <div class="w-100 border-bottom-1"></div>
             </div>
         </div>
-        <div class="row mt-4">
-            @for($i=1; $i<=3; $i++)
-            <div class="col-md-4 new">
-                <div class="img" style="background-image: url('{{ asset('storage/new-img.jpg') }}')"></div>
-                <div class="p-3">
-                    <p class="title border-bottom-1">
-                        Lorem ipsum dolor sit amet quisque consectetur adipiscing elit  quis et facilisis tortor
-                    </p>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <a href="">VER HISTORIA</a>
-                        </div>
-                        <div class="col-md-6 text-end">
-                            <a href="">
-                                <img src="{{ asset('images/arrow-right.svg') }}" class="img-fluid">
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            @endfor
-        </div>
+        @livewire('news.show',['paginate' => false, 'numberOfItems' => 3])
     </div>
 </div>
 
