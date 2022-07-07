@@ -18,4 +18,9 @@ class NewsController extends Controller
         return view('frontend.news.show')
                 ->with('new',$new);
     }
+
+    public function publish()
+    {
+        return view('frontend.news.publish');
+    }
 }

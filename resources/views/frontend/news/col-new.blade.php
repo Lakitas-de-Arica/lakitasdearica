@@ -2,7 +2,9 @@
     <div class="img" style="background-image: url('{{ asset('storage/news/'.$new->image) }}')"></div>
     <div class="p-3">
         <div class="title border-bottom-1">
-            <p>{{ $new->title }}</p>
+            <a href="{{ $new->publicLink() }}">
+                {{ $new->title }}
+            </a>
         </div>
         <div class="row">
             <div class="col-6">

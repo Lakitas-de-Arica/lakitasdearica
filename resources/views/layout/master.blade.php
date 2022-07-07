@@ -43,13 +43,8 @@
 
         <script>
             $(function(){
-                $('.open-menu').on('click',function(){
-                    $('.data-menu').removeClass('d-none');
-                });
-
-                $('.close-menu').on('click',function(){
-                    $('.data-menu').addClass('d-none');
-                });
+                $('.open-menu').on('click',function(){ $('.data-menu').removeClass('d-none'); });
+                $('.close-menu').on('click',function(){ $('.data-menu').addClass('d-none'); });
             });
         </script>
 
