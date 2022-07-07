@@ -1,1 +1,3407 @@
-!function(t,e){"object"==typeof module&&module.exports?module.exports=e(t,require("jquery")):t.jQueryBridget=e(t,t.jQuery)}(window,(function(t,e){let i=t.console,s=void 0===i?function(){}:function(t){i.error(t)};return function(i,n,o){(o=o||e||t.jQuery)&&(n.prototype.option||(n.prototype.option=function(t){t&&(this.options=Object.assign(this.options||{},t))}),o.fn[i]=function(t,...e){return"string"==typeof t?function(t,e,n){let l,r=`$().${i}("${e}")`;return t.each((function(t,h){let a=o.data(h,i);if(!a)return void s(`${i} not initialized. Cannot call method ${r}`);let c=a[e];if(!c||"_"==e.charAt(0))return void s(`${r} is not a valid method`);let d=c.apply(a,n);l=void 0===l?d:l})),void 0!==l?l:t}(this,t,e):(l=t,this.each((function(t,e){let s=o.data(e,i);s?(s.option(l),s._init()):(s=new n(e,l),o.data(e,i,s))})),this);var l})}})),function(t,e){"object"==typeof module&&module.exports?module.exports=e():t.EvEmitter=e()}("undefined"!=typeof window?window:this,(function(){function t(){}let e=t.prototype;return e.on=function(t,e){if(!t||!e)return this;let i=this._events=this._events||{},s=i[t]=i[t]||[];return s.includes(e)||s.push(e),this},e.once=function(t,e){if(!t||!e)return this;this.on(t,e);let i=this._onceEvents=this._onceEvents||{};return(i[t]=i[t]||{})[e]=!0,this},e.off=function(t,e){let i=this._events&&this._events[t];if(!i||!i.length)return this;let s=i.indexOf(e);return-1!=s&&i.splice(s,1),this},e.emitEvent=function(t,e){let i=this._events&&this._events[t];if(!i||!i.length)return this;i=i.slice(0),e=e||[];let s=this._onceEvents&&this._onceEvents[t];for(let n of i){s&&s[n]&&(this.off(t,n),delete s[n]),n.apply(this,e)}return this},e.allOff=function(){return delete this._events,delete this._onceEvents,this},t})),function(t,e){"object"==typeof module&&module.exports?module.exports=e():t.getSize=e()}(window,(function(){function t(t){let e=parseFloat(t);return-1==t.indexOf("%")&&!isNaN(e)&&e}let e=["paddingLeft","paddingRight","paddingTop","paddingBottom","marginLeft","marginRight","marginTop","marginBottom","borderLeftWidth","borderRightWidth","borderTopWidth","borderBottomWidth"];e.length;return function(i){if("string"==typeof i&&(i=document.querySelector(i)),!(i&&"object"==typeof i&&i.nodeType))return;let s=getComputedStyle(i);if("none"==s.display)return function(){let t={width:0,height:0,innerWidth:0,innerHeight:0,outerWidth:0,outerHeight:0};return e.forEach((e=>{t[e]=0})),t}();let n={};n.width=i.offsetWidth,n.height=i.offsetHeight;let o=n.isBorderBox="border-box"==s.boxSizing;e.forEach((t=>{let e=s[t],i=parseFloat(e);n[t]=isNaN(i)?0:i}));let l=n.paddingLeft+n.paddingRight,r=n.paddingTop+n.paddingBottom,h=n.marginLeft+n.marginRight,a=n.marginTop+n.marginBottom,c=n.borderLeftWidth+n.borderRightWidth,d=n.borderTopWidth+n.borderBottomWidth,u=t(s.width);!1!==u&&(n.width=u+(o?0:l+c));let p=t(s.height);return!1!==p&&(n.height=p+(o?0:r+d)),n.innerWidth=n.width-(l+c),n.innerHeight=n.height-(r+d),n.outerWidth=n.width+h,n.outerHeight=n.height+a,n}})),function(t,e){"object"==typeof module&&module.exports?module.exports=e(t):t.fizzyUIUtils=e(t)}(this,(function(t){let e={extend:function(t,e){return Object.assign(t,e)},modulo:function(t,e){return(t%e+e)%e},makeArray:function(t){if(Array.isArray(t))return t;if(null==t)return[];return"object"==typeof t&&"number"==typeof t.length?[...t]:[t]},removeFrom:function(t,e){let i=t.indexOf(e);-1!=i&&t.splice(i,1)},getParent:function(t,e){for(;t.parentNode&&t!=document.body;)if((t=t.parentNode).matches(e))return t},getQueryElement:function(t){return"string"==typeof t?document.querySelector(t):t},handleEvent:function(t){let e="on"+t.type;this[e]&&this[e](t)},filterFindElements:function(t,i){return(t=e.makeArray(t)).filter((t=>t instanceof HTMLElement)).reduce(((t,e)=>{if(!i)return t.push(e),t;e.matches(i)&&t.push(e);let s=e.querySelectorAll(i);return t=t.concat(...s)}),[])},debounceMethod:function(t,e,i){i=i||100;let s=t.prototype[e],n=e+"Timeout";t.prototype[e]=function(){clearTimeout(this[n]);let t=arguments;this[n]=setTimeout((()=>{s.apply(this,t),delete this[n]}),i)}},docReady:function(t){let e=document.readyState;"complete"==e||"interactive"==e?setTimeout(t):document.addEventListener("DOMContentLoaded",t)},toDashed:function(t){return t.replace(/(.)([A-Z])/g,(function(t,e,i){return e+"-"+i})).toLowerCase()}},i=t.console;return e.htmlInit=function(s,n){e.docReady((function(){let o="data-"+e.toDashed(n),l=document.querySelectorAll(`[${o}]`),r=t.jQuery;[...l].forEach((t=>{let e,l=t.getAttribute(o);try{e=l&&JSON.parse(l)}catch(e){return void(i&&i.error(`Error parsing ${o} on ${t.className}: ${e}`))}let h=new s(t,e);r&&r.data(t,n,h)}))}))},e})),function(t,e){"object"==typeof module&&module.exports?module.exports=e(t,require("ev-emitter")):t.Unidragger=e(t,t.EvEmitter)}("undefined"!=typeof window?window:this,(function(t,e){function i(){}let s,n,o=i.prototype=Object.create(e.prototype);o.handleEvent=function(t){let e="on"+t.type;this[e]&&this[e](t)},"ontouchstart"in t?(s="touchstart",n=["touchmove","touchend","touchcancel"]):t.PointerEvent?(s="pointerdown",n=["pointermove","pointerup","pointercancel"]):(s="mousedown",n=["mousemove","mouseup"]),o.touchActionValue="none",o.bindHandles=function(){this._bindHandles("addEventListener",this.touchActionValue)},o.unbindHandles=function(){this._bindHandles("removeEventListener","")},o._bindHandles=function(e,i){this.handles.forEach((n=>{n[e](s,this),n[e]("click",this),t.PointerEvent&&(n.style.touchAction=i)}))},o.bindActivePointerEvents=function(){n.forEach((e=>{t.addEventListener(e,this)}))},o.unbindActivePointerEvents=function(){n.forEach((e=>{t.removeEventListener(e,this)}))},o.withPointer=function(t,e){e.pointerId==this.pointerIdentifier&&this[t](e,e)},o.withTouch=function(t,e){let i;for(let t of e.changedTouches)t.identifier==this.pointerIdentifier&&(i=t);i&&this[t](e,i)},o.onmousedown=function(t){this.pointerDown(t,t)},o.ontouchstart=function(t){this.pointerDown(t,t.changedTouches[0])},o.onpointerdown=function(t){this.pointerDown(t,t)};const l=["TEXTAREA","INPUT","SELECT","OPTION"],r=["radio","checkbox","button","submit","image","file"];return o.pointerDown=function(t,e){let i=l.includes(t.target.nodeName),s=r.includes(t.target.type),n=!i||s;!this.isPointerDown&&!t.button&&n&&(this.isPointerDown=!0,this.pointerIdentifier=void 0!==e.pointerId?e.pointerId:e.identifier,this.pointerDownPointer={pageX:e.pageX,pageY:e.pageY},this.bindActivePointerEvents(),this.emitEvent("pointerDown",[t,e]))},o.onmousemove=function(t){this.pointerMove(t,t)},o.onpointermove=function(t){this.withPointer("pointerMove",t)},o.ontouchmove=function(t){this.withTouch("pointerMove",t)},o.pointerMove=function(t,e){let i={x:e.pageX-this.pointerDownPointer.pageX,y:e.pageY-this.pointerDownPointer.pageY};this.emitEvent("pointerMove",[t,e,i]),!this.isDragging&&this.hasDragStarted(i)&&this.dragStart(t,e),this.isDragging&&this.dragMove(t,e,i)},o.hasDragStarted=function(t){return Math.abs(t.x)>3||Math.abs(t.y)>3},o.dragStart=function(t,e){this.isDragging=!0,this.isPreventingClicks=!0,this.emitEvent("dragStart",[t,e])},o.dragMove=function(t,e,i){this.emitEvent("dragMove",[t,e,i])},o.onmouseup=function(t){this.pointerUp(t,t)},o.onpointerup=function(t){this.withPointer("pointerUp",t)},o.ontouchend=function(t){this.withTouch("pointerUp",t)},o.pointerUp=function(t,e){this.pointerDone(),this.emitEvent("pointerUp",[t,e]),this.isDragging?this.dragEnd(t,e):this.staticClick(t,e)},o.dragEnd=function(t,e){this.isDragging=!1,setTimeout((()=>delete this.isPreventingClicks)),this.emitEvent("dragEnd",[t,e])},o.pointerDone=function(){this.isPointerDown=!1,delete this.pointerIdentifier,this.unbindActivePointerEvents(),this.emitEvent("pointerDone")},o.onpointercancel=function(t){this.withPointer("pointerCancel",t)},o.ontouchcancel=function(t){this.withTouch("pointerCancel",t)},o.pointerCancel=function(t,e){this.pointerDone(),this.emitEvent("pointerCancel",[t,e])},o.onclick=function(t){this.isPreventingClicks&&t.preventDefault()},o.staticClick=function(t,e){let i="mouseup"==t.type;i&&this.isIgnoringMouseUp||(this.emitEvent("staticClick",[t,e]),i&&(this.isIgnoringMouseUp=!0,setTimeout((()=>{delete this.isIgnoringMouseUp}),400)))},i})),function(t,e){"object"==typeof module&&module.exports?module.exports=e(t,require("ev-emitter")):t.imagesLoaded=e(t,t.EvEmitter)}("undefined"!=typeof window?window:this,(function(t,e){let i=t.jQuery,s=t.console;function n(t,e,o){if(!(this instanceof n))return new n(t,e,o);let l=t;var r;("string"==typeof t&&(l=document.querySelectorAll(t)),l)?(this.elements=(r=l,Array.isArray(r)?r:"object"==typeof r&&"number"==typeof r.length?[...r]:[r]),this.options={},"function"==typeof e?o=e:Object.assign(this.options,e),o&&this.on("always",o),this.getImages(),i&&(this.jqDeferred=new i.Deferred),setTimeout(this.check.bind(this))):s.error(`Bad element for imagesLoaded ${l||t}`)}n.prototype=Object.create(e.prototype),n.prototype.getImages=function(){this.images=[],this.elements.forEach(this.addElementImages,this)};const o=[1,9,11];n.prototype.addElementImages=function(t){"IMG"===t.nodeName&&this.addImage(t),!0===this.options.background&&this.addElementBackgroundImages(t);let{nodeType:e}=t;if(!e||!o.includes(e))return;let i=t.querySelectorAll("img");for(let t of i)this.addImage(t);if("string"==typeof this.options.background){let e=t.querySelectorAll(this.options.background);for(let t of e)this.addElementBackgroundImages(t)}};const l=/url\((['"])?(.*?)\1\)/gi;function r(t){this.img=t}function h(t,e){this.url=t,this.element=e,this.img=new Image}return n.prototype.addElementBackgroundImages=function(t){let e=getComputedStyle(t);if(!e)return;let i=l.exec(e.backgroundImage);for(;null!==i;){let s=i&&i[2];s&&this.addBackground(s,t),i=l.exec(e.backgroundImage)}},n.prototype.addImage=function(t){let e=new r(t);this.images.push(e)},n.prototype.addBackground=function(t,e){let i=new h(t,e);this.images.push(i)},n.prototype.check=function(){if(this.progressedCount=0,this.hasAnyBroken=!1,!this.images.length)return void this.complete();let t=(t,e,i)=>{setTimeout((()=>{this.progress(t,e,i)}))};this.images.forEach((function(e){e.once("progress",t),e.check()}))},n.prototype.progress=function(t,e,i){this.progressedCount++,this.hasAnyBroken=this.hasAnyBroken||!t.isLoaded,this.emitEvent("progress",[this,t,e]),this.jqDeferred&&this.jqDeferred.notify&&this.jqDeferred.notify(this,t),this.progressedCount===this.images.length&&this.complete(),this.options.debug&&s&&s.log(`progress: ${i}`,t,e)},n.prototype.complete=function(){let t=this.hasAnyBroken?"fail":"done";if(this.isComplete=!0,this.emitEvent(t,[this]),this.emitEvent("always",[this]),this.jqDeferred){let t=this.hasAnyBroken?"reject":"resolve";this.jqDeferred[t](this)}},r.prototype=Object.create(e.prototype),r.prototype.check=function(){this.getIsImageComplete()?this.confirm(0!==this.img.naturalWidth,"naturalWidth"):(this.proxyImage=new Image,this.img.crossOrigin&&(this.proxyImage.crossOrigin=this.img.crossOrigin),this.proxyImage.addEventListener("load",this),this.proxyImage.addEventListener("error",this),this.img.addEventListener("load",this),this.img.addEventListener("error",this),this.proxyImage.src=this.img.currentSrc||this.img.src)},r.prototype.getIsImageComplete=function(){return this.img.complete&&this.img.naturalWidth},r.prototype.confirm=function(t,e){this.isLoaded=t;let{parentNode:i}=this.img,s="PICTURE"===i.nodeName?i:this.img;this.emitEvent("progress",[this,s,e])},r.prototype.handleEvent=function(t){let e="on"+t.type;this[e]&&this[e](t)},r.prototype.onload=function(){this.confirm(!0,"onload"),this.unbindEvents()},r.prototype.onerror=function(){this.confirm(!1,"onerror"),this.unbindEvents()},r.prototype.unbindEvents=function(){this.proxyImage.removeEventListener("load",this),this.proxyImage.removeEventListener("error",this),this.img.removeEventListener("load",this),this.img.removeEventListener("error",this)},h.prototype=Object.create(r.prototype),h.prototype.check=function(){this.img.addEventListener("load",this),this.img.addEventListener("error",this),this.img.src=this.url,this.getIsImageComplete()&&(this.confirm(0!==this.img.naturalWidth,"naturalWidth"),this.unbindEvents())},h.prototype.unbindEvents=function(){this.img.removeEventListener("load",this),this.img.removeEventListener("error",this)},h.prototype.confirm=function(t,e){this.isLoaded=t,this.emitEvent("progress",[this,this.element,e])},n.makeJQueryPlugin=function(e){(e=e||t.jQuery)&&(i=e,i.fn.imagesLoaded=function(t,e){return new n(this,t,e).jqDeferred.promise(i(this))})},n.makeJQueryPlugin(),n})),function(t,e){"object"==typeof module&&module.exports?module.exports=e(require("get-size")):(t.Flickity=t.Flickity||{},t.Flickity.Cell=e(t.getSize))}("undefined"!=typeof window?window:this,(function(t){const e="flickity-cell";function i(t){this.element=t,this.element.classList.add(e),this.x=0,this.unselect()}let s=i.prototype;return s.destroy=function(){this.unselect(),this.element.classList.remove(e),this.element.style.transform="",this.element.removeAttribute("aria-hidden")},s.getSize=function(){this.size=t(this.element)},s.select=function(){this.element.classList.add("is-selected"),this.element.removeAttribute("aria-hidden")},s.unselect=function(){this.element.classList.remove("is-selected"),this.element.setAttribute("aria-hidden","true")},s.remove=function(){this.element.remove()},i})),function(t,e){"object"==typeof module&&module.exports?module.exports=e():(t.Flickity=t.Flickity||{},t.Flickity.Slide=e())}("undefined"!=typeof window?window:this,(function(){function t(t,e,i){this.beginMargin=t,this.endMargin=e,this.cellAlign=i,this.cells=[],this.outerWidth=0,this.height=0}let e=t.prototype;return e.addCell=function(t){this.cells.push(t),this.outerWidth+=t.size.outerWidth,this.height=Math.max(t.size.outerHeight,this.height),1===this.cells.length&&(this.x=t.x,this.firstMargin=t.size[this.beginMargin])},e.updateTarget=function(){let t=this.getLastCell(),e=t?t.size[this.endMargin]:0,i=this.outerWidth-(this.firstMargin+e);this.target=this.x+this.firstMargin+i*this.cellAlign},e.getLastCell=function(){return this.cells[this.cells.length-1]},e.select=function(){this.cells.forEach((t=>t.select()))},e.unselect=function(){this.cells.forEach((t=>t.unselect()))},e.getCellElements=function(){return this.cells.map((t=>t.element))},t})),function(t,e){"object"==typeof module&&module.exports?module.exports=e(require("fizzy-ui-utils")):(t.Flickity=t.Flickity||{},t.Flickity.animatePrototype=e(t.fizzyUIUtils))}("undefined"!=typeof window?window:this,(function(t){let e={startAnimation:function(){this.isAnimating||(this.isAnimating=!0,this.restingFrames=0,this.animate())},animate:function(){this.applyDragForce(),this.applySelectedAttraction();let t=this.x;this.integratePhysics(),this.positionSlider(),this.settle(t),this.isAnimating&&requestAnimationFrame((()=>this.animate()))},positionSlider:function(){let e=this.x;this.isWrapping&&(e=t.modulo(e,this.slideableWidth)-this.slideableWidth,this.shiftWrapCells(e)),this.setTranslateX(e,this.isAnimating),this.dispatchScrollEvent()},setTranslateX:function(t,e){t+=this.cursorPosition,this.options.rightToLeft&&(t=-t);let i=this.getPositionValue(t);this.slider.style.transform=e?`translate3d(${i},0,0)`:`translateX(${i})`},dispatchScrollEvent:function(){let t=this.slides[0];if(!t)return;let e=-this.x-t.target,i=e/this.slidesWidth;this.dispatchEvent("scroll",null,[i,e])},positionSliderAtSelected:function(){this.cells.length&&(this.x=-this.selectedSlide.target,this.velocity=0,this.positionSlider())},getPositionValue:function(t){return this.options.percentPosition?.01*Math.round(t/this.size.innerWidth*1e4)+"%":Math.round(t)+"px"},settle:function(t){!this.isPointerDown&&Math.round(100*this.x)===Math.round(100*t)&&this.restingFrames++,this.restingFrames>2&&(this.isAnimating=!1,delete this.isFreeScrolling,this.positionSlider(),this.dispatchEvent("settle",null,[this.selectedIndex]))},shiftWrapCells:function(t){let e=this.cursorPosition+t;this._shiftCells(this.beforeShiftCells,e,-1);let i=this.size.innerWidth-(t+this.slideableWidth+this.cursorPosition);this._shiftCells(this.afterShiftCells,i,1)},_shiftCells:function(t,e,i){t.forEach((t=>{let s=e>0?i:0;this._wrapShiftCell(t,s),e-=t.size.outerWidth}))},_unshiftCells:function(t){t&&t.length&&t.forEach((t=>this._wrapShiftCell(t,0)))},_wrapShiftCell:function(t,e){this._renderCellPosition(t,t.x+this.slideableWidth*e)},integratePhysics:function(){this.x+=this.velocity,this.velocity*=this.getFrictionFactor()},applyForce:function(t){this.velocity+=t},getFrictionFactor:function(){return 1-this.options[this.isFreeScrolling?"freeScrollFriction":"friction"]},getRestingPosition:function(){return this.x+this.velocity/(1-this.getFrictionFactor())},applyDragForce:function(){if(!this.isDraggable||!this.isPointerDown)return;let t=this.dragX-this.x-this.velocity;this.applyForce(t)},applySelectedAttraction:function(){if(this.isDraggable&&this.isPointerDown||this.isFreeScrolling||!this.slides.length)return;let t=(-1*this.selectedSlide.target-this.x)*this.options.selectedAttraction;this.applyForce(t)}};return e})),function(t,e){if("object"==typeof module&&module.exports)module.exports=e(t,require("ev-emitter"),require("get-size"),require("fizzy-ui-utils"),require("./cell"),require("./slide"),require("./animate"));else{let i=t.Flickity;t.Flickity=e(t,t.EvEmitter,t.getSize,t.fizzyUIUtils,i.Cell,i.Slide,i.animatePrototype)}}("undefined"!=typeof window?window:this,(function(t,e,i,s,n,o,l){const{getComputedStyle:r,console:h}=t;let{jQuery:a}=t,c=0,d={};function u(t,e){let i=s.getQueryElement(t);if(i){if(this.element=i,this.element.flickityGUID){let t=d[this.element.flickityGUID];return t&&t.option(e),t}a&&(this.$element=a(this.element)),this.options={...this.constructor.defaults},this.option(e),this._create()}else h&&h.error(`Bad element for Flickity: ${i||t}`)}u.defaults={accessibility:!0,cellAlign:"center",freeScrollFriction:.075,friction:.28,namespaceJQueryEvents:!0,percentPosition:!0,resize:!0,selectedAttraction:.025,setGallerySize:!0},u.create={};let p=u.prototype;Object.assign(p,e.prototype),p._create=function(){let{resize:e,watchCSS:i,rightToLeft:s}=this.options,n=this.guid=++c;this.element.flickityGUID=n,d[n]=this,this.selectedIndex=0,this.restingFrames=0,this.x=0,this.velocity=0,this.beginMargin=s?"marginRight":"marginLeft",this.endMargin=s?"marginLeft":"marginRight",this.viewport=document.createElement("div"),this.viewport.className="flickity-viewport",this._createSlider(),this.focusableElems=[this.element],(e||i)&&t.addEventListener("resize",this);for(let t in this.options.on){let e=this.options.on[t];this.on(t,e)}for(let t in u.create)u.create[t].call(this);i?this.watchCSS():this.activate()},p.option=function(t){Object.assign(this.options,t)},p.activate=function(){if(this.isActive)return;this.isActive=!0,this.element.classList.add("flickity-enabled"),this.options.rightToLeft&&this.element.classList.add("flickity-rtl"),this.getSize();let t=this._filterFindCellElements(this.element.children);this.slider.append(...t),this.viewport.append(this.slider),this.element.append(this.viewport),this.reloadCells(),this.options.accessibility&&(this.element.tabIndex=0,this.element.addEventListener("keydown",this)),this.emitEvent("activate"),this.selectInitialIndex(),this.isInitActivated=!0,this.dispatchEvent("ready")},p._createSlider=function(){let t=document.createElement("div");t.className="flickity-slider",this.slider=t},p._filterFindCellElements=function(t){return s.filterFindElements(t,this.options.cellSelector)},p.reloadCells=function(){this.cells=this._makeCells(this.slider.children),this.positionCells(),this._updateWrapShiftCells(),this.setGallerySize()},p._makeCells=function(t){return this._filterFindCellElements(t).map((t=>new n(t)))},p.getLastCell=function(){return this.cells[this.cells.length-1]},p.getLastSlide=function(){return this.slides[this.slides.length-1]},p.positionCells=function(){this._sizeCells(this.cells),this._positionCells(0)},p._positionCells=function(t){t=t||0,this.maxCellHeight=t&&this.maxCellHeight||0;let e=0;if(t>0){let i=this.cells[t-1];e=i.x+i.size.outerWidth}this.cells.slice(t).forEach((t=>{t.x=e,this._renderCellPosition(t,e),e+=t.size.outerWidth,this.maxCellHeight=Math.max(t.size.outerHeight,this.maxCellHeight)})),this.slideableWidth=e,this.updateSlides(),this._containSlides(),this.slidesWidth=this.cells.length?this.getLastSlide().target-this.slides[0].target:0},p._renderCellPosition=function(t,e){let i=e*(this.options.rightToLeft?-1:1);this.options.percentPosition&&(i*=this.size.innerWidth/t.size.width);let s=this.getPositionValue(i);t.element.style.transform=`translateX( ${s} )`},p._sizeCells=function(t){t.forEach((t=>t.getSize()))},p.updateSlides=function(){if(this.slides=[],!this.cells.length)return;let{beginMargin:t,endMargin:e}=this,i=new o(t,e,this.cellAlign);this.slides.push(i);let s=this._getCanCellFit();this.cells.forEach(((n,l)=>{if(!i.cells.length)return void i.addCell(n);let r=i.outerWidth-i.firstMargin+(n.size.outerWidth-n.size[e]);s(l,r)||(i.updateTarget(),i=new o(t,e,this.cellAlign),this.slides.push(i)),i.addCell(n)})),i.updateTarget(),this.updateSelectedSlide()},p._getCanCellFit=function(){let{groupCells:t}=this.options;if(!t)return()=>!1;if("number"==typeof t){let e=parseInt(t,10);return t=>t%e!=0}let e=1,i="string"==typeof t&&t.match(/^(\d+)%$/);i&&(e=parseInt(i[1],10)/100);let s=(this.size.innerWidth+1)*e;return(t,e)=>e<=s},p._init=p.reposition=function(){this.positionCells(),this.positionSliderAtSelected()},p.getSize=function(){this.size=i(this.element),this.setCellAlign(),this.cursorPosition=this.size.innerWidth*this.cellAlign};let f={left:0,center:.5,right:1};p.setCellAlign=function(){let{cellAlign:t,rightToLeft:e}=this.options,i=f[t];this.cellAlign=void 0!==i?i:t,e&&(this.cellAlign=1-this.cellAlign)},p.setGallerySize=function(){if(!this.options.setGallerySize)return;let t=this.options.adaptiveHeight&&this.selectedSlide?this.selectedSlide.height:this.maxCellHeight;this.viewport.style.height=`${t}px`},p._updateWrapShiftCells=function(){if(this.isWrapping=this.getIsWrapping(),!this.isWrapping)return;this._unshiftCells(this.beforeShiftCells),this._unshiftCells(this.afterShiftCells);let t=this.cursorPosition,e=this.cells.length-1;this.beforeShiftCells=this._getGapCells(t,e,-1);let i=this.size.innerWidth-this.cursorPosition;this.afterShiftCells=this._getGapCells(i,0,1)},p.getIsWrapping=function(){let{wrapAround:t}=this.options;if(!t||this.slides.length<2)return!1;if("fill"!==t)return!0;let e=this.slideableWidth-this.size.innerWidth;if(e>this.size.innerWidth)return!0;for(let t of this.cells)if(t.size.outerWidth>e)return!1;return!0},p._getGapCells=function(t,e,i){let s=[];for(;t>0;){let n=this.cells[e];if(!n)break;s.push(n),e+=i,t-=n.size.outerWidth}return s},p._containSlides=function(){if(!(this.options.contain&&!this.isWrapping&&this.cells.length))return;let t=this.slideableWidth-this.getLastCell().size[this.endMargin];if(t<this.size.innerWidth)this.slides.forEach((e=>{e.target=t*this.cellAlign}));else{let e=this.cursorPosition+this.cells[0].size[this.beginMargin],i=t-this.size.innerWidth*(1-this.cellAlign);this.slides.forEach((t=>{t.target=Math.max(t.target,e),t.target=Math.min(t.target,i)}))}},p.dispatchEvent=function(t,e,i){let s=e?[e].concat(i):i;if(this.emitEvent(t,s),a&&this.$element){let s=t+=this.options.namespaceJQueryEvents?".flickity":"";if(e){let i=new a.Event(e);i.type=t,s=i}this.$element.trigger(s,i)}};const g=["dragStart","dragMove","dragEnd","pointerDown","pointerMove","pointerEnd","staticClick"];let m=p.emitEvent;p.emitEvent=function(t,e){if("staticClick"===t){let t=this.getParentCell(e[0].target),i=t&&t.element,s=t&&this.cells.indexOf(t);e=e.concat(i,s)}if(m.call(this,t,e),!g.includes(t)||!a||!this.$element)return;t+=this.options.namespaceJQueryEvents?".flickity":"";let i=e.shift(0),s=new a.Event(i);s.type=t,this.$element.trigger(s,e)},p.select=function(t,e,i){if(!this.isActive)return;if(t=parseInt(t,10),this._wrapSelect(t),(this.isWrapping||e)&&(t=s.modulo(t,this.slides.length)),!this.slides[t])return;let n=this.selectedIndex;this.selectedIndex=t,this.updateSelectedSlide(),i?this.positionSliderAtSelected():this.startAnimation(),this.options.adaptiveHeight&&this.setGallerySize(),this.dispatchEvent("select",null,[t]),t!==n&&this.dispatchEvent("change",null,[t])},p._wrapSelect=function(t){if(!this.isWrapping)return;const{selectedIndex:e,slideableWidth:i,slides:{length:n}}=this;if(!this.isDragSelect){let i=s.modulo(t,n),o=Math.abs(i-e),l=Math.abs(i+n-e),r=Math.abs(i-n-e);l<o?t+=n:r<o&&(t-=n)}t<0?this.x-=i:t>=n&&(this.x+=i)},p.previous=function(t,e){this.select(this.selectedIndex-1,t,e)},p.next=function(t,e){this.select(this.selectedIndex+1,t,e)},p.updateSelectedSlide=function(){let t=this.slides[this.selectedIndex];t&&(this.unselectSelectedSlide(),this.selectedSlide=t,t.select(),this.selectedCells=t.cells,this.selectedElements=t.getCellElements(),this.selectedCell=t.cells[0],this.selectedElement=this.selectedElements[0])},p.unselectSelectedSlide=function(){this.selectedSlide&&this.selectedSlide.unselect()},p.selectInitialIndex=function(){let t=this.options.initialIndex;if(this.isInitActivated)return void this.select(this.selectedIndex,!1,!0);if(t&&"string"==typeof t){if(this.queryCell(t))return void this.selectCell(t,!1,!0)}let e=0;t&&this.slides[t]&&(e=t),this.select(e,!1,!0)},p.selectCell=function(t,e,i){let s=this.queryCell(t);if(!s)return;let n=this.getCellSlideIndex(s);this.select(n,e,i)},p.getCellSlideIndex=function(t){let e=this.slides.find((e=>e.cells.includes(t)));return this.slides.indexOf(e)},p.getCell=function(t){for(let e of this.cells)if(e.element===t)return e},p.getCells=function(t){return(t=s.makeArray(t)).map((t=>this.getCell(t))).filter(Boolean)},p.getCellElements=function(){return this.cells.map((t=>t.element))},p.getParentCell=function(t){let e=this.getCell(t);if(e)return e;let i=t.closest(".flickity-slider > *");return this.getCell(i)},p.getAdjacentCellElements=function(t,e){if(!t)return this.selectedSlide.getCellElements();e=void 0===e?this.selectedIndex:e;let i=this.slides.length;if(1+2*t>=i)return this.getCellElements();let n=[];for(let o=e-t;o<=e+t;o++){let t=this.isWrapping?s.modulo(o,i):o,e=this.slides[t];e&&(n=n.concat(e.getCellElements()))}return n},p.queryCell=function(t){if("number"==typeof t)return this.cells[t];return"string"==typeof t&&!t.match(/^[#.]?[\d/]/)&&(t=this.element.querySelector(t)),this.getCell(t)},p.uiChange=function(){this.emitEvent("uiChange")},p.onresize=function(){this.watchCSS(),this.resize()},s.debounceMethod(u,"onresize",150),p.resize=function(){if(!this.isActive||this.isAnimating||this.isDragging)return;this.getSize(),this.isWrapping&&(this.x=s.modulo(this.x,this.slideableWidth)),this.positionCells(),this._updateWrapShiftCells(),this.setGallerySize(),this.emitEvent("resize");let t=this.selectedElements&&this.selectedElements[0];this.selectCell(t,!1,!0)},p.watchCSS=function(){if(!this.options.watchCSS)return;r(this.element,":after").content.includes("flickity")?this.activate():this.deactivate()},p.onkeydown=function(t){let{activeElement:e}=document,i=u.keyboardHandlers[t.key];this.options.accessibility&&e&&i&&this.focusableElems.some((t=>e===t))&&i.call(this)},u.keyboardHandlers={ArrowLeft:function(){this.uiChange(),this[this.options.rightToLeft?"next":"previous"]()},ArrowRight:function(){this.uiChange(),this[this.options.rightToLeft?"previous":"next"]()}},p.focus=function(){this.element.focus({preventScroll:!0})},p.deactivate=function(){this.isActive&&(this.element.classList.remove("flickity-enabled"),this.element.classList.remove("flickity-rtl"),this.unselectSelectedSlide(),this.cells.forEach((t=>t.destroy())),this.viewport.remove(),this.element.append(...this.slider.children),this.options.accessibility&&(this.element.removeAttribute("tabIndex"),this.element.removeEventListener("keydown",this)),this.isActive=!1,this.emitEvent("deactivate"))},p.destroy=function(){this.deactivate(),t.removeEventListener("resize",this),this.allOff(),this.emitEvent("destroy"),a&&this.$element&&a.removeData(this.element,"flickity"),delete this.element.flickityGUID,delete d[this.guid]},Object.assign(p,l),u.data=function(t){if(t=s.getQueryElement(t))return d[t.flickityGUID]},s.htmlInit(u,"flickity");let{jQueryBridget:y}=t;return a&&y&&y("flickity",u,a),u.setJQuery=function(t){a=t},u.Cell=n,u.Slide=o,u})),function(t,e){"object"==typeof module&&module.exports?module.exports=e(t,require("./core"),require("unidragger"),require("fizzy-ui-utils")):t.Flickity=e(t,t.Flickity,t.Unidragger,t.fizzyUIUtils)}("undefined"!=typeof window?window:this,(function(t,e,i,s){Object.assign(e.defaults,{draggable:">1",dragThreshold:3});let n=e.prototype;function o(){return{x:t.pageXOffset,y:t.pageYOffset}}return Object.assign(n,i.prototype),n.touchActionValue="",e.create.drag=function(){this.on("activate",this.onActivateDrag),this.on("uiChange",this._uiChangeDrag),this.on("deactivate",this.onDeactivateDrag),this.on("cellChange",this.updateDraggable),this.on("pointerDown",this.handlePointerDown),this.on("pointerUp",this.handlePointerUp),this.on("pointerDown",this.handlePointerDone),this.on("dragStart",this.handleDragStart),this.on("dragMove",this.handleDragMove),this.on("dragEnd",this.handleDragEnd),this.on("staticClick",this.handleStaticClick)},n.onActivateDrag=function(){this.handles=[this.viewport],this.bindHandles(),this.updateDraggable()},n.onDeactivateDrag=function(){this.unbindHandles(),this.element.classList.remove("is-draggable")},n.updateDraggable=function(){">1"===this.options.draggable?this.isDraggable=this.slides.length>1:this.isDraggable=this.options.draggable,this.element.classList.toggle("is-draggable",this.isDraggable)},n._uiChangeDrag=function(){delete this.isFreeScrolling},n.handlePointerDown=function(e){if(!this.isDraggable)return void this.bindActivePointerEvents(e);let i="touchstart"===e.type,s="touch"===e.pointerType,n=e.target.matches("input, textarea, select");i||s||n||e.preventDefault(),n||this.focus(),document.activeElement!==this.element&&document.activeElement.blur(),this.dragX=this.x,this.viewport.classList.add("is-pointer-down"),this.pointerDownScroll=o(),t.addEventListener("scroll",this),this.bindActivePointerEvents(e)},n.hasDragStarted=function(t){return Math.abs(t.x)>this.options.dragThreshold},n.handlePointerUp=function(){delete this.isTouchScrolling,this.viewport.classList.remove("is-pointer-down")},n.handlePointerDone=function(){t.removeEventListener("scroll",this),delete this.pointerDownScroll},n.handleDragStart=function(){this.isDraggable&&(this.dragStartPosition=this.x,this.startAnimation(),t.removeEventListener("scroll",this))},n.handleDragMove=function(t,e,i){if(!this.isDraggable)return;t.preventDefault(),this.previousDragX=this.dragX;let s=this.options.rightToLeft?-1:1;this.isWrapping&&(i.x%=this.slideableWidth);let n=this.dragStartPosition+i.x*s;if(!this.isWrapping){let t=Math.max(-this.slides[0].target,this.dragStartPosition);n=n>t?.5*(n+t):n;let e=Math.min(-this.getLastSlide().target,this.dragStartPosition);n=n<e?.5*(n+e):n}this.dragX=n,this.dragMoveTime=new Date},n.handleDragEnd=function(){if(!this.isDraggable)return;let{freeScroll:t}=this.options;t&&(this.isFreeScrolling=!0);let e=this.dragEndRestingSelect();if(t&&!this.isWrapping){let t=this.getRestingPosition();this.isFreeScrolling=-t>this.slides[0].target&&-t<this.getLastSlide().target}else t||e!==this.selectedIndex||(e+=this.dragEndBoostSelect());delete this.previousDragX,this.isDragSelect=this.isWrapping,this.select(e),delete this.isDragSelect},n.dragEndRestingSelect=function(){let t=this.getRestingPosition(),e=Math.abs(this.getSlideDistance(-t,this.selectedIndex)),i=this._getClosestResting(t,e,1),s=this._getClosestResting(t,e,-1);return i.distance<s.distance?i.index:s.index},n._getClosestResting=function(t,e,i){let s=this.selectedIndex,n=1/0,o=this.options.contain&&!this.isWrapping?(t,e)=>t<=e:(t,e)=>t<e;for(;o(e,n)&&(s+=i,n=e,null!==(e=this.getSlideDistance(-t,s)));)e=Math.abs(e);return{distance:n,index:s-i}},n.getSlideDistance=function(t,e){let i=this.slides.length,n=this.options.wrapAround&&i>1,o=n?s.modulo(e,i):e,l=this.slides[o];if(!l)return null;let r=n?this.slideableWidth*Math.floor(e/i):0;return t-(l.target+r)},n.dragEndBoostSelect=function(){if(void 0===this.previousDragX||!this.dragMoveTime||new Date-this.dragMoveTime>100)return 0;let t=this.getSlideDistance(-this.dragX,this.selectedIndex),e=this.previousDragX-this.dragX;return t>0&&e>0?1:t<0&&e<0?-1:0},n.onscroll=function(){let t=o(),e=this.pointerDownScroll.x-t.x,i=this.pointerDownScroll.y-t.y;(Math.abs(e)>3||Math.abs(i)>3)&&this.pointerDone()},e})),function(t,e){"object"==typeof module&&module.exports?module.exports=e(require("./core")):e(t.Flickity)}("undefined"!=typeof window?window:this,(function(t){const e="http://www.w3.org/2000/svg";function i(t,e,i){this.increment=t,this.direction=e,this.isPrevious="previous"===t,this.isLeft="left"===e,this._create(i)}i.prototype._create=function(t){let e=this.element=document.createElement("button");e.className=`flickity-button flickity-prev-next-button ${this.increment}`;let i=this.isPrevious?"Previous":"Next";e.setAttribute("type","button"),e.setAttribute("aria-label",i),this.disable();let s=this.createSVG(i,t);e.append(s)},i.prototype.createSVG=function(t,i){let s=document.createElementNS(e,"svg");s.setAttribute("class","flickity-button-icon"),s.setAttribute("viewBox","0 0 100 100");let n=document.createElementNS(e,"title");n.append(t);let o=document.createElementNS(e,"path"),l=function(t){if("string"==typeof t)return t;let{x0:e,x1:i,x2:s,x3:n,y1:o,y2:l}=t;return`M ${e}, 50\n    L ${i}, ${o+50}\n    L ${s}, ${l+50}\n    L ${n}, 50\n    L ${s}, ${50-l}\n    L ${i}, ${50-o}\n    Z`}(i);return o.setAttribute("d",l),o.setAttribute("class","arrow"),this.isLeft||o.setAttribute("transform","translate(100, 100) rotate(180)"),s.append(n,o),s},i.prototype.enable=function(){this.element.removeAttribute("disabled")},i.prototype.disable=function(){this.element.setAttribute("disabled",!0)},Object.assign(t.defaults,{prevNextButtons:!0,arrowShape:{x0:10,x1:60,y1:50,x2:70,y2:40,x3:30}}),t.create.prevNextButtons=function(){if(!this.options.prevNextButtons)return;let{rightToLeft:t,arrowShape:e}=this.options,s=t?"right":"left",n=t?"left":"right";this.prevButton=new i("previous",s,e),this.nextButton=new i("next",n,e),this.focusableElems.push(this.prevButton.element),this.focusableElems.push(this.nextButton.element),this.handlePrevButtonClick=()=>{this.uiChange(),this.previous()},this.handleNextButtonClick=()=>{this.uiChange(),this.next()},this.on("activate",this.activatePrevNextButtons),this.on("select",this.updatePrevNextButtons)};let s=t.prototype;return s.updatePrevNextButtons=function(){let t=this.slides.length?this.slides.length-1:0;this.updatePrevNextButton(this.prevButton,0),this.updatePrevNextButton(this.nextButton,t)},s.updatePrevNextButton=function(t,e){if(this.isWrapping&&this.slides.length>1)return void t.enable();let i=this.selectedIndex!==e;t[i?"enable":"disable"](),!i&&document.activeElement===t.element&&this.focus()},s.activatePrevNextButtons=function(){this.prevButton.element.addEventListener("click",this.handlePrevButtonClick),this.nextButton.element.addEventListener("click",this.handleNextButtonClick),this.element.append(this.prevButton.element,this.nextButton.element),this.on("deactivate",this.deactivatePrevNextButtons)},s.deactivatePrevNextButtons=function(){this.prevButton.element.remove(),this.nextButton.element.remove(),this.prevButton.element.removeEventListener("click",this.handlePrevButtonClick),this.nextButton.element.removeEventListener("click",this.handleNextButtonClick),this.off("deactivate",this.deactivatePrevNextButtons)},t.PrevNextButton=i,t})),function(t,e){"object"==typeof module&&module.exports?module.exports=e(require("./core"),require("fizzy-ui-utils")):e(t.Flickity,t.fizzyUIUtils)}("undefined"!=typeof window?window:this,(function(t,e){function i(){this.holder=document.createElement("div"),this.holder.className="flickity-page-dots",this.dots=[]}i.prototype.setDots=function(t){let e=t-this.dots.length;e>0?this.addDots(e):e<0&&this.removeDots(-e)},i.prototype.addDots=function(t){let e=new Array(t).fill().map(((t,e)=>{let i=document.createElement("button");i.setAttribute("type","button");let s=e+1+this.dots.length;return i.className="flickity-page-dot",i.textContent=`View slide ${s}`,i}));this.holder.append(...e),this.dots=this.dots.concat(e)},i.prototype.removeDots=function(t){this.dots.splice(this.dots.length-t,t).forEach((t=>t.remove()))},i.prototype.updateSelected=function(t){this.selectedDot&&(this.selectedDot.classList.remove("is-selected"),this.selectedDot.removeAttribute("aria-current")),this.dots.length&&(this.selectedDot=this.dots[t],this.selectedDot.classList.add("is-selected"),this.selectedDot.setAttribute("aria-current","step"))},t.PageDots=i,Object.assign(t.defaults,{pageDots:!0}),t.create.pageDots=function(){this.options.pageDots&&(this.pageDots=new i,this.handlePageDotsClick=this.onPageDotsClick.bind(this),this.on("activate",this.activatePageDots),this.on("select",this.updateSelectedPageDots),this.on("cellChange",this.updatePageDots),this.on("resize",this.updatePageDots),this.on("deactivate",this.deactivatePageDots))};let s=t.prototype;return s.activatePageDots=function(){this.pageDots.setDots(this.slides.length),this.focusableElems.push(...this.pageDots.dots),this.pageDots.holder.addEventListener("click",this.handlePageDotsClick),this.element.append(this.pageDots.holder)},s.onPageDotsClick=function(t){let e=this.pageDots.dots.indexOf(t.target);-1!==e&&(this.uiChange(),this.select(e))},s.updateSelectedPageDots=function(){this.pageDots.updateSelected(this.selectedIndex)},s.updatePageDots=function(){this.pageDots.dots.forEach((t=>{e.removeFrom(this.focusableElems,t)})),this.pageDots.setDots(this.slides.length),this.focusableElems.push(...this.pageDots.dots)},s.deactivatePageDots=function(){this.pageDots.holder.remove(),this.pageDots.holder.removeEventListener("click",this.handlePageDotsClick)},t.PageDots=i,t})),function(t,e){"object"==typeof module&&module.exports?module.exports=e(require("./core")):e(t.Flickity)}("undefined"!=typeof window?window:this,(function(t){function e(t,e){this.autoPlay=t,this.onTick=e,this.state="stopped",this.onVisibilityChange=this.visibilityChange.bind(this),this.onVisibilityPlay=this.visibilityPlay.bind(this)}e.prototype.play=function(){if("playing"===this.state)return;document.hidden?document.addEventListener("visibilitychange",this.onVisibilityPlay):(this.state="playing",document.addEventListener("visibilitychange",this.onVisibilityChange),this.tick())},e.prototype.tick=function(){if("playing"!==this.state)return;let t="number"==typeof this.autoPlay?this.autoPlay:3e3;this.clear(),this.timeout=setTimeout((()=>{this.onTick(),this.tick()}),t)},e.prototype.stop=function(){this.state="stopped",this.clear(),document.removeEventListener("visibilitychange",this.onVisibilityChange)},e.prototype.clear=function(){clearTimeout(this.timeout)},e.prototype.pause=function(){"playing"===this.state&&(this.state="paused",this.clear())},e.prototype.unpause=function(){"paused"===this.state&&this.play()},e.prototype.visibilityChange=function(){this[document.hidden?"pause":"unpause"]()},e.prototype.visibilityPlay=function(){this.play(),document.removeEventListener("visibilitychange",this.onVisibilityPlay)},Object.assign(t.defaults,{pauseAutoPlayOnHover:!0}),t.create.player=function(){this.player=new e(this.options.autoPlay,(()=>{this.next(!0)})),this.on("activate",this.activatePlayer),this.on("uiChange",this.stopPlayer),this.on("pointerDown",this.stopPlayer),this.on("deactivate",this.deactivatePlayer)};let i=t.prototype;return i.activatePlayer=function(){this.options.autoPlay&&(this.player.play(),this.element.addEventListener("mouseenter",this))},i.playPlayer=function(){this.player.play()},i.stopPlayer=function(){this.player.stop()},i.pausePlayer=function(){this.player.pause()},i.unpausePlayer=function(){this.player.unpause()},i.deactivatePlayer=function(){this.player.stop(),this.element.removeEventListener("mouseenter",this)},i.onmouseenter=function(){this.options.pauseAutoPlayOnHover&&(this.player.pause(),this.element.addEventListener("mouseleave",this))},i.onmouseleave=function(){this.player.unpause(),this.element.removeEventListener("mouseleave",this)},t.Player=e,t})),function(t,e){"object"==typeof module&&module.exports?module.exports=e(require("./core"),require("fizzy-ui-utils")):e(t.Flickity,t.fizzyUIUtils)}("undefined"!=typeof window?window:this,(function(t,e){let i=t.prototype;return i.insert=function(t,e){let i=this._makeCells(t);if(!i||!i.length)return;let s=this.cells.length;e=void 0===e?s:e;let n=function(t){let e=document.createDocumentFragment();return t.forEach((t=>e.appendChild(t.element))),e}(i),o=e===s;if(o)this.slider.appendChild(n);else{let t=this.cells[e].element;this.slider.insertBefore(n,t)}if(0===e)this.cells=i.concat(this.cells);else if(o)this.cells=this.cells.concat(i);else{let t=this.cells.splice(e,s-e);this.cells=this.cells.concat(i).concat(t)}this._sizeCells(i),this.cellChange(e),this.positionSliderAtSelected()},i.append=function(t){this.insert(t,this.cells.length)},i.prepend=function(t){this.insert(t,0)},i.remove=function(t){let i=this.getCells(t);if(!i||!i.length)return;let s=this.cells.length-1;i.forEach((t=>{t.remove();let i=this.cells.indexOf(t);s=Math.min(i,s),e.removeFrom(this.cells,t)})),this.cellChange(s),this.positionSliderAtSelected()},i.cellSizeChange=function(t){let e=this.getCell(t);if(!e)return;e.getSize();let i=this.cells.indexOf(e);this.cellChange(i)},i.cellChange=function(t){let e=this.selectedElement;this._positionCells(t),this._updateWrapShiftCells(),this.setGallerySize();let i=this.getCell(e);i&&(this.selectedIndex=this.getCellSlideIndex(i)),this.selectedIndex=Math.min(this.slides.length-1,this.selectedIndex),this.emitEvent("cellChange",[t]),this.select(this.selectedIndex)},t})),function(t,e){"object"==typeof module&&module.exports?module.exports=e(require("./core"),require("fizzy-ui-utils")):e(t.Flickity,t.fizzyUIUtils)}("undefined"!=typeof window?window:this,(function(t,e){const i="data-flickity-lazyload",s=`${i}-src`,n=`${i}-srcset`,o=`img[${i}], img[${s}], img[${n}], source[${n}]`;t.create.lazyLoad=function(){this.on("select",this.lazyLoad),this.handleLazyLoadComplete=this.onLazyLoadComplete.bind(this)};let l=t.prototype;function r(t){if(t.matches("img")){let e=t.getAttribute(i),o=t.getAttribute(s),l=t.getAttribute(n);if(e||o||l)return t}return[...t.querySelectorAll(o)]}function h(t,e){this.img=t,this.onComplete=e,this.load()}return l.lazyLoad=function(){let{lazyLoad:t}=this.options;if(!t)return;let e="number"==typeof t?t:0;this.getAdjacentCellElements(e).map(r).flat().forEach((t=>new h(t,this.handleLazyLoadComplete)))},l.onLazyLoadComplete=function(t,e){let i=this.getParentCell(t),s=i&&i.element;this.cellSizeChange(s),this.dispatchEvent("lazyLoad",e,s)},h.prototype.handleEvent=e.handleEvent,h.prototype.load=function(){this.img.addEventListener("load",this),this.img.addEventListener("error",this);let t=this.img.getAttribute(i)||this.img.getAttribute(s),e=this.img.getAttribute(n);this.img.src=t,e&&this.img.setAttribute("srcset",e),this.img.removeAttribute(i),this.img.removeAttribute(s),this.img.removeAttribute(n)},h.prototype.onload=function(t){this.complete(t,"flickity-lazyloaded")},h.prototype.onerror=function(t){this.complete(t,"flickity-lazyerror")},h.prototype.complete=function(t,e){this.img.removeEventListener("load",this),this.img.removeEventListener("error",this),(this.img.parentNode.matches("picture")?this.img.parentNode:this.img).classList.add(e),this.onComplete(this.img,t)},t.LazyLoader=h,t})),function(t,e){"object"==typeof module&&module.exports?module.exports=e(require("./core"),require("imagesloaded")):e(t.Flickity,t.imagesLoaded)}("undefined"!=typeof window?window:this,(function(t,e){return t.create.imagesLoaded=function(){this.on("activate",this.imagesLoaded)},t.prototype.imagesLoaded=function(){if(!this.options.imagesLoaded)return;e(this.slider).on("progress",((t,e)=>{let i=this.getParentCell(e.img);this.cellSizeChange(i&&i.element),this.options.freeScroll||this.positionSliderAtSelected()}))},t}));
+/*!
+ * Flickity PACKAGED v3.0.0
+ * Touch, responsive, flickable carousels
+ *
+ * Licensed GPLv3 for open source use
+ * or Flickity Commercial License for commercial use
+ *
+ * https://flickity.metafizzy.co
+ * Copyright 2015-2022 Metafizzy
+ */
+
+/**
+ * Bridget makes jQuery widgets
+ * v3.0.1
+ * MIT license
+ */
+
+( function( window, factory ) {
+  // module definition
+ if ( typeof module == 'object' && module.exports ) {
+   // CommonJS
+   module.exports = factory(
+       window,
+       require('jquery'),
+   );
+ } else {
+   // browser global
+   window.jQueryBridget = factory(
+       window,
+       window.jQuery,
+   );
+ }
+
+}( window, function factory( window, jQuery ) {
+
+// ----- utils ----- //
+
+// helper function for logging errors
+// $.error breaks jQuery chaining
+let console = window.console;
+let logError = typeof console == 'undefined' ? function() {} :
+  function( message ) {
+    console.error( message );
+  };
+
+// ----- jQueryBridget ----- //
+
+function jQueryBridget( namespace, PluginClass, $ ) {
+  $ = $ || jQuery || window.jQuery;
+  if ( !$ ) {
+    return;
+  }
+
+  // add option method -> $().plugin('option', {...})
+  if ( !PluginClass.prototype.option ) {
+    // option setter
+    PluginClass.prototype.option = function( opts ) {
+      if ( !opts ) return;
+
+      this.options = Object.assign( this.options || {}, opts );
+    };
+  }
+
+  // make jQuery plugin
+  $.fn[ namespace ] = function( arg0, ...args ) {
+    if ( typeof arg0 == 'string' ) {
+      // method call $().plugin( 'methodName', { options } )
+      return methodCall( this, arg0, args );
+    }
+    // just $().plugin({ options })
+    plainCall( this, arg0 );
+    return this;
+  };
+
+  // $().plugin('methodName')
+  function methodCall( $elems, methodName, args ) {
+    let returnValue;
+    let pluginMethodStr = `$().${namespace}("${methodName}")`;
+
+    $elems.each( function( i, elem ) {
+      // get instance
+      let instance = $.data( elem, namespace );
+      if ( !instance ) {
+        logError( `${namespace} not initialized.` +
+          ` Cannot call method ${pluginMethodStr}` );
+        return;
+      }
+
+      let method = instance[ methodName ];
+      if ( !method || methodName.charAt( 0 ) == '_' ) {
+        logError(`${pluginMethodStr} is not a valid method`);
+        return;
+      }
+
+      // apply method, get return value
+      let value = method.apply( instance, args );
+      // set return value if value is returned, use only first value
+      returnValue = returnValue === undefined ? value : returnValue;
+    } );
+
+    return returnValue !== undefined ? returnValue : $elems;
+  }
+
+  function plainCall( $elems, options ) {
+    $elems.each( function( i, elem ) {
+      let instance = $.data( elem, namespace );
+      if ( instance ) {
+        // set options & init
+        instance.option( options );
+        instance._init();
+      } else {
+        // initialize new instance
+        instance = new PluginClass( elem, options );
+        $.data( elem, namespace, instance );
+      }
+    } );
+  }
+
+}
+
+// -----  ----- //
+
+return jQueryBridget;
+
+} ) );
+/**
+ * EvEmitter v2.1.1
+ * Lil' event emitter
+ * MIT License
+ */
+
+( function( global, factory ) {
+  // universal module definition
+  if ( typeof module == 'object' && module.exports ) {
+    // CommonJS - Browserify, Webpack
+    module.exports = factory();
+  } else {
+    // Browser globals
+    global.EvEmitter = factory();
+  }
+
+}( typeof window != 'undefined' ? window : this, function() {
+
+function EvEmitter() {}
+
+let proto = EvEmitter.prototype;
+
+proto.on = function( eventName, listener ) {
+  if ( !eventName || !listener ) return this;
+
+  // set events hash
+  let events = this._events = this._events || {};
+  // set listeners array
+  let listeners = events[ eventName ] = events[ eventName ] || [];
+  // only add once
+  if ( !listeners.includes( listener ) ) {
+    listeners.push( listener );
+  }
+
+  return this;
+};
+
+proto.once = function( eventName, listener ) {
+  if ( !eventName || !listener ) return this;
+
+  // add event
+  this.on( eventName, listener );
+  // set once flag
+  // set onceEvents hash
+  let onceEvents = this._onceEvents = this._onceEvents || {};
+  // set onceListeners object
+  let onceListeners = onceEvents[ eventName ] = onceEvents[ eventName ] || {};
+  // set flag
+  onceListeners[ listener ] = true;
+
+  return this;
+};
+
+proto.off = function( eventName, listener ) {
+  let listeners = this._events && this._events[ eventName ];
+  if ( !listeners || !listeners.length ) return this;
+
+  let index = listeners.indexOf( listener );
+  if ( index != -1 ) {
+    listeners.splice( index, 1 );
+  }
+
+  return this;
+};
+
+proto.emitEvent = function( eventName, args ) {
+  let listeners = this._events && this._events[ eventName ];
+  if ( !listeners || !listeners.length ) return this;
+
+  // copy over to avoid interference if .off() in listener
+  listeners = listeners.slice( 0 );
+  args = args || [];
+  // once stuff
+  let onceListeners = this._onceEvents && this._onceEvents[ eventName ];
+
+  for ( let listener of listeners ) {
+    let isOnce = onceListeners && onceListeners[ listener ];
+    if ( isOnce ) {
+      // remove listener
+      // remove before trigger to prevent recursion
+      this.off( eventName, listener );
+      // unset once flag
+      delete onceListeners[ listener ];
+    }
+    // trigger listener
+    listener.apply( this, args );
+  }
+
+  return this;
+};
+
+proto.allOff = function() {
+  delete this._events;
+  delete this._onceEvents;
+  return this;
+};
+
+return EvEmitter;
+
+} ) );
+/*!
+ * Infinite Scroll v2.0.4
+ * measure size of elements
+ * MIT license
+ */
+
+( function( window, factory ) {
+  if ( typeof module == 'object' && module.exports ) {
+    // CommonJS
+    module.exports = factory();
+  } else {
+    // browser global
+    window.getSize = factory();
+  }
+
+} )( window, function factory() {
+
+// -------------------------- helpers -------------------------- //
+
+// get a number from a string, not a percentage
+function getStyleSize( value ) {
+  let num = parseFloat( value );
+  // not a percent like '100%', and a number
+  let isValid = value.indexOf('%') == -1 && !isNaN( num );
+  return isValid && num;
+}
+
+// -------------------------- measurements -------------------------- //
+
+let measurements = [
+  'paddingLeft',
+  'paddingRight',
+  'paddingTop',
+  'paddingBottom',
+  'marginLeft',
+  'marginRight',
+  'marginTop',
+  'marginBottom',
+  'borderLeftWidth',
+  'borderRightWidth',
+  'borderTopWidth',
+  'borderBottomWidth',
+];
+
+let measurementsLength = measurements.length;
+
+function getZeroSize() {
+  let size = {
+    width: 0,
+    height: 0,
+    innerWidth: 0,
+    innerHeight: 0,
+    outerWidth: 0,
+    outerHeight: 0,
+  };
+  measurements.forEach( ( measurement ) => {
+    size[ measurement ] = 0;
+  } );
+  return size;
+}
+
+// -------------------------- getSize -------------------------- //
+
+function getSize( elem ) {
+  // use querySeletor if elem is string
+  if ( typeof elem == 'string' ) elem = document.querySelector( elem );
+
+  // do not proceed on non-objects
+  let isElement = elem && typeof elem == 'object' && elem.nodeType;
+  if ( !isElement ) return;
+
+  let style = getComputedStyle( elem );
+
+  // if hidden, everything is 0
+  if ( style.display == 'none' ) return getZeroSize();
+
+  let size = {};
+  size.width = elem.offsetWidth;
+  size.height = elem.offsetHeight;
+
+  let isBorderBox = size.isBorderBox = style.boxSizing == 'border-box';
+
+  // get all measurements
+  measurements.forEach( ( measurement ) => {
+    let value = style[ measurement ];
+    let num = parseFloat( value );
+    // any 'auto', 'medium' value will be 0
+    size[ measurement ] = !isNaN( num ) ? num : 0;
+  } );
+
+  let paddingWidth = size.paddingLeft + size.paddingRight;
+  let paddingHeight = size.paddingTop + size.paddingBottom;
+  let marginWidth = size.marginLeft + size.marginRight;
+  let marginHeight = size.marginTop + size.marginBottom;
+  let borderWidth = size.borderLeftWidth + size.borderRightWidth;
+  let borderHeight = size.borderTopWidth + size.borderBottomWidth;
+
+  // overwrite width and height if we can get it from style
+  let styleWidth = getStyleSize( style.width );
+  if ( styleWidth !== false ) {
+    size.width = styleWidth +
+      // add padding and border unless it's already including it
+      ( isBorderBox ? 0 : paddingWidth + borderWidth );
+  }
+
+  let styleHeight = getStyleSize( style.height );
+  if ( styleHeight !== false ) {
+    size.height = styleHeight +
+      // add padding and border unless it's already including it
+      ( isBorderBox ? 0 : paddingHeight + borderHeight );
+  }
+
+  size.innerWidth = size.width - ( paddingWidth + borderWidth );
+  size.innerHeight = size.height - ( paddingHeight + borderHeight );
+
+  size.outerWidth = size.width + marginWidth;
+  size.outerHeight = size.height + marginHeight;
+
+  return size;
+}
+
+return getSize;
+
+} );
+/**
+ * Fizzy UI utils v3.0.0
+ * MIT license
+ */
+
+( function( global, factory ) {
+  // universal module definition
+  if ( typeof module == 'object' && module.exports ) {
+    // CommonJS
+    module.exports = factory( global );
+  } else {
+    // browser global
+    global.fizzyUIUtils = factory( global );
+  }
+
+}( this, function factory( global ) {
+
+let utils = {};
+
+// ----- extend ----- //
+
+// extends objects
+utils.extend = function( a, b ) {
+  return Object.assign( a, b );
+};
+
+// ----- modulo ----- //
+
+utils.modulo = function( num, div ) {
+  return ( ( num % div ) + div ) % div;
+};
+
+// ----- makeArray ----- //
+
+// turn element or nodeList into an array
+utils.makeArray = function( obj ) {
+  // use object if already an array
+  if ( Array.isArray( obj ) ) return obj;
+
+  // return empty array if undefined or null. #6
+  if ( obj === null || obj === undefined ) return [];
+
+  let isArrayLike = typeof obj == 'object' && typeof obj.length == 'number';
+  // convert nodeList to array
+  if ( isArrayLike ) return [ ...obj ];
+
+  // array of single index
+  return [ obj ];
+};
+
+// ----- removeFrom ----- //
+
+utils.removeFrom = function( ary, obj ) {
+  let index = ary.indexOf( obj );
+  if ( index != -1 ) {
+    ary.splice( index, 1 );
+  }
+};
+
+// ----- getParent ----- //
+
+utils.getParent = function( elem, selector ) {
+  while ( elem.parentNode && elem != document.body ) {
+    elem = elem.parentNode;
+    if ( elem.matches( selector ) ) return elem;
+  }
+};
+
+// ----- getQueryElement ----- //
+
+// use element as selector string
+utils.getQueryElement = function( elem ) {
+  if ( typeof elem == 'string' ) {
+    return document.querySelector( elem );
+  }
+  return elem;
+};
+
+// ----- handleEvent ----- //
+
+// enable .ontype to trigger from .addEventListener( elem, 'type' )
+utils.handleEvent = function( event ) {
+  let method = 'on' + event.type;
+  if ( this[ method ] ) {
+    this[ method ]( event );
+  }
+};
+
+// ----- filterFindElements ----- //
+
+utils.filterFindElements = function( elems, selector ) {
+  // make array of elems
+  elems = utils.makeArray( elems );
+
+  return elems
+    // check that elem is an actual element
+    .filter( ( elem ) => elem instanceof HTMLElement )
+    .reduce( ( ffElems, elem ) => {
+      // add elem if no selector
+      if ( !selector ) {
+        ffElems.push( elem );
+        return ffElems;
+      }
+      // filter & find items if we have a selector
+      // filter
+      if ( elem.matches( selector ) ) {
+        ffElems.push( elem );
+      }
+      // find children
+      let childElems = elem.querySelectorAll( selector );
+      // concat childElems to filterFound array
+      ffElems = ffElems.concat( ...childElems );
+      return ffElems;
+    }, [] );
+};
+
+// ----- debounceMethod ----- //
+
+utils.debounceMethod = function( _class, methodName, threshold ) {
+  threshold = threshold || 100;
+  // original method
+  let method = _class.prototype[ methodName ];
+  let timeoutName = methodName + 'Timeout';
+
+  _class.prototype[ methodName ] = function() {
+    clearTimeout( this[ timeoutName ] );
+
+    let args = arguments;
+    this[ timeoutName ] = setTimeout( () => {
+      method.apply( this, args );
+      delete this[ timeoutName ];
+    }, threshold );
+  };
+};
+
+// ----- docReady ----- //
+
+utils.docReady = function( onDocReady ) {
+  let readyState = document.readyState;
+  if ( readyState == 'complete' || readyState == 'interactive' ) {
+    // do async to allow for other scripts to run. metafizzy/flickity#441
+    setTimeout( onDocReady );
+  } else {
+    document.addEventListener( 'DOMContentLoaded', onDocReady );
+  }
+};
+
+// ----- htmlInit ----- //
+
+// http://bit.ly/3oYLusc
+utils.toDashed = function( str ) {
+  return str.replace( /(.)([A-Z])/g, function( match, $1, $2 ) {
+    return $1 + '-' + $2;
+  } ).toLowerCase();
+};
+
+let console = global.console;
+
+// allow user to initialize classes via [data-namespace] or .js-namespace class
+// htmlInit( Widget, 'widgetName' )
+// options are parsed from data-namespace-options
+utils.htmlInit = function( WidgetClass, namespace ) {
+  utils.docReady( function() {
+    let dashedNamespace = utils.toDashed( namespace );
+    let dataAttr = 'data-' + dashedNamespace;
+    let dataAttrElems = document.querySelectorAll( `[${dataAttr}]` );
+    let jQuery = global.jQuery;
+
+    [ ...dataAttrElems ].forEach( ( elem ) => {
+      let attr = elem.getAttribute( dataAttr );
+      let options;
+      try {
+        options = attr && JSON.parse( attr );
+      } catch ( error ) {
+        // log error, do not initialize
+        if ( console ) {
+          console.error( `Error parsing ${dataAttr} on ${elem.className}: ${error}` );
+        }
+        return;
+      }
+      // initialize
+      let instance = new WidgetClass( elem, options );
+      // make available via $().data('namespace')
+      if ( jQuery ) {
+        jQuery.data( elem, namespace, instance );
+      }
+    } );
+
+  } );
+};
+
+// -----  ----- //
+
+return utils;
+
+} ) );
+/*!
+ * Unidragger v3.0.0
+ * Draggable base class
+ * MIT license
+ */
+
+( function( window, factory ) {
+  // universal module definition
+  if ( typeof module == 'object' && module.exports ) {
+    // CommonJS
+    module.exports = factory(
+        window,
+        require('ev-emitter'),
+    );
+  } else {
+    // browser global
+    window.Unidragger = factory(
+        window,
+        window.EvEmitter,
+    );
+  }
+
+}( typeof window != 'undefined' ? window : this, function factory( window, EvEmitter ) {
+
+function Unidragger() {}
+
+// inherit EvEmitter
+let proto = Unidragger.prototype = Object.create( EvEmitter.prototype );
+
+// ----- bind start ----- //
+
+// trigger handler methods for events
+proto.handleEvent = function( event ) {
+  let method = 'on' + event.type;
+  if ( this[ method ] ) {
+    this[ method ]( event );
+  }
+};
+
+let startEvent, activeEvents;
+if ( 'ontouchstart' in window ) {
+  // HACK prefer Touch Events as you can preventDefault on touchstart to
+  // disable scroll in iOS & mobile Chrome metafizzy/flickity#1177
+  startEvent = 'touchstart';
+  activeEvents = [ 'touchmove', 'touchend', 'touchcancel' ];
+} else if ( window.PointerEvent ) {
+  // Pointer Events
+  startEvent = 'pointerdown';
+  activeEvents = [ 'pointermove', 'pointerup', 'pointercancel' ];
+} else {
+  // mouse events
+  startEvent = 'mousedown';
+  activeEvents = [ 'mousemove', 'mouseup' ];
+}
+
+// prototype so it can be overwriteable by Flickity
+proto.touchActionValue = 'none';
+
+proto.bindHandles = function() {
+  this._bindHandles( 'addEventListener', this.touchActionValue );
+};
+
+proto.unbindHandles = function() {
+  this._bindHandles( 'removeEventListener', '' );
+};
+
+/**
+ * Add or remove start event
+ * @param {String} bindMethod - addEventListener or removeEventListener
+ * @param {String} touchAction - value for touch-action CSS property
+ */
+proto._bindHandles = function( bindMethod, touchAction ) {
+  this.handles.forEach( ( handle ) => {
+    handle[ bindMethod ]( startEvent, this );
+    handle[ bindMethod ]( 'click', this );
+    // touch-action: none to override browser touch gestures. metafizzy/flickity#540
+    if ( window.PointerEvent ) handle.style.touchAction = touchAction;
+  } );
+};
+
+proto.bindActivePointerEvents = function() {
+  activeEvents.forEach( ( eventName ) => {
+    window.addEventListener( eventName, this );
+  } );
+};
+
+proto.unbindActivePointerEvents = function() {
+  activeEvents.forEach( ( eventName ) => {
+    window.removeEventListener( eventName, this );
+  } );
+};
+
+// ----- event handler helpers ----- //
+
+// trigger method with matching pointer
+proto.withPointer = function( methodName, event ) {
+  if ( event.pointerId == this.pointerIdentifier ) {
+    this[ methodName ]( event, event );
+  }
+};
+
+// trigger method with matching touch
+proto.withTouch = function( methodName, event ) {
+  let touch;
+  for ( let changedTouch of event.changedTouches ) {
+    if ( changedTouch.identifier == this.pointerIdentifier ) {
+      touch = changedTouch;
+    }
+  }
+  if ( touch ) this[ methodName ]( event, touch );
+};
+
+// ----- start event ----- //
+
+proto.onmousedown = function( event ) {
+  this.pointerDown( event, event );
+};
+
+proto.ontouchstart = function( event ) {
+  this.pointerDown( event, event.changedTouches[0] );
+};
+
+proto.onpointerdown = function( event ) {
+  this.pointerDown( event, event );
+};
+
+// nodes that have text fields
+const cursorNodes = [ 'TEXTAREA', 'INPUT', 'SELECT', 'OPTION' ];
+// input types that do not have text fields
+const clickTypes = [ 'radio', 'checkbox', 'button', 'submit', 'image', 'file' ];
+
+/**
+ * any time you set `event, pointer` it refers to:
+ * @param {Event} event
+ * @param {Event | Touch} pointer
+ */
+proto.pointerDown = function( event, pointer ) {
+  // dismiss multi-touch taps, right clicks, and clicks on text fields
+  let isCursorNode = cursorNodes.includes( event.target.nodeName );
+  let isClickType = clickTypes.includes( event.target.type );
+  let isOkayElement = !isCursorNode || isClickType;
+  let isOkay = !this.isPointerDown && !event.button && isOkayElement;
+  if ( !isOkay ) return;
+
+  this.isPointerDown = true;
+  // save pointer identifier to match up touch events
+  this.pointerIdentifier = pointer.pointerId !== undefined ?
+    // pointerId for pointer events, touch.indentifier for touch events
+    pointer.pointerId : pointer.identifier;
+  // track position for move
+  this.pointerDownPointer = {
+    pageX: pointer.pageX,
+    pageY: pointer.pageY,
+  };
+
+  this.bindActivePointerEvents();
+  this.emitEvent( 'pointerDown', [ event, pointer ] );
+};
+
+// ----- move ----- //
+
+proto.onmousemove = function( event ) {
+  this.pointerMove( event, event );
+};
+
+proto.onpointermove = function( event ) {
+  this.withPointer( 'pointerMove', event );
+};
+
+proto.ontouchmove = function( event ) {
+  this.withTouch( 'pointerMove', event );
+};
+
+proto.pointerMove = function( event, pointer ) {
+  let moveVector = {
+    x: pointer.pageX - this.pointerDownPointer.pageX,
+    y: pointer.pageY - this.pointerDownPointer.pageY,
+  };
+  this.emitEvent( 'pointerMove', [ event, pointer, moveVector ] );
+  // start drag if pointer has moved far enough to start drag
+  let isDragStarting = !this.isDragging && this.hasDragStarted( moveVector );
+  if ( isDragStarting ) this.dragStart( event, pointer );
+  if ( this.isDragging ) this.dragMove( event, pointer, moveVector );
+};
+
+// condition if pointer has moved far enough to start drag
+proto.hasDragStarted = function( moveVector ) {
+  return Math.abs( moveVector.x ) > 3 || Math.abs( moveVector.y ) > 3;
+};
+
+// ----- drag ----- //
+
+proto.dragStart = function( event, pointer ) {
+  this.isDragging = true;
+  this.isPreventingClicks = true; // set flag to prevent clicks
+  this.emitEvent( 'dragStart', [ event, pointer ] );
+};
+
+proto.dragMove = function( event, pointer, moveVector ) {
+  this.emitEvent( 'dragMove', [ event, pointer, moveVector ] );
+};
+
+// ----- end ----- //
+
+proto.onmouseup = function( event ) {
+  this.pointerUp( event, event );
+};
+
+proto.onpointerup = function( event ) {
+  this.withPointer( 'pointerUp', event );
+};
+
+proto.ontouchend = function( event ) {
+  this.withTouch( 'pointerUp', event );
+};
+
+proto.pointerUp = function( event, pointer ) {
+  this.pointerDone();
+  this.emitEvent( 'pointerUp', [ event, pointer ] );
+
+  if ( this.isDragging ) {
+    this.dragEnd( event, pointer );
+  } else {
+    // pointer didn't move enough for drag to start
+    this.staticClick( event, pointer );
+  }
+};
+
+proto.dragEnd = function( event, pointer ) {
+  this.isDragging = false; // reset flag
+  // re-enable clicking async
+  setTimeout( () => delete this.isPreventingClicks );
+
+  this.emitEvent( 'dragEnd', [ event, pointer ] );
+};
+
+// triggered on pointer up & pointer cancel
+proto.pointerDone = function() {
+  this.isPointerDown = false;
+  delete this.pointerIdentifier;
+  this.unbindActivePointerEvents();
+  this.emitEvent('pointerDone');
+};
+
+// ----- cancel ----- //
+
+proto.onpointercancel = function( event ) {
+  this.withPointer( 'pointerCancel', event );
+};
+
+proto.ontouchcancel = function( event ) {
+  this.withTouch( 'pointerCancel', event );
+};
+
+proto.pointerCancel = function( event, pointer ) {
+  this.pointerDone();
+  this.emitEvent( 'pointerCancel', [ event, pointer ] );
+};
+
+// ----- click ----- //
+
+// handle all clicks and prevent clicks when dragging
+proto.onclick = function( event ) {
+  if ( this.isPreventingClicks ) event.preventDefault();
+};
+
+// triggered after pointer down & up with no/tiny movement
+proto.staticClick = function( event, pointer ) {
+  // ignore emulated mouse up clicks
+  let isMouseup = event.type == 'mouseup';
+  if ( isMouseup && this.isIgnoringMouseUp ) return;
+
+  this.emitEvent( 'staticClick', [ event, pointer ] );
+
+  // set flag for emulated clicks 300ms after touchend
+  if ( isMouseup ) {
+    this.isIgnoringMouseUp = true;
+    // reset flag after 400ms
+    setTimeout( () => {
+      delete this.isIgnoringMouseUp;
+    }, 400 );
+  }
+};
+
+// -----  ----- //
+
+return Unidragger;
+
+} ) );
+/*!
+ * imagesLoaded v5.0.0
+ * JavaScript is all like "You images are done yet or what?"
+ * MIT License
+ */
+
+( function( window, factory ) {
+  // universal module definition
+  if ( typeof module == 'object' && module.exports ) {
+    // CommonJS
+    module.exports = factory( window, require('ev-emitter') );
+  } else {
+    // browser global
+    window.imagesLoaded = factory( window, window.EvEmitter );
+  }
+
+} )( typeof window !== 'undefined' ? window : this,
+    function factory( window, EvEmitter ) {
+
+let $ = window.jQuery;
+let console = window.console;
+
+// -------------------------- helpers -------------------------- //
+
+// turn element or nodeList into an array
+function makeArray( obj ) {
+  // use object if already an array
+  if ( Array.isArray( obj ) ) return obj;
+
+  let isArrayLike = typeof obj == 'object' && typeof obj.length == 'number';
+  // convert nodeList to array
+  if ( isArrayLike ) return [ ...obj ];
+
+  // array of single index
+  return [ obj ];
+}
+
+// -------------------------- imagesLoaded -------------------------- //
+
+/**
+ * @param {[Array, Element, NodeList, String]} elem
+ * @param {[Object, Function]} options - if function, use as callback
+ * @param {Function} onAlways - callback function
+ * @returns {ImagesLoaded}
+ */
+function ImagesLoaded( elem, options, onAlways ) {
+  // coerce ImagesLoaded() without new, to be new ImagesLoaded()
+  if ( !( this instanceof ImagesLoaded ) ) {
+    return new ImagesLoaded( elem, options, onAlways );
+  }
+  // use elem as selector string
+  let queryElem = elem;
+  if ( typeof elem == 'string' ) {
+    queryElem = document.querySelectorAll( elem );
+  }
+  // bail if bad element
+  if ( !queryElem ) {
+    console.error(`Bad element for imagesLoaded ${queryElem || elem}`);
+    return;
+  }
+
+  this.elements = makeArray( queryElem );
+  this.options = {};
+  // shift arguments if no options set
+  if ( typeof options == 'function' ) {
+    onAlways = options;
+  } else {
+    Object.assign( this.options, options );
+  }
+
+  if ( onAlways ) this.on( 'always', onAlways );
+
+  this.getImages();
+  // add jQuery Deferred object
+  if ( $ ) this.jqDeferred = new $.Deferred();
+
+  // HACK check async to allow time to bind listeners
+  setTimeout( this.check.bind( this ) );
+}
+
+ImagesLoaded.prototype = Object.create( EvEmitter.prototype );
+
+ImagesLoaded.prototype.getImages = function() {
+  this.images = [];
+
+  // filter & find items if we have an item selector
+  this.elements.forEach( this.addElementImages, this );
+};
+
+const elementNodeTypes = [ 1, 9, 11 ];
+
+/**
+ * @param {Node} elem
+ */
+ImagesLoaded.prototype.addElementImages = function( elem ) {
+  // filter siblings
+  if ( elem.nodeName === 'IMG' ) {
+    this.addImage( elem );
+  }
+  // get background image on element
+  if ( this.options.background === true ) {
+    this.addElementBackgroundImages( elem );
+  }
+
+  // find children
+  // no non-element nodes, #143
+  let { nodeType } = elem;
+  if ( !nodeType || !elementNodeTypes.includes( nodeType ) ) return;
+
+  let childImgs = elem.querySelectorAll('img');
+  // concat childElems to filterFound array
+  for ( let img of childImgs ) {
+    this.addImage( img );
+  }
+
+  // get child background images
+  if ( typeof this.options.background == 'string' ) {
+    let children = elem.querySelectorAll( this.options.background );
+    for ( let child of children ) {
+      this.addElementBackgroundImages( child );
+    }
+  }
+};
+
+const reURL = /url\((['"])?(.*?)\1\)/gi;
+
+ImagesLoaded.prototype.addElementBackgroundImages = function( elem ) {
+  let style = getComputedStyle( elem );
+  // Firefox returns null if in a hidden iframe https://bugzil.la/548397
+  if ( !style ) return;
+
+  // get url inside url("...")
+  let matches = reURL.exec( style.backgroundImage );
+  while ( matches !== null ) {
+    let url = matches && matches[2];
+    if ( url ) {
+      this.addBackground( url, elem );
+    }
+    matches = reURL.exec( style.backgroundImage );
+  }
+};
+
+/**
+ * @param {Image} img
+ */
+ImagesLoaded.prototype.addImage = function( img ) {
+  let loadingImage = new LoadingImage( img );
+  this.images.push( loadingImage );
+};
+
+ImagesLoaded.prototype.addBackground = function( url, elem ) {
+  let background = new Background( url, elem );
+  this.images.push( background );
+};
+
+ImagesLoaded.prototype.check = function() {
+  this.progressedCount = 0;
+  this.hasAnyBroken = false;
+  // complete if no images
+  if ( !this.images.length ) {
+    this.complete();
+    return;
+  }
+
+  /* eslint-disable-next-line func-style */
+  let onProgress = ( image, elem, message ) => {
+    // HACK - Chrome triggers event before object properties have changed. #83
+    setTimeout( () => {
+      this.progress( image, elem, message );
+    } );
+  };
+
+  this.images.forEach( function( loadingImage ) {
+    loadingImage.once( 'progress', onProgress );
+    loadingImage.check();
+  } );
+};
+
+ImagesLoaded.prototype.progress = function( image, elem, message ) {
+  this.progressedCount++;
+  this.hasAnyBroken = this.hasAnyBroken || !image.isLoaded;
+  // progress event
+  this.emitEvent( 'progress', [ this, image, elem ] );
+  if ( this.jqDeferred && this.jqDeferred.notify ) {
+    this.jqDeferred.notify( this, image );
+  }
+  // check if completed
+  if ( this.progressedCount === this.images.length ) {
+    this.complete();
+  }
+
+  if ( this.options.debug && console ) {
+    console.log( `progress: ${message}`, image, elem );
+  }
+};
+
+ImagesLoaded.prototype.complete = function() {
+  let eventName = this.hasAnyBroken ? 'fail' : 'done';
+  this.isComplete = true;
+  this.emitEvent( eventName, [ this ] );
+  this.emitEvent( 'always', [ this ] );
+  if ( this.jqDeferred ) {
+    let jqMethod = this.hasAnyBroken ? 'reject' : 'resolve';
+    this.jqDeferred[ jqMethod ]( this );
+  }
+};
+
+// --------------------------  -------------------------- //
+
+function LoadingImage( img ) {
+  this.img = img;
+}
+
+LoadingImage.prototype = Object.create( EvEmitter.prototype );
+
+LoadingImage.prototype.check = function() {
+  // If complete is true and browser supports natural sizes,
+  // try to check for image status manually.
+  let isComplete = this.getIsImageComplete();
+  if ( isComplete ) {
+    // report based on naturalWidth
+    this.confirm( this.img.naturalWidth !== 0, 'naturalWidth' );
+    return;
+  }
+
+  // If none of the checks above matched, simulate loading on detached element.
+  this.proxyImage = new Image();
+  // add crossOrigin attribute. #204
+  if ( this.img.crossOrigin ) {
+    this.proxyImage.crossOrigin = this.img.crossOrigin;
+  }
+  this.proxyImage.addEventListener( 'load', this );
+  this.proxyImage.addEventListener( 'error', this );
+  // bind to image as well for Firefox. #191
+  this.img.addEventListener( 'load', this );
+  this.img.addEventListener( 'error', this );
+  this.proxyImage.src = this.img.currentSrc || this.img.src;
+};
+
+LoadingImage.prototype.getIsImageComplete = function() {
+  // check for non-zero, non-undefined naturalWidth
+  // fixes Safari+InfiniteScroll+Masonry bug infinite-scroll#671
+  return this.img.complete && this.img.naturalWidth;
+};
+
+LoadingImage.prototype.confirm = function( isLoaded, message ) {
+  this.isLoaded = isLoaded;
+  let { parentNode } = this.img;
+  // emit progress with parent <picture> or self <img>
+  let elem = parentNode.nodeName === 'PICTURE' ? parentNode : this.img;
+  this.emitEvent( 'progress', [ this, elem, message ] );
+};
+
+// ----- events ----- //
+
+// trigger specified handler for event type
+LoadingImage.prototype.handleEvent = function( event ) {
+  let method = 'on' + event.type;
+  if ( this[ method ] ) {
+    this[ method ]( event );
+  }
+};
+
+LoadingImage.prototype.onload = function() {
+  this.confirm( true, 'onload' );
+  this.unbindEvents();
+};
+
+LoadingImage.prototype.onerror = function() {
+  this.confirm( false, 'onerror' );
+  this.unbindEvents();
+};
+
+LoadingImage.prototype.unbindEvents = function() {
+  this.proxyImage.removeEventListener( 'load', this );
+  this.proxyImage.removeEventListener( 'error', this );
+  this.img.removeEventListener( 'load', this );
+  this.img.removeEventListener( 'error', this );
+};
+
+// -------------------------- Background -------------------------- //
+
+function Background( url, element ) {
+  this.url = url;
+  this.element = element;
+  this.img = new Image();
+}
+
+// inherit LoadingImage prototype
+Background.prototype = Object.create( LoadingImage.prototype );
+
+Background.prototype.check = function() {
+  this.img.addEventListener( 'load', this );
+  this.img.addEventListener( 'error', this );
+  this.img.src = this.url;
+  // check if image is already complete
+  let isComplete = this.getIsImageComplete();
+  if ( isComplete ) {
+    this.confirm( this.img.naturalWidth !== 0, 'naturalWidth' );
+    this.unbindEvents();
+  }
+};
+
+Background.prototype.unbindEvents = function() {
+  this.img.removeEventListener( 'load', this );
+  this.img.removeEventListener( 'error', this );
+};
+
+Background.prototype.confirm = function( isLoaded, message ) {
+  this.isLoaded = isLoaded;
+  this.emitEvent( 'progress', [ this, this.element, message ] );
+};
+
+// -------------------------- jQuery -------------------------- //
+
+ImagesLoaded.makeJQueryPlugin = function( jQuery ) {
+  jQuery = jQuery || window.jQuery;
+  if ( !jQuery ) return;
+
+  // set local variable
+  $ = jQuery;
+  // $().imagesLoaded()
+  $.fn.imagesLoaded = function( options, onAlways ) {
+    let instance = new ImagesLoaded( this, options, onAlways );
+    return instance.jqDeferred.promise( $( this ) );
+  };
+};
+// try making plugin
+ImagesLoaded.makeJQueryPlugin();
+
+// --------------------------  -------------------------- //
+
+return ImagesLoaded;
+
+} );
+// Flickity.Cell
+( function( window, factory ) {
+  // universal module definition
+  if ( typeof module == 'object' && module.exports ) {
+    // CommonJS
+    module.exports = factory( require('get-size') );
+  } else {
+    // browser global
+    window.Flickity = window.Flickity || {};
+    window.Flickity.Cell = factory( window.getSize );
+  }
+
+}( typeof window != 'undefined' ? window : this, function factory( getSize ) {
+
+const cellClassName = 'flickity-cell';
+
+function Cell( elem ) {
+  this.element = elem;
+  this.element.classList.add( cellClassName );
+
+  this.x = 0;
+  this.unselect();
+}
+
+let proto = Cell.prototype;
+
+proto.destroy = function() {
+  // reset style
+  this.unselect();
+  this.element.classList.remove( cellClassName );
+  this.element.style.transform = '';
+  this.element.removeAttribute('aria-hidden');
+};
+
+proto.getSize = function() {
+  this.size = getSize( this.element );
+};
+
+proto.select = function() {
+  this.element.classList.add('is-selected');
+  this.element.removeAttribute('aria-hidden');
+};
+
+proto.unselect = function() {
+  this.element.classList.remove('is-selected');
+  this.element.setAttribute( 'aria-hidden', 'true' );
+};
+
+proto.remove = function() {
+  this.element.remove();
+};
+
+return Cell;
+
+} ) );
+// slide
+( function( window, factory ) {
+  // universal module definition
+  if ( typeof module == 'object' && module.exports ) {
+    // CommonJS
+    module.exports = factory();
+  } else {
+    // browser global
+    window.Flickity = window.Flickity || {};
+    window.Flickity.Slide = factory();
+  }
+
+}( typeof window != 'undefined' ? window : this, function factory() {
+
+function Slide( beginMargin, endMargin, cellAlign ) {
+  this.beginMargin = beginMargin;
+  this.endMargin = endMargin;
+  this.cellAlign = cellAlign;
+  this.cells = [];
+  this.outerWidth = 0;
+  this.height = 0;
+}
+
+let proto = Slide.prototype;
+
+proto.addCell = function( cell ) {
+  this.cells.push( cell );
+  this.outerWidth += cell.size.outerWidth;
+  this.height = Math.max( cell.size.outerHeight, this.height );
+  // first cell stuff
+  if ( this.cells.length === 1 ) {
+    this.x = cell.x; // x comes from first cell
+    this.firstMargin = cell.size[ this.beginMargin ];
+  }
+};
+
+proto.updateTarget = function() {
+  let lastCell = this.getLastCell();
+  let lastMargin = lastCell ? lastCell.size[ this.endMargin ] : 0;
+  let slideWidth = this.outerWidth - ( this.firstMargin + lastMargin );
+  this.target = this.x + this.firstMargin + slideWidth * this.cellAlign;
+};
+
+proto.getLastCell = function() {
+  return this.cells[ this.cells.length - 1 ];
+};
+
+proto.select = function() {
+  this.cells.forEach( ( cell ) => cell.select() );
+};
+
+proto.unselect = function() {
+  this.cells.forEach( ( cell ) => cell.unselect() );
+};
+
+proto.getCellElements = function() {
+  return this.cells.map( ( cell ) => cell.element );
+};
+
+return Slide;
+
+} ) );
+// animate
+( function( window, factory ) {
+  // universal module definition
+  if ( typeof module == 'object' && module.exports ) {
+    // CommonJS
+    module.exports = factory( require('fizzy-ui-utils') );
+  } else {
+    // browser global
+    window.Flickity = window.Flickity || {};
+    window.Flickity.animatePrototype = factory( window.fizzyUIUtils );
+  }
+
+}( typeof window != 'undefined' ? window : this, function factory( utils ) {
+
+// -------------------------- animate -------------------------- //
+
+let proto = {};
+
+proto.startAnimation = function() {
+  if ( this.isAnimating ) return;
+
+  this.isAnimating = true;
+  this.restingFrames = 0;
+  this.animate();
+};
+
+proto.animate = function() {
+  this.applyDragForce();
+  this.applySelectedAttraction();
+
+  let previousX = this.x;
+
+  this.integratePhysics();
+  this.positionSlider();
+  this.settle( previousX );
+  // animate next frame
+  if ( this.isAnimating ) requestAnimationFrame( () => this.animate() );
+};
+
+proto.positionSlider = function() {
+  let x = this.x;
+  // wrap position around
+  if ( this.isWrapping ) {
+    x = utils.modulo( x, this.slideableWidth ) - this.slideableWidth;
+    this.shiftWrapCells( x );
+  }
+
+  this.setTranslateX( x, this.isAnimating );
+  this.dispatchScrollEvent();
+};
+
+proto.setTranslateX = function( x, is3d ) {
+  x += this.cursorPosition;
+  // reverse if right-to-left and using transform
+  if ( this.options.rightToLeft ) x = -x;
+  let translateX = this.getPositionValue( x );
+  // use 3D transforms for hardware acceleration on iOS
+  // but use 2D when settled, for better font-rendering
+  this.slider.style.transform = is3d ?
+    `translate3d(${translateX},0,0)` : `translateX(${translateX})`;
+};
+
+proto.dispatchScrollEvent = function() {
+  let firstSlide = this.slides[0];
+  if ( !firstSlide ) return;
+
+  let positionX = -this.x - firstSlide.target;
+  let progress = positionX / this.slidesWidth;
+  this.dispatchEvent( 'scroll', null, [ progress, positionX ] );
+};
+
+proto.positionSliderAtSelected = function() {
+  if ( !this.cells.length ) return;
+
+  this.x = -this.selectedSlide.target;
+  this.velocity = 0; // stop wobble
+  this.positionSlider();
+};
+
+proto.getPositionValue = function( position ) {
+  if ( this.options.percentPosition ) {
+    // percent position, round to 2 digits, like 12.34%
+    return ( Math.round( ( position / this.size.innerWidth ) * 10000 ) * 0.01 ) + '%';
+  } else {
+    // pixel positioning
+    return Math.round( position ) + 'px';
+  }
+};
+
+proto.settle = function( previousX ) {
+  // keep track of frames where x hasn't moved
+  let isResting = !this.isPointerDown &&
+      Math.round( this.x * 100 ) === Math.round( previousX * 100 );
+  if ( isResting ) this.restingFrames++;
+  // stop animating if resting for 3 or more frames
+  if ( this.restingFrames > 2 ) {
+    this.isAnimating = false;
+    delete this.isFreeScrolling;
+    // render position with translateX when settled
+    this.positionSlider();
+    this.dispatchEvent( 'settle', null, [ this.selectedIndex ] );
+  }
+};
+
+proto.shiftWrapCells = function( x ) {
+  // shift before cells
+  let beforeGap = this.cursorPosition + x;
+  this._shiftCells( this.beforeShiftCells, beforeGap, -1 );
+  // shift after cells
+  let afterGap = this.size.innerWidth - ( x + this.slideableWidth + this.cursorPosition );
+  this._shiftCells( this.afterShiftCells, afterGap, 1 );
+};
+
+proto._shiftCells = function( cells, gap, shift ) {
+  cells.forEach( ( cell ) => {
+    let cellShift = gap > 0 ? shift : 0;
+    this._wrapShiftCell( cell, cellShift );
+    gap -= cell.size.outerWidth;
+  } );
+};
+
+proto._unshiftCells = function( cells ) {
+  if ( !cells || !cells.length ) return;
+
+  cells.forEach( ( cell ) => this._wrapShiftCell( cell, 0 ) );
+};
+
+// @param {Integer} shift - 0, 1, or -1
+proto._wrapShiftCell = function( cell, shift ) {
+  this._renderCellPosition( cell, cell.x + this.slideableWidth * shift );
+};
+
+// -------------------------- physics -------------------------- //
+
+proto.integratePhysics = function() {
+  this.x += this.velocity;
+  this.velocity *= this.getFrictionFactor();
+};
+
+proto.applyForce = function( force ) {
+  this.velocity += force;
+};
+
+proto.getFrictionFactor = function() {
+  return 1 - this.options[ this.isFreeScrolling ? 'freeScrollFriction' : 'friction' ];
+};
+
+proto.getRestingPosition = function() {
+  // my thanks to Steven Wittens, who simplified this math greatly
+  return this.x + this.velocity / ( 1 - this.getFrictionFactor() );
+};
+
+proto.applyDragForce = function() {
+  if ( !this.isDraggable || !this.isPointerDown ) return;
+
+  // change the position to drag position by applying force
+  let dragVelocity = this.dragX - this.x;
+  let dragForce = dragVelocity - this.velocity;
+  this.applyForce( dragForce );
+};
+
+proto.applySelectedAttraction = function() {
+  // do not attract if pointer down or no slides
+  let dragDown = this.isDraggable && this.isPointerDown;
+  if ( dragDown || this.isFreeScrolling || !this.slides.length ) return;
+
+  let distance = this.selectedSlide.target * -1 - this.x;
+  let force = distance * this.options.selectedAttraction;
+  this.applyForce( force );
+};
+
+return proto;
+
+} ) );
+// Flickity main
+/* eslint-disable max-params */
+( function( window, factory ) {
+  // universal module definition
+  if ( typeof module == 'object' && module.exports ) {
+    // CommonJS
+    module.exports = factory(
+        window,
+        require('ev-emitter'),
+        require('get-size'),
+        require('fizzy-ui-utils'),
+        require('./cell'),
+        require('./slide'),
+        require('./animate'),
+    );
+  } else {
+    // browser global
+    let _Flickity = window.Flickity;
+
+    window.Flickity = factory(
+        window,
+        window.EvEmitter,
+        window.getSize,
+        window.fizzyUIUtils,
+        _Flickity.Cell,
+        _Flickity.Slide,
+        _Flickity.animatePrototype,
+    );
+  }
+
+}( typeof window != 'undefined' ? window : this,
+    function factory( window, EvEmitter, getSize, utils, Cell, Slide, animatePrototype ) {
+/* eslint-enable max-params */
+
+// vars
+const { getComputedStyle, console } = window;
+let { jQuery } = window;
+
+// -------------------------- Flickity -------------------------- //
+
+// globally unique identifiers
+let GUID = 0;
+// internal store of all Flickity intances
+let instances = {};
+
+function Flickity( element, options ) {
+  let queryElement = utils.getQueryElement( element );
+  if ( !queryElement ) {
+    if ( console ) console.error(`Bad element for Flickity: ${queryElement || element}`);
+    return;
+  }
+  this.element = queryElement;
+  // do not initialize twice on same element
+  if ( this.element.flickityGUID ) {
+    let instance = instances[ this.element.flickityGUID ];
+    if ( instance ) instance.option( options );
+    return instance;
+  }
+
+  // add jQuery
+  if ( jQuery ) {
+    this.$element = jQuery( this.element );
+  }
+  // options
+  this.options = { ...this.constructor.defaults };
+  this.option( options );
+
+  // kick things off
+  this._create();
+}
+
+Flickity.defaults = {
+  accessibility: true,
+  // adaptiveHeight: false,
+  cellAlign: 'center',
+  // cellSelector: undefined,
+  // contain: false,
+  freeScrollFriction: 0.075, // friction when free-scrolling
+  friction: 0.28, // friction when selecting
+  namespaceJQueryEvents: true,
+  // initialIndex: 0,
+  percentPosition: true,
+  resize: true,
+  selectedAttraction: 0.025,
+  setGallerySize: true,
+  // watchCSS: false,
+  // wrapAround: false
+};
+
+// hash of methods triggered on _create()
+Flickity.create = {};
+
+let proto = Flickity.prototype;
+// inherit EventEmitter
+Object.assign( proto, EvEmitter.prototype );
+
+proto._create = function() {
+  let { resize, watchCSS, rightToLeft } = this.options;
+  // add id for Flickity.data
+  let id = this.guid = ++GUID;
+  this.element.flickityGUID = id; // expando
+  instances[ id ] = this; // associate via id
+  // initial properties
+  this.selectedIndex = 0;
+  // how many frames slider has been in same position
+  this.restingFrames = 0;
+  // initial physics properties
+  this.x = 0;
+  this.velocity = 0;
+  this.beginMargin = rightToLeft ? 'marginRight' : 'marginLeft';
+  this.endMargin = rightToLeft ? 'marginLeft' : 'marginRight';
+  // create viewport & slider
+  this.viewport = document.createElement('div');
+  this.viewport.className = 'flickity-viewport';
+  this._createSlider();
+  // used for keyboard navigation
+  this.focusableElems = [ this.element ];
+
+  if ( resize || watchCSS ) {
+    window.addEventListener( 'resize', this );
+  }
+
+  // add listeners from on option
+  for ( let eventName in this.options.on ) {
+    let listener = this.options.on[ eventName ];
+    this.on( eventName, listener );
+  }
+
+  for ( let method in Flickity.create ) {
+    Flickity.create[ method ].call( this );
+  }
+
+  if ( watchCSS ) {
+    this.watchCSS();
+  } else {
+    this.activate();
+  }
+};
+
+/**
+ * set options
+ * @param {Object} opts - options to extend
+ */
+proto.option = function( opts ) {
+  Object.assign( this.options, opts );
+};
+
+proto.activate = function() {
+  if ( this.isActive ) return;
+
+  this.isActive = true;
+  this.element.classList.add('flickity-enabled');
+  if ( this.options.rightToLeft ) {
+    this.element.classList.add('flickity-rtl');
+  }
+
+  this.getSize();
+  // move initial cell elements so they can be loaded as cells
+  let cellElems = this._filterFindCellElements( this.element.children );
+  this.slider.append( ...cellElems );
+  this.viewport.append( this.slider );
+  this.element.append( this.viewport );
+  // get cells from children
+  this.reloadCells();
+
+  if ( this.options.accessibility ) {
+    // allow element to focusable
+    this.element.tabIndex = 0;
+    // listen for key presses
+    this.element.addEventListener( 'keydown', this );
+  }
+
+  this.emitEvent('activate');
+  this.selectInitialIndex();
+  // flag for initial activation, for using initialIndex
+  this.isInitActivated = true;
+  // ready event. #493
+  this.dispatchEvent('ready');
+};
+
+// slider positions the cells
+proto._createSlider = function() {
+  // slider element does all the positioning
+  let slider = document.createElement('div');
+  slider.className = 'flickity-slider';
+  this.slider = slider;
+};
+
+proto._filterFindCellElements = function( elems ) {
+  return utils.filterFindElements( elems, this.options.cellSelector );
+};
+
+// goes through all children
+proto.reloadCells = function() {
+  // collection of item elements
+  this.cells = this._makeCells( this.slider.children );
+  this.positionCells();
+  this._updateWrapShiftCells();
+  this.setGallerySize();
+};
+
+/**
+ * turn elements into Flickity.Cells
+ * @param {[Array, NodeList, HTMLElement]} elems - elements to make into cells
+ * @returns {Array} items - collection of new Flickity Cells
+ */
+proto._makeCells = function( elems ) {
+  let cellElems = this._filterFindCellElements( elems );
+
+  // create new Cells for collection
+  return cellElems.map( ( cellElem ) => new Cell( cellElem ) );
+};
+
+proto.getLastCell = function() {
+  return this.cells[ this.cells.length - 1 ];
+};
+
+proto.getLastSlide = function() {
+  return this.slides[ this.slides.length - 1 ];
+};
+
+// positions all cells
+proto.positionCells = function() {
+  // size all cells
+  this._sizeCells( this.cells );
+  // position all cells
+  this._positionCells( 0 );
+};
+
+/**
+ * position certain cells
+ * @param {Integer} index - which cell to start with
+ */
+proto._positionCells = function( index ) {
+  index = index || 0;
+  // also measure maxCellHeight
+  // start 0 if positioning all cells
+  this.maxCellHeight = index ? this.maxCellHeight || 0 : 0;
+  let cellX = 0;
+  // get cellX
+  if ( index > 0 ) {
+    let startCell = this.cells[ index - 1 ];
+    cellX = startCell.x + startCell.size.outerWidth;
+  }
+
+  this.cells.slice( index ).forEach( ( cell ) => {
+    cell.x = cellX;
+    this._renderCellPosition( cell, cellX );
+    cellX += cell.size.outerWidth;
+    this.maxCellHeight = Math.max( cell.size.outerHeight, this.maxCellHeight );
+  } );
+  // keep track of cellX for wrap-around
+  this.slideableWidth = cellX;
+  // slides
+  this.updateSlides();
+  // contain slides target
+  this._containSlides();
+  // update slidesWidth
+  this.slidesWidth = this.cells.length ?
+    this.getLastSlide().target - this.slides[0].target : 0;
+};
+
+proto._renderCellPosition = function( cell, x ) {
+  // render position of cell with in slider
+  let sideOffset = this.options.rightToLeft ? -1 : 1;
+  let renderX = x * sideOffset;
+  if ( this.options.percentPosition ) renderX *= this.size.innerWidth / cell.size.width;
+  let positionValue = this.getPositionValue( renderX );
+  cell.element.style.transform = `translateX( ${positionValue} )`;
+};
+
+/**
+ * cell.getSize() on multiple cells
+ * @param {Array} cells - cells to size
+ */
+proto._sizeCells = function( cells ) {
+  cells.forEach( ( cell ) => cell.getSize() );
+};
+
+// --------------------------  -------------------------- //
+
+proto.updateSlides = function() {
+  this.slides = [];
+  if ( !this.cells.length ) return;
+
+  let { beginMargin, endMargin } = this;
+  let slide = new Slide( beginMargin, endMargin, this.cellAlign );
+  this.slides.push( slide );
+
+  let canCellFit = this._getCanCellFit();
+
+  this.cells.forEach( ( cell, i ) => {
+    // just add cell if first cell in slide
+    if ( !slide.cells.length ) {
+      slide.addCell( cell );
+      return;
+    }
+
+    let slideWidth = ( slide.outerWidth - slide.firstMargin ) +
+      ( cell.size.outerWidth - cell.size[ endMargin ] );
+
+    if ( canCellFit( i, slideWidth ) ) {
+      slide.addCell( cell );
+    } else {
+      // doesn't fit, new slide
+      slide.updateTarget();
+
+      slide = new Slide( beginMargin, endMargin, this.cellAlign );
+      this.slides.push( slide );
+      slide.addCell( cell );
+    }
+  } );
+  // last slide
+  slide.updateTarget();
+  // update .selectedSlide
+  this.updateSelectedSlide();
+};
+
+proto._getCanCellFit = function() {
+  let { groupCells } = this.options;
+  if ( !groupCells ) return () => false;
+
+  if ( typeof groupCells == 'number' ) {
+    // group by number. 3 -> [0,1,2], [3,4,5], ...
+    let number = parseInt( groupCells, 10 );
+    return ( i ) => ( i % number ) !== 0;
+  }
+  // default, group by width of slide
+  let percent = 1;
+  // parse '75%
+  let percentMatch = typeof groupCells == 'string' && groupCells.match( /^(\d+)%$/ );
+  if ( percentMatch ) percent = parseInt( percentMatch[1], 10 ) / 100;
+  let groupWidth = ( this.size.innerWidth + 1 ) * percent;
+  return ( i, slideWidth ) => slideWidth <= groupWidth;
+};
+
+// alias _init for jQuery plugin .flickity()
+proto._init =
+proto.reposition = function() {
+  this.positionCells();
+  this.positionSliderAtSelected();
+};
+
+proto.getSize = function() {
+  this.size = getSize( this.element );
+  this.setCellAlign();
+  this.cursorPosition = this.size.innerWidth * this.cellAlign;
+};
+
+let cellAlignShorthands = {
+  left: 0,
+  center: 0.5,
+  right: 1,
+};
+
+proto.setCellAlign = function() {
+  let { cellAlign, rightToLeft } = this.options;
+  let shorthand = cellAlignShorthands[ cellAlign ];
+  this.cellAlign = shorthand !== undefined ? shorthand : cellAlign;
+  if ( rightToLeft ) this.cellAlign = 1 - this.cellAlign;
+};
+
+proto.setGallerySize = function() {
+  if ( !this.options.setGallerySize ) return;
+
+  let height = this.options.adaptiveHeight && this.selectedSlide ?
+    this.selectedSlide.height : this.maxCellHeight;
+  this.viewport.style.height = `${height}px`;
+};
+
+proto._updateWrapShiftCells = function() {
+  // update isWrapping
+  this.isWrapping = this.getIsWrapping();
+  // only for wrap-around
+  if ( !this.isWrapping ) return;
+
+  // unshift previous cells
+  this._unshiftCells( this.beforeShiftCells );
+  this._unshiftCells( this.afterShiftCells );
+  // get before cells
+  // initial gap
+  let beforeGapX = this.cursorPosition;
+  let lastIndex = this.cells.length - 1;
+  this.beforeShiftCells = this._getGapCells( beforeGapX, lastIndex, -1 );
+  // get after cells
+  // ending gap between last cell and end of gallery viewport
+  let afterGapX = this.size.innerWidth - this.cursorPosition;
+  // start cloning at first cell, working forwards
+  this.afterShiftCells = this._getGapCells( afterGapX, 0, 1 );
+};
+
+proto.getIsWrapping = function() {
+  let { wrapAround } = this.options;
+  if ( !wrapAround || this.slides.length < 2 ) return false;
+
+  if ( wrapAround !== 'fill' ) return true;
+  // check that slides can fit
+
+  let gapWidth = this.slideableWidth - this.size.innerWidth;
+  if ( gapWidth > this.size.innerWidth ) return true; // gap * 2x big, all good
+  // check that content width - shifting cell is bigger than viewport width
+  for ( let cell of this.cells ) {
+    if ( cell.size.outerWidth > gapWidth ) return false;
+  }
+  return true;
+};
+
+proto._getGapCells = function( gapX, cellIndex, increment ) {
+  // keep adding cells until the cover the initial gap
+  let cells = [];
+  while ( gapX > 0 ) {
+    let cell = this.cells[ cellIndex ];
+    if ( !cell ) break;
+
+    cells.push( cell );
+    cellIndex += increment;
+    gapX -= cell.size.outerWidth;
+  }
+  return cells;
+};
+
+// ----- contain & wrap ----- //
+
+// contain cell targets so no excess sliding
+proto._containSlides = function() {
+  let isContaining = this.options.contain && !this.isWrapping &&
+      this.cells.length;
+  if ( !isContaining ) return;
+
+  let contentWidth = this.slideableWidth - this.getLastCell().size[ this.endMargin ];
+  // content is less than gallery size
+  let isContentSmaller = contentWidth < this.size.innerWidth;
+  if ( isContentSmaller ) {
+    // all cells fit inside gallery
+    this.slides.forEach( ( slide ) => {
+      slide.target = contentWidth * this.cellAlign;
+    } );
+  } else {
+    // contain to bounds
+    let beginBound = this.cursorPosition + this.cells[0].size[ this.beginMargin ];
+    let endBound = contentWidth - this.size.innerWidth * ( 1 - this.cellAlign );
+    this.slides.forEach( ( slide ) => {
+      slide.target = Math.max( slide.target, beginBound );
+      slide.target = Math.min( slide.target, endBound );
+    } );
+  }
+};
+
+// ----- events ----- //
+
+/**
+ * emits events via eventEmitter and jQuery events
+ * @param {String} type - name of event
+ * @param {Event} event - original event
+ * @param {Array} args - extra arguments
+ */
+proto.dispatchEvent = function( type, event, args ) {
+  let emitArgs = event ? [ event ].concat( args ) : args;
+  this.emitEvent( type, emitArgs );
+
+  if ( jQuery && this.$element ) {
+    // default trigger with type if no event
+    type += this.options.namespaceJQueryEvents ? '.flickity' : '';
+    let $event = type;
+    if ( event ) {
+      // create jQuery event
+      let jQEvent = new jQuery.Event( event );
+      jQEvent.type = type;
+      $event = jQEvent;
+    }
+    this.$element.trigger( $event, args );
+  }
+};
+
+const unidraggerEvents = [
+  'dragStart',
+  'dragMove',
+  'dragEnd',
+  'pointerDown',
+  'pointerMove',
+  'pointerEnd',
+  'staticClick',
+];
+
+let _emitEvent = proto.emitEvent;
+proto.emitEvent = function( eventName, args ) {
+  if ( eventName === 'staticClick' ) {
+    // add cellElem and cellIndex args to staticClick
+    let clickedCell = this.getParentCell( args[0].target );
+    let cellElem = clickedCell && clickedCell.element;
+    let cellIndex = clickedCell && this.cells.indexOf( clickedCell );
+    args = args.concat( cellElem, cellIndex );
+  }
+  // do regular thing
+  _emitEvent.call( this, eventName, args );
+  // duck-punch in jQuery events for Unidragger events
+  let isUnidraggerEvent = unidraggerEvents.includes( eventName );
+  if ( !isUnidraggerEvent || !jQuery || !this.$element ) return;
+
+  eventName += this.options.namespaceJQueryEvents ? '.flickity' : '';
+  let event = args.shift( 0 );
+  let jQEvent = new jQuery.Event( event );
+  jQEvent.type = eventName;
+  this.$element.trigger( jQEvent, args );
+};
+
+// -------------------------- select -------------------------- //
+
+/**
+ * @param {Integer} index - index of the slide
+ * @param {Boolean} isWrap - will wrap-around to last/first if at the end
+ * @param {Boolean} isInstant - will immediately set position at selected cell
+ */
+proto.select = function( index, isWrap, isInstant ) {
+  if ( !this.isActive ) return;
+
+  index = parseInt( index, 10 );
+  this._wrapSelect( index );
+
+  if ( this.isWrapping || isWrap ) {
+    index = utils.modulo( index, this.slides.length );
+  }
+  // bail if invalid index
+  if ( !this.slides[ index ] ) return;
+
+  let prevIndex = this.selectedIndex;
+  this.selectedIndex = index;
+  this.updateSelectedSlide();
+  if ( isInstant ) {
+    this.positionSliderAtSelected();
+  } else {
+    this.startAnimation();
+  }
+  if ( this.options.adaptiveHeight ) {
+    this.setGallerySize();
+  }
+  // events
+  this.dispatchEvent( 'select', null, [ index ] );
+  // change event if new index
+  if ( index !== prevIndex ) {
+    this.dispatchEvent( 'change', null, [ index ] );
+  }
+};
+
+// wraps position for wrapAround, to move to closest slide. #113
+proto._wrapSelect = function( index ) {
+  if ( !this.isWrapping ) return;
+
+  const { selectedIndex, slideableWidth, slides: { length } } = this;
+  // shift index for wrap, do not wrap dragSelect
+  if ( !this.isDragSelect ) {
+    let wrapIndex = utils.modulo( index, length );
+    // go to shortest
+    let delta = Math.abs( wrapIndex - selectedIndex );
+    let backWrapDelta = Math.abs( ( wrapIndex + length ) - selectedIndex );
+    let forewardWrapDelta = Math.abs( ( wrapIndex - length ) - selectedIndex );
+    if ( backWrapDelta < delta ) {
+      index += length;
+    } else if ( forewardWrapDelta < delta ) {
+      index -= length;
+    }
+  }
+
+  // wrap position so slider is within normal area
+  if ( index < 0 ) {
+    this.x -= slideableWidth;
+  } else if ( index >= length ) {
+    this.x += slideableWidth;
+  }
+};
+
+proto.previous = function( isWrap, isInstant ) {
+  this.select( this.selectedIndex - 1, isWrap, isInstant );
+};
+
+proto.next = function( isWrap, isInstant ) {
+  this.select( this.selectedIndex + 1, isWrap, isInstant );
+};
+
+proto.updateSelectedSlide = function() {
+  let slide = this.slides[ this.selectedIndex ];
+  // selectedIndex could be outside of slides, if triggered before resize()
+  if ( !slide ) return;
+
+  // unselect previous selected slide
+  this.unselectSelectedSlide();
+  // update new selected slide
+  this.selectedSlide = slide;
+  slide.select();
+  this.selectedCells = slide.cells;
+  this.selectedElements = slide.getCellElements();
+  // HACK: selectedCell & selectedElement is first cell in slide, backwards compatibility
+  this.selectedCell = slide.cells[0];
+  this.selectedElement = this.selectedElements[0];
+};
+
+proto.unselectSelectedSlide = function() {
+  if ( this.selectedSlide ) this.selectedSlide.unselect();
+};
+
+proto.selectInitialIndex = function() {
+  let initialIndex = this.options.initialIndex;
+  // already activated, select previous selectedIndex
+  if ( this.isInitActivated ) {
+    this.select( this.selectedIndex, false, true );
+    return;
+  }
+  // select with selector string
+  if ( initialIndex && typeof initialIndex == 'string' ) {
+    let cell = this.queryCell( initialIndex );
+    if ( cell ) {
+      this.selectCell( initialIndex, false, true );
+      return;
+    }
+  }
+
+  let index = 0;
+  // select with number
+  if ( initialIndex && this.slides[ initialIndex ] ) {
+    index = initialIndex;
+  }
+  // select instantly
+  this.select( index, false, true );
+};
+
+/**
+ * select slide from number or cell element
+ * @param {[Element, Number]} value - zero-based index or element to select
+ * @param {Boolean} isWrap - enables wrapping around for extra index
+ * @param {Boolean} isInstant - disables slide animation
+ */
+proto.selectCell = function( value, isWrap, isInstant ) {
+  // get cell
+  let cell = this.queryCell( value );
+  if ( !cell ) return;
+
+  let index = this.getCellSlideIndex( cell );
+  this.select( index, isWrap, isInstant );
+};
+
+proto.getCellSlideIndex = function( cell ) {
+  // get index of slide that has cell
+  let cellSlide = this.slides.find( ( slide ) => slide.cells.includes( cell ) );
+  return this.slides.indexOf( cellSlide );
+};
+
+// -------------------------- get cells -------------------------- //
+
+/**
+ * get Flickity.Cell, given an Element
+ * @param {Element} elem - matching cell element
+ * @returns {Flickity.Cell} cell - matching cell
+ */
+proto.getCell = function( elem ) {
+  // loop through cells to get the one that matches
+  for ( let cell of this.cells ) {
+    if ( cell.element === elem ) return cell;
+  }
+};
+
+/**
+ * get collection of Flickity.Cells, given Elements
+ * @param {[Element, Array, NodeList]} elems - multiple elements
+ * @returns {Array} cells - Flickity.Cells
+ */
+proto.getCells = function( elems ) {
+  elems = utils.makeArray( elems );
+  return elems.map( ( elem ) => this.getCell( elem ) ).filter( Boolean );
+};
+
+/**
+ * get cell elements
+ * @returns {Array} cellElems
+ */
+proto.getCellElements = function() {
+  return this.cells.map( ( cell ) => cell.element );
+};
+
+/**
+ * get parent cell from an element
+ * @param {Element} elem - child element
+ * @returns {Flickit.Cell} cell - parent cell
+ */
+proto.getParentCell = function( elem ) {
+  // first check if elem is cell
+  let cell = this.getCell( elem );
+  if ( cell ) return cell;
+
+  // try to get parent cell elem
+  let closest = elem.closest('.flickity-slider > *');
+  return this.getCell( closest );
+};
+
+/**
+ * get cells adjacent to a slide
+ * @param {Integer} adjCount - number of adjacent slides
+ * @param {Integer} index - index of slide to start
+ * @returns {Array} cells - array of Flickity.Cells
+ */
+proto.getAdjacentCellElements = function( adjCount, index ) {
+  if ( !adjCount ) return this.selectedSlide.getCellElements();
+
+  index = index === undefined ? this.selectedIndex : index;
+
+  let len = this.slides.length;
+  if ( 1 + ( adjCount * 2 ) >= len ) {
+    return this.getCellElements(); // get all
+  }
+
+  let cellElems = [];
+  for ( let i = index - adjCount; i <= index + adjCount; i++ ) {
+    let slideIndex = this.isWrapping ? utils.modulo( i, len ) : i;
+    let slide = this.slides[ slideIndex ];
+    if ( slide ) {
+      cellElems = cellElems.concat( slide.getCellElements() );
+    }
+  }
+  return cellElems;
+};
+
+/**
+ * select slide from number or cell element
+ * @param {[Element, String, Number]} selector - element, selector string, or index
+ * @returns {Flickity.Cell} - matching cell
+ */
+proto.queryCell = function( selector ) {
+  if ( typeof selector == 'number' ) {
+    // use number as index
+    return this.cells[ selector ];
+  }
+  // do not select invalid selectors from hash: #123, #/. #791
+  let isSelectorString = typeof selector == 'string' && !selector.match( /^[#.]?[\d/]/ );
+  if ( isSelectorString ) {
+    // use string as selector, get element
+    selector = this.element.querySelector( selector );
+  }
+  // get cell from element
+  return this.getCell( selector );
+};
+
+// -------------------------- events -------------------------- //
+
+proto.uiChange = function() {
+  this.emitEvent('uiChange');
+};
+
+// ----- resize ----- //
+
+proto.onresize = function() {
+  this.watchCSS();
+  this.resize();
+};
+
+utils.debounceMethod( Flickity, 'onresize', 150 );
+
+proto.resize = function() {
+  // #1177 disable resize behavior when animating or dragging for iOS 15
+  if ( !this.isActive || this.isAnimating || this.isDragging ) return;
+  this.getSize();
+  // wrap values
+  if ( this.isWrapping ) {
+    this.x = utils.modulo( this.x, this.slideableWidth );
+  }
+  this.positionCells();
+  this._updateWrapShiftCells();
+  this.setGallerySize();
+  this.emitEvent('resize');
+  // update selected index for group slides, instant
+  // TODO: position can be lost between groups of various numbers
+  let selectedElement = this.selectedElements && this.selectedElements[0];
+  this.selectCell( selectedElement, false, true );
+};
+
+// watches the :after property, activates/deactivates
+proto.watchCSS = function() {
+  if ( !this.options.watchCSS ) return;
+
+  let afterContent = getComputedStyle( this.element, ':after' ).content;
+  // activate if :after { content: 'flickity' }
+  if ( afterContent.includes('flickity') ) {
+    this.activate();
+  } else {
+    this.deactivate();
+  }
+};
+
+// ----- keydown ----- //
+
+// go previous/next if left/right keys pressed
+proto.onkeydown = function( event ) {
+  let { activeElement } = document;
+  let handler = Flickity.keyboardHandlers[ event.key ];
+  // only work if element is in focus
+  if ( !this.options.accessibility || !activeElement || !handler ) return;
+
+  let isFocused = this.focusableElems.some( ( elem ) => activeElement === elem );
+  if ( isFocused ) handler.call( this );
+};
+
+Flickity.keyboardHandlers = {
+  ArrowLeft: function() {
+    this.uiChange();
+    let leftMethod = this.options.rightToLeft ? 'next' : 'previous';
+    this[ leftMethod ]();
+  },
+  ArrowRight: function() {
+    this.uiChange();
+    let rightMethod = this.options.rightToLeft ? 'previous' : 'next';
+    this[ rightMethod ]();
+  },
+};
+
+// ----- focus ----- //
+
+proto.focus = function() {
+  this.element.focus({ preventScroll: true });
+};
+
+// -------------------------- destroy -------------------------- //
+
+// deactivate all Flickity functionality, but keep stuff available
+proto.deactivate = function() {
+  if ( !this.isActive ) return;
+
+  this.element.classList.remove('flickity-enabled');
+  this.element.classList.remove('flickity-rtl');
+  this.unselectSelectedSlide();
+  // destroy cells
+  this.cells.forEach( ( cell ) => cell.destroy() );
+  this.viewport.remove();
+  // move child elements back into element
+  this.element.append( ...this.slider.children );
+  if ( this.options.accessibility ) {
+    this.element.removeAttribute('tabIndex');
+    this.element.removeEventListener( 'keydown', this );
+  }
+  // set flags
+  this.isActive = false;
+  this.emitEvent('deactivate');
+};
+
+proto.destroy = function() {
+  this.deactivate();
+  window.removeEventListener( 'resize', this );
+  this.allOff();
+  this.emitEvent('destroy');
+  if ( jQuery && this.$element ) {
+    jQuery.removeData( this.element, 'flickity' );
+  }
+  delete this.element.flickityGUID;
+  delete instances[ this.guid ];
+};
+
+// -------------------------- prototype -------------------------- //
+
+Object.assign( proto, animatePrototype );
+
+// -------------------------- extras -------------------------- //
+
+/**
+ * get Flickity instance from element
+ * @param {[Element, String]} elem - element or selector string
+ * @returns {Flickity} - Flickity instance
+ */
+Flickity.data = function( elem ) {
+  elem = utils.getQueryElement( elem );
+  if ( elem ) return instances[ elem.flickityGUID ];
+};
+
+utils.htmlInit( Flickity, 'flickity' );
+
+let { jQueryBridget } = window;
+if ( jQuery && jQueryBridget ) {
+  jQueryBridget( 'flickity', Flickity, jQuery );
+}
+
+// set internal jQuery, for Webpack + jQuery v3, #478
+Flickity.setJQuery = function( jq ) {
+  jQuery = jq;
+};
+
+Flickity.Cell = Cell;
+Flickity.Slide = Slide;
+
+return Flickity;
+
+} ) );
+// drag
+( function( window, factory ) {
+  // universal module definition
+  if ( typeof module == 'object' && module.exports ) {
+    // CommonJS
+    module.exports = factory(
+        window,
+        require('./core'),
+        require('unidragger'),
+        require('fizzy-ui-utils'),
+    );
+  } else {
+    // browser global
+    window.Flickity = factory(
+        window,
+        window.Flickity,
+        window.Unidragger,
+        window.fizzyUIUtils,
+    );
+  }
+
+}( typeof window != 'undefined' ? window : this,
+    function factory( window, Flickity, Unidragger, utils ) {
+
+// ----- defaults ----- //
+
+Object.assign( Flickity.defaults, {
+  draggable: '>1',
+  dragThreshold: 3,
+} );
+
+// -------------------------- drag prototype -------------------------- //
+
+let proto = Flickity.prototype;
+Object.assign( proto, Unidragger.prototype ); // inherit Unidragger
+proto.touchActionValue = '';
+
+// --------------------------  -------------------------- //
+
+Flickity.create.drag = function() {
+  this.on( 'activate', this.onActivateDrag );
+  this.on( 'uiChange', this._uiChangeDrag );
+  this.on( 'deactivate', this.onDeactivateDrag );
+  this.on( 'cellChange', this.updateDraggable );
+  this.on( 'pointerDown', this.handlePointerDown );
+  this.on( 'pointerUp', this.handlePointerUp );
+  this.on( 'pointerDown', this.handlePointerDone );
+  this.on( 'dragStart', this.handleDragStart );
+  this.on( 'dragMove', this.handleDragMove );
+  this.on( 'dragEnd', this.handleDragEnd );
+  this.on( 'staticClick', this.handleStaticClick );
+  // TODO updateDraggable on resize? if groupCells & slides change
+};
+
+proto.onActivateDrag = function() {
+  this.handles = [ this.viewport ];
+  this.bindHandles();
+  this.updateDraggable();
+};
+
+proto.onDeactivateDrag = function() {
+  this.unbindHandles();
+  this.element.classList.remove('is-draggable');
+};
+
+proto.updateDraggable = function() {
+  // disable dragging if less than 2 slides. #278
+  if ( this.options.draggable === '>1' ) {
+    this.isDraggable = this.slides.length > 1;
+  } else {
+    this.isDraggable = this.options.draggable;
+  }
+  this.element.classList.toggle( 'is-draggable', this.isDraggable );
+};
+
+proto._uiChangeDrag = function() {
+  delete this.isFreeScrolling;
+};
+
+// -------------------------- pointer events -------------------------- //
+
+proto.handlePointerDown = function( event ) {
+  if ( !this.isDraggable ) {
+    // proceed for staticClick
+    this.bindActivePointerEvents( event );
+    return;
+  }
+
+  let isTouchStart = event.type === 'touchstart';
+  let isTouchPointer = event.pointerType === 'touch';
+  let isFocusNode = event.target.matches('input, textarea, select');
+  if ( !isTouchStart && !isTouchPointer && !isFocusNode ) event.preventDefault();
+  if ( !isFocusNode ) this.focus();
+  // blur
+  if ( document.activeElement !== this.element ) document.activeElement.blur();
+  // stop if it was moving
+  this.dragX = this.x;
+  this.viewport.classList.add('is-pointer-down');
+  // track scrolling
+  this.pointerDownScroll = getScrollPosition();
+  window.addEventListener( 'scroll', this );
+  this.bindActivePointerEvents( event );
+};
+
+// ----- move ----- //
+
+proto.hasDragStarted = function( moveVector ) {
+  return Math.abs( moveVector.x ) > this.options.dragThreshold;
+};
+
+// ----- up ----- //
+
+proto.handlePointerUp = function() {
+  delete this.isTouchScrolling;
+  this.viewport.classList.remove('is-pointer-down');
+};
+
+proto.handlePointerDone = function() {
+  window.removeEventListener( 'scroll', this );
+  delete this.pointerDownScroll;
+};
+
+// -------------------------- dragging -------------------------- //
+
+proto.handleDragStart = function() {
+  if ( !this.isDraggable ) return;
+
+  this.dragStartPosition = this.x;
+  this.startAnimation();
+  window.removeEventListener( 'scroll', this );
+};
+
+proto.handleDragMove = function( event, pointer, moveVector ) {
+  if ( !this.isDraggable ) return;
+
+  event.preventDefault();
+
+  this.previousDragX = this.dragX;
+  // reverse if right-to-left
+  let direction = this.options.rightToLeft ? -1 : 1;
+  // wrap around move. #589
+  if ( this.isWrapping ) moveVector.x %= this.slideableWidth;
+  let dragX = this.dragStartPosition + moveVector.x * direction;
+
+  if ( !this.isWrapping ) {
+    // slow drag
+    let originBound = Math.max( -this.slides[0].target, this.dragStartPosition );
+    dragX = dragX > originBound ? ( dragX + originBound ) * 0.5 : dragX;
+    let endBound = Math.min( -this.getLastSlide().target, this.dragStartPosition );
+    dragX = dragX < endBound ? ( dragX + endBound ) * 0.5 : dragX;
+  }
+
+  this.dragX = dragX;
+  this.dragMoveTime = new Date();
+};
+
+proto.handleDragEnd = function() {
+  if ( !this.isDraggable ) return;
+
+  let { freeScroll } = this.options;
+  if ( freeScroll ) this.isFreeScrolling = true;
+  // set selectedIndex based on where flick will end up
+  let index = this.dragEndRestingSelect();
+
+  if ( freeScroll && !this.isWrapping ) {
+    // if free-scroll & not wrap around
+    // do not free-scroll if going outside of bounding slides
+    // so bounding slides can attract slider, and keep it in bounds
+    let restingX = this.getRestingPosition();
+    this.isFreeScrolling = -restingX > this.slides[0].target &&
+      -restingX < this.getLastSlide().target;
+  } else if ( !freeScroll && index === this.selectedIndex ) {
+    // boost selection if selected index has not changed
+    index += this.dragEndBoostSelect();
+  }
+  delete this.previousDragX;
+  // apply selection
+  // HACK, set flag so dragging stays in correct direction
+  this.isDragSelect = this.isWrapping;
+  this.select( index );
+  delete this.isDragSelect;
+};
+
+proto.dragEndRestingSelect = function() {
+  let restingX = this.getRestingPosition();
+  // how far away from selected slide
+  let distance = Math.abs( this.getSlideDistance( -restingX, this.selectedIndex ) );
+  // get closet resting going up and going down
+  let positiveResting = this._getClosestResting( restingX, distance, 1 );
+  let negativeResting = this._getClosestResting( restingX, distance, -1 );
+  // use closer resting for wrap-around
+  return positiveResting.distance < negativeResting.distance ?
+    positiveResting.index : negativeResting.index;
+};
+
+/**
+ * given resting X and distance to selected cell
+ * get the distance and index of the closest cell
+ * @param {Number} restingX - estimated post-flick resting position
+ * @param {Number} distance - distance to selected cell
+ * @param {Integer} increment - +1 or -1, going up or down
+ * @returns {Object} - { distance: {Number}, index: {Integer} }
+ */
+proto._getClosestResting = function( restingX, distance, increment ) {
+  let index = this.selectedIndex;
+  let minDistance = Infinity;
+  let condition = this.options.contain && !this.isWrapping ?
+    // if containing, keep going if distance is equal to minDistance
+    ( dist, minDist ) => dist <= minDist :
+    ( dist, minDist ) => dist < minDist;
+
+  while ( condition( distance, minDistance ) ) {
+    // measure distance to next cell
+    index += increment;
+    minDistance = distance;
+    distance = this.getSlideDistance( -restingX, index );
+    if ( distance === null ) break;
+
+    distance = Math.abs( distance );
+  }
+  return {
+    distance: minDistance,
+    // selected was previous index
+    index: index - increment,
+  };
+};
+
+/**
+ * measure distance between x and a slide target
+ * @param {Number} x - horizontal position
+ * @param {Integer} index - slide index
+ * @returns {Number} - slide distance
+ */
+proto.getSlideDistance = function( x, index ) {
+  let len = this.slides.length;
+  // wrap around if at least 2 slides
+  let isWrapAround = this.options.wrapAround && len > 1;
+  let slideIndex = isWrapAround ? utils.modulo( index, len ) : index;
+  let slide = this.slides[ slideIndex ];
+  if ( !slide ) return null;
+
+  // add distance for wrap-around slides
+  let wrap = isWrapAround ? this.slideableWidth * Math.floor( index/len ) : 0;
+  return x - ( slide.target + wrap );
+};
+
+proto.dragEndBoostSelect = function() {
+  // do not boost if no previousDragX or dragMoveTime
+  if ( this.previousDragX === undefined || !this.dragMoveTime ||
+    // or if drag was held for 100 ms
+    new Date() - this.dragMoveTime > 100 ) {
+    return 0;
+  }
+
+  let distance = this.getSlideDistance( -this.dragX, this.selectedIndex );
+  let delta = this.previousDragX - this.dragX;
+  if ( distance > 0 && delta > 0 ) {
+    // boost to next if moving towards the right, and positive velocity
+    return 1;
+  } else if ( distance < 0 && delta < 0 ) {
+    // boost to previous if moving towards the left, and negative velocity
+    return -1;
+  }
+  return 0;
+};
+
+// ----- scroll ----- //
+
+proto.onscroll = function() {
+  let scroll = getScrollPosition();
+  let scrollMoveX = this.pointerDownScroll.x - scroll.x;
+  let scrollMoveY = this.pointerDownScroll.y - scroll.y;
+  // cancel click/tap if scroll is too much
+  if ( Math.abs( scrollMoveX ) > 3 || Math.abs( scrollMoveY ) > 3 ) {
+    this.pointerDone();
+  }
+};
+
+// ----- utils ----- //
+
+function getScrollPosition() {
+  return {
+    x: window.pageXOffset,
+    y: window.pageYOffset,
+  };
+}
+
+// -----  ----- //
+
+return Flickity;
+
+} ) );
+// prev/next buttons
+( function( window, factory ) {
+  // universal module definition
+  if ( typeof module == 'object' && module.exports ) {
+    // CommonJS
+    module.exports = factory( require('./core') );
+  } else {
+    // browser global
+    factory( window.Flickity );
+  }
+
+}( typeof window != 'undefined' ? window : this, function factory( Flickity ) {
+
+const svgURI = 'http://www.w3.org/2000/svg';
+
+// -------------------------- PrevNextButton -------------------------- //
+
+function PrevNextButton( increment, direction, arrowShape ) {
+  this.increment = increment;
+  this.direction = direction;
+  this.isPrevious = increment === 'previous';
+  this.isLeft = direction === 'left';
+  this._create( arrowShape );
+}
+
+PrevNextButton.prototype._create = function( arrowShape ) {
+  // properties
+  let element = this.element = document.createElement('button');
+  element.className = `flickity-button flickity-prev-next-button ${this.increment}`;
+  let label = this.isPrevious ? 'Previous' : 'Next';
+  // prevent button from submitting form https://stackoverflow.com/a/10836076/182183
+  element.setAttribute( 'type', 'button' );
+  element.setAttribute( 'aria-label', label );
+  // init as disabled
+  this.disable();
+  // create arrow
+  let svg = this.createSVG( label, arrowShape );
+  element.append( svg );
+};
+
+PrevNextButton.prototype.createSVG = function( label, arrowShape ) {
+  let svg = document.createElementNS( svgURI, 'svg' );
+  svg.setAttribute( 'class', 'flickity-button-icon' );
+  svg.setAttribute( 'viewBox', '0 0 100 100' );
+  // add title #1189
+  let title = document.createElementNS( svgURI, 'title' );
+  title.append( label );
+  // add path
+  let path = document.createElementNS( svgURI, 'path' );
+  let pathMovements = getArrowMovements( arrowShape );
+  path.setAttribute( 'd', pathMovements );
+  path.setAttribute( 'class', 'arrow' );
+  // rotate arrow
+  if ( !this.isLeft ) {
+    path.setAttribute( 'transform', 'translate(100, 100) rotate(180)' );
+  }
+  svg.append( title, path );
+  return svg;
+};
+
+// get SVG path movmement
+function getArrowMovements( shape ) {
+  // use shape as movement if string
+  if ( typeof shape == 'string' ) return shape;
+
+  let { x0, x1, x2, x3, y1, y2 } = shape;
+
+  // create movement string
+  return `M ${x0}, 50
+    L ${x1}, ${y1 + 50}
+    L ${x2}, ${y2 + 50}
+    L ${x3}, 50
+    L ${x2}, ${50 - y2}
+    L ${x1}, ${50 - y1}
+    Z`;
+}
+
+// -----  ----- //
+
+PrevNextButton.prototype.enable = function() {
+  this.element.removeAttribute('disabled');
+};
+
+PrevNextButton.prototype.disable = function() {
+  this.element.setAttribute( 'disabled', true );
+};
+
+// -------------------------- Flickity prototype -------------------------- //
+
+Object.assign( Flickity.defaults, {
+  prevNextButtons: true,
+  arrowShape: {
+    x0: 10,
+    x1: 60, y1: 50,
+    x2: 70, y2: 40,
+    x3: 30,
+  },
+} );
+
+Flickity.create.prevNextButtons = function() {
+  if ( !this.options.prevNextButtons ) return;
+
+  let { rightToLeft, arrowShape } = this.options;
+  let prevDirection = rightToLeft ? 'right' : 'left';
+  let nextDirection = rightToLeft ? 'left' : 'right';
+  this.prevButton = new PrevNextButton( 'previous', prevDirection, arrowShape );
+  this.nextButton = new PrevNextButton( 'next', nextDirection, arrowShape );
+  this.focusableElems.push( this.prevButton.element );
+  this.focusableElems.push( this.nextButton.element );
+
+  this.handlePrevButtonClick = () => {
+    this.uiChange();
+    this.previous();
+  };
+
+  this.handleNextButtonClick = () => {
+    this.uiChange();
+    this.next();
+  };
+
+  this.on( 'activate', this.activatePrevNextButtons );
+  this.on( 'select', this.updatePrevNextButtons );
+};
+
+let proto = Flickity.prototype;
+
+proto.updatePrevNextButtons = function() {
+  let lastIndex = this.slides.length ? this.slides.length - 1 : 0;
+  this.updatePrevNextButton( this.prevButton, 0 );
+  this.updatePrevNextButton( this.nextButton, lastIndex );
+};
+
+proto.updatePrevNextButton = function( button, disabledIndex ) {
+  // enable is wrapAround and at least 2 slides
+  if ( this.isWrapping && this.slides.length > 1 ) {
+    button.enable();
+    return;
+  }
+
+  let isEnabled = this.selectedIndex !== disabledIndex;
+  button[ isEnabled ? 'enable' : 'disable' ]();
+  // if disabling button that is focused,
+  // shift focus to element to maintain keyboard accessibility
+  let isDisabledFocused = !isEnabled && document.activeElement === button.element;
+  if ( isDisabledFocused ) this.focus();
+};
+
+proto.activatePrevNextButtons = function() {
+  this.prevButton.element.addEventListener( 'click', this.handlePrevButtonClick );
+  this.nextButton.element.addEventListener( 'click', this.handleNextButtonClick );
+  this.element.append( this.prevButton.element, this.nextButton.element );
+  this.on( 'deactivate', this.deactivatePrevNextButtons );
+};
+
+proto.deactivatePrevNextButtons = function() {
+  this.prevButton.element.remove();
+  this.nextButton.element.remove();
+  this.prevButton.element.removeEventListener( 'click', this.handlePrevButtonClick );
+  this.nextButton.element.removeEventListener( 'click', this.handleNextButtonClick );
+  this.off( 'deactivate', this.deactivatePrevNextButtons );
+};
+
+// --------------------------  -------------------------- //
+
+Flickity.PrevNextButton = PrevNextButton;
+
+return Flickity;
+
+} ) );
+// page dots
+( function( window, factory ) {
+  // universal module definition
+  if ( typeof module == 'object' && module.exports ) {
+    // CommonJS
+    module.exports = factory(
+        require('./core'),
+        require('fizzy-ui-utils'),
+    );
+  } else {
+    // browser global
+    factory(
+        window.Flickity,
+        window.fizzyUIUtils,
+    );
+  }
+
+}( typeof window != 'undefined' ? window : this, function factory( Flickity, utils ) {
+
+// -------------------------- PageDots -------------------------- //
+
+function PageDots() {
+  // create holder element
+  this.holder = document.createElement('div');
+  this.holder.className = 'flickity-page-dots';
+  // create dots, array of elements
+  this.dots = [];
+}
+
+PageDots.prototype.setDots = function( slidesLength ) {
+  // get difference between number of slides and number of dots
+  let delta = slidesLength - this.dots.length;
+  if ( delta > 0 ) {
+    this.addDots( delta );
+  } else if ( delta < 0 ) {
+    this.removeDots( -delta );
+  }
+};
+
+PageDots.prototype.addDots = function( count ) {
+  let newDots = new Array( count ).fill()
+    .map( ( item, i ) => {
+      let dot = document.createElement('button');
+      dot.setAttribute( 'type', 'button' );
+      let num = i + 1 + this.dots.length;
+      dot.className = 'flickity-page-dot';
+      dot.textContent = `View slide ${num}`;
+      return dot;
+    } );
+
+  this.holder.append( ...newDots );
+  this.dots = this.dots.concat( newDots );
+};
+
+PageDots.prototype.removeDots = function( count ) {
+  // remove from this.dots collection
+  let removeDots = this.dots.splice( this.dots.length - count, count );
+  // remove from DOM
+  removeDots.forEach( ( dot ) => dot.remove() );
+};
+
+PageDots.prototype.updateSelected = function( index ) {
+  // remove selected class on previous
+  if ( this.selectedDot ) {
+    this.selectedDot.classList.remove('is-selected');
+    this.selectedDot.removeAttribute('aria-current');
+  }
+  // don't proceed if no dots
+  if ( !this.dots.length ) return;
+
+  this.selectedDot = this.dots[ index ];
+  this.selectedDot.classList.add('is-selected');
+  this.selectedDot.setAttribute( 'aria-current', 'step' );
+};
+
+Flickity.PageDots = PageDots;
+
+// -------------------------- Flickity -------------------------- //
+
+Object.assign( Flickity.defaults, {
+  pageDots: true,
+} );
+
+Flickity.create.pageDots = function() {
+  if ( !this.options.pageDots ) return;
+
+  this.pageDots = new PageDots();
+  this.handlePageDotsClick = this.onPageDotsClick.bind( this );
+  // events
+  this.on( 'activate', this.activatePageDots );
+  this.on( 'select', this.updateSelectedPageDots );
+  this.on( 'cellChange', this.updatePageDots );
+  this.on( 'resize', this.updatePageDots );
+  this.on( 'deactivate', this.deactivatePageDots );
+};
+
+let proto = Flickity.prototype;
+
+proto.activatePageDots = function() {
+  this.pageDots.setDots( this.slides.length );
+  this.focusableElems.push( ...this.pageDots.dots );
+  this.pageDots.holder.addEventListener( 'click', this.handlePageDotsClick );
+  this.element.append( this.pageDots.holder );
+};
+
+proto.onPageDotsClick = function( event ) {
+  let index = this.pageDots.dots.indexOf( event.target );
+  if ( index === -1 ) return; // only dot clicks
+
+  this.uiChange();
+  this.select( index );
+};
+
+proto.updateSelectedPageDots = function() {
+  this.pageDots.updateSelected( this.selectedIndex );
+};
+
+proto.updatePageDots = function() {
+  this.pageDots.dots.forEach( ( dot ) => {
+    utils.removeFrom( this.focusableElems, dot );
+  } );
+  this.pageDots.setDots( this.slides.length );
+  this.focusableElems.push( ...this.pageDots.dots );
+};
+
+proto.deactivatePageDots = function() {
+  this.pageDots.holder.remove();
+  this.pageDots.holder.removeEventListener( 'click', this.handlePageDotsClick );
+};
+
+// -----  ----- //
+
+Flickity.PageDots = PageDots;
+
+return Flickity;
+
+} ) );
+// player & autoPlay
+( function( window, factory ) {
+  // universal module definition
+  if ( typeof module == 'object' && module.exports ) {
+    // CommonJS
+    module.exports = factory( require('./core') );
+  } else {
+    // browser global
+    factory( window.Flickity );
+  }
+
+}( typeof window != 'undefined' ? window : this, function factory( Flickity ) {
+
+// -------------------------- Player -------------------------- //
+
+function Player( autoPlay, onTick ) {
+  this.autoPlay = autoPlay;
+  this.onTick = onTick;
+  this.state = 'stopped';
+  // visibility change event handler
+  this.onVisibilityChange = this.visibilityChange.bind( this );
+  this.onVisibilityPlay = this.visibilityPlay.bind( this );
+}
+
+// start play
+Player.prototype.play = function() {
+  if ( this.state === 'playing' ) return;
+
+  // do not play if page is hidden, start playing when page is visible
+  let isPageHidden = document.hidden;
+  if ( isPageHidden ) {
+    document.addEventListener( 'visibilitychange', this.onVisibilityPlay );
+    return;
+  }
+
+  this.state = 'playing';
+  // listen to visibility change
+  document.addEventListener( 'visibilitychange', this.onVisibilityChange );
+  // start ticking
+  this.tick();
+};
+
+Player.prototype.tick = function() {
+  // do not tick if not playing
+  if ( this.state !== 'playing' ) return;
+
+  // default to 3 seconds
+  let time = typeof this.autoPlay == 'number' ? this.autoPlay : 3000;
+  // HACK: reset ticks if stopped and started within interval
+  this.clear();
+  this.timeout = setTimeout( () => {
+    this.onTick();
+    this.tick();
+  }, time );
+};
+
+Player.prototype.stop = function() {
+  this.state = 'stopped';
+  this.clear();
+  // remove visibility change event
+  document.removeEventListener( 'visibilitychange', this.onVisibilityChange );
+};
+
+Player.prototype.clear = function() {
+  clearTimeout( this.timeout );
+};
+
+Player.prototype.pause = function() {
+  if ( this.state === 'playing' ) {
+    this.state = 'paused';
+    this.clear();
+  }
+};
+
+Player.prototype.unpause = function() {
+  // re-start play if paused
+  if ( this.state === 'paused' ) this.play();
+};
+
+// pause if page visibility is hidden, unpause if visible
+Player.prototype.visibilityChange = function() {
+  let isPageHidden = document.hidden;
+  this[ isPageHidden ? 'pause' : 'unpause' ]();
+};
+
+Player.prototype.visibilityPlay = function() {
+  this.play();
+  document.removeEventListener( 'visibilitychange', this.onVisibilityPlay );
+};
+
+// -------------------------- Flickity -------------------------- //
+
+Object.assign( Flickity.defaults, {
+  pauseAutoPlayOnHover: true,
+} );
+
+Flickity.create.player = function() {
+  this.player = new Player( this.options.autoPlay, () => {
+    this.next( true );
+  } );
+
+  this.on( 'activate', this.activatePlayer );
+  this.on( 'uiChange', this.stopPlayer );
+  this.on( 'pointerDown', this.stopPlayer );
+  this.on( 'deactivate', this.deactivatePlayer );
+};
+
+let proto = Flickity.prototype;
+
+proto.activatePlayer = function() {
+  if ( !this.options.autoPlay ) return;
+
+  this.player.play();
+  this.element.addEventListener( 'mouseenter', this );
+};
+
+// Player API, don't hate the ... thanks I know where the door is
+
+proto.playPlayer = function() {
+  this.player.play();
+};
+
+proto.stopPlayer = function() {
+  this.player.stop();
+};
+
+proto.pausePlayer = function() {
+  this.player.pause();
+};
+
+proto.unpausePlayer = function() {
+  this.player.unpause();
+};
+
+proto.deactivatePlayer = function() {
+  this.player.stop();
+  this.element.removeEventListener( 'mouseenter', this );
+};
+
+// ----- mouseenter/leave ----- //
+
+// pause auto-play on hover
+proto.onmouseenter = function() {
+  if ( !this.options.pauseAutoPlayOnHover ) return;
+
+  this.player.pause();
+  this.element.addEventListener( 'mouseleave', this );
+};
+
+// resume auto-play on hover off
+proto.onmouseleave = function() {
+  this.player.unpause();
+  this.element.removeEventListener( 'mouseleave', this );
+};
+
+// -----  ----- //
+
+Flickity.Player = Player;
+
+return Flickity;
+
+} ) );
+// add, remove cell
+( function( window, factory ) {
+  // universal module definition
+  if ( typeof module == 'object' && module.exports ) {
+    // CommonJS
+    module.exports = factory(
+        require('./core'),
+        require('fizzy-ui-utils'),
+    );
+  } else {
+    // browser global
+    factory(
+        window.Flickity,
+        window.fizzyUIUtils,
+    );
+  }
+
+}( typeof window != 'undefined' ? window : this, function factory( Flickity, utils ) {
+
+// append cells to a document fragment
+function getCellsFragment( cells ) {
+  let fragment = document.createDocumentFragment();
+  cells.forEach( ( cell ) => fragment.appendChild( cell.element ) );
+  return fragment;
+}
+
+// -------------------------- add/remove cell prototype -------------------------- //
+
+let proto = Flickity.prototype;
+
+/**
+ * Insert, prepend, or append cells
+ * @param {[Element, Array, NodeList]} elems - Elements to insert
+ * @param {Integer} index - Zero-based number to insert
+ */
+proto.insert = function( elems, index ) {
+  let cells = this._makeCells( elems );
+  if ( !cells || !cells.length ) return;
+
+  let len = this.cells.length;
+  // default to append
+  index = index === undefined ? len : index;
+  // add cells with document fragment
+  let fragment = getCellsFragment( cells );
+  // append to slider
+  let isAppend = index === len;
+  if ( isAppend ) {
+    this.slider.appendChild( fragment );
+  } else {
+    let insertCellElement = this.cells[ index ].element;
+    this.slider.insertBefore( fragment, insertCellElement );
+  }
+  // add to this.cells
+  if ( index === 0 ) {
+    // prepend, add to start
+    this.cells = cells.concat( this.cells );
+  } else if ( isAppend ) {
+    // append, add to end
+    this.cells = this.cells.concat( cells );
+  } else {
+    // insert in this.cells
+    let endCells = this.cells.splice( index, len - index );
+    this.cells = this.cells.concat( cells ).concat( endCells );
+  }
+
+  this._sizeCells( cells );
+  this.cellChange( index );
+  this.positionSliderAtSelected();
+};
+
+proto.append = function( elems ) {
+  this.insert( elems, this.cells.length );
+};
+
+proto.prepend = function( elems ) {
+  this.insert( elems, 0 );
+};
+
+/**
+ * Remove cells
+ * @param {[Element, Array, NodeList]} elems - ELements to remove
+ */
+proto.remove = function( elems ) {
+  let cells = this.getCells( elems );
+  if ( !cells || !cells.length ) return;
+
+  let minCellIndex = this.cells.length - 1;
+  // remove cells from collection & DOM
+  cells.forEach( ( cell ) => {
+    cell.remove();
+    let index = this.cells.indexOf( cell );
+    minCellIndex = Math.min( index, minCellIndex );
+    utils.removeFrom( this.cells, cell );
+  } );
+
+  this.cellChange( minCellIndex );
+  this.positionSliderAtSelected();
+};
+
+/**
+ * logic to be run after a cell's size changes
+ * @param {Element} elem - cell's element
+ */
+proto.cellSizeChange = function( elem ) {
+  let cell = this.getCell( elem );
+  if ( !cell ) return;
+
+  cell.getSize();
+
+  let index = this.cells.indexOf( cell );
+  this.cellChange( index );
+  // do not position slider after lazy load
+};
+
+/**
+ * logic any time a cell is changed: added, removed, or size changed
+ * @param {Integer} changedCellIndex - index of the changed cell, optional
+ */
+proto.cellChange = function( changedCellIndex ) {
+  let prevSelectedElem = this.selectedElement;
+  this._positionCells( changedCellIndex );
+  this._updateWrapShiftCells();
+  this.setGallerySize();
+  // update selectedIndex, try to maintain position & select previous selected element
+  let cell = this.getCell( prevSelectedElem );
+  if ( cell ) this.selectedIndex = this.getCellSlideIndex( cell );
+  this.selectedIndex = Math.min( this.slides.length - 1, this.selectedIndex );
+
+  this.emitEvent( 'cellChange', [ changedCellIndex ] );
+  // position slider
+  this.select( this.selectedIndex );
+};
+
+// -----  ----- //
+
+return Flickity;
+
+} ) );
+// lazyload
+( function( window, factory ) {
+  // universal module definition
+  if ( typeof module == 'object' && module.exports ) {
+    // CommonJS
+    module.exports = factory(
+        require('./core'),
+        require('fizzy-ui-utils'),
+    );
+  } else {
+    // browser global
+    factory(
+        window.Flickity,
+        window.fizzyUIUtils,
+    );
+  }
+
+}( typeof window != 'undefined' ? window : this, function factory( Flickity, utils ) {
+
+const lazyAttr = 'data-flickity-lazyload';
+const lazySrcAttr = `${lazyAttr}-src`;
+const lazySrcsetAttr = `${lazyAttr}-srcset`;
+const imgSelector = `img[${lazyAttr}], img[${lazySrcAttr}], ` +
+  `img[${lazySrcsetAttr}], source[${lazySrcsetAttr}]`;
+
+Flickity.create.lazyLoad = function() {
+  this.on( 'select', this.lazyLoad );
+
+  this.handleLazyLoadComplete = this.onLazyLoadComplete.bind( this );
+};
+
+let proto = Flickity.prototype;
+
+proto.lazyLoad = function() {
+  let { lazyLoad } = this.options;
+  if ( !lazyLoad ) return;
+
+  // get adjacent cells, use lazyLoad option for adjacent count
+  let adjCount = typeof lazyLoad == 'number' ? lazyLoad : 0;
+  // lazy load images
+  this.getAdjacentCellElements( adjCount )
+    .map( getCellLazyImages )
+    .flat()
+    .forEach( ( img ) => new LazyLoader( img, this.handleLazyLoadComplete ) );
+};
+
+function getCellLazyImages( cellElem ) {
+  // check if cell element is lazy image
+  if ( cellElem.matches('img') ) {
+    let cellAttr = cellElem.getAttribute( lazyAttr );
+    let cellSrcAttr = cellElem.getAttribute( lazySrcAttr );
+    let cellSrcsetAttr = cellElem.getAttribute( lazySrcsetAttr );
+    if ( cellAttr || cellSrcAttr || cellSrcsetAttr ) {
+      return cellElem;
+    }
+  }
+  // select lazy images in cell
+  return [ ...cellElem.querySelectorAll( imgSelector ) ];
+}
+
+proto.onLazyLoadComplete = function( img, event ) {
+  let cell = this.getParentCell( img );
+  let cellElem = cell && cell.element;
+  this.cellSizeChange( cellElem );
+
+  this.dispatchEvent( 'lazyLoad', event, cellElem );
+};
+
+// -------------------------- LazyLoader -------------------------- //
+
+/**
+ * class to handle loading images
+ * @param {Image} img - Image element
+ * @param {Function} onComplete - callback function
+ */
+function LazyLoader( img, onComplete ) {
+  this.img = img;
+  this.onComplete = onComplete;
+  this.load();
+}
+
+LazyLoader.prototype.handleEvent = utils.handleEvent;
+
+LazyLoader.prototype.load = function() {
+  this.img.addEventListener( 'load', this );
+  this.img.addEventListener( 'error', this );
+  // get src & srcset
+  let src = this.img.getAttribute( lazyAttr ) ||
+    this.img.getAttribute( lazySrcAttr );
+  let srcset = this.img.getAttribute( lazySrcsetAttr );
+  // set src & serset
+  this.img.src = src;
+  if ( srcset ) this.img.setAttribute( 'srcset', srcset );
+  // remove attr
+  this.img.removeAttribute( lazyAttr );
+  this.img.removeAttribute( lazySrcAttr );
+  this.img.removeAttribute( lazySrcsetAttr );
+};
+
+LazyLoader.prototype.onload = function( event ) {
+  this.complete( event, 'flickity-lazyloaded' );
+};
+
+LazyLoader.prototype.onerror = function( event ) {
+  this.complete( event, 'flickity-lazyerror' );
+};
+
+LazyLoader.prototype.complete = function( event, className ) {
+  // unbind events
+  this.img.removeEventListener( 'load', this );
+  this.img.removeEventListener( 'error', this );
+  let mediaElem = this.img.parentNode.matches('picture') ? this.img.parentNode : this.img;
+  mediaElem.classList.add( className );
+
+  this.onComplete( this.img, event );
+};
+
+// -----  ----- //
+
+Flickity.LazyLoader = LazyLoader;
+
+return Flickity;
+
+} ) );
+// imagesloaded
+( function( window, factory ) {
+  // universal module definition
+  if ( typeof module == 'object' && module.exports ) {
+    // CommonJS
+    module.exports = factory(
+        require('./core'),
+        require('imagesloaded'),
+    );
+  } else {
+    // browser global
+    factory(
+        window.Flickity,
+        window.imagesLoaded,
+    );
+  }
+
+}( typeof window != 'undefined' ? window : this,
+    function factory( Flickity, imagesLoaded ) {
+
+Flickity.create.imagesLoaded = function() {
+  this.on( 'activate', this.imagesLoaded );
+};
+
+Flickity.prototype.imagesLoaded = function() {
+  if ( !this.options.imagesLoaded ) return;
+
+  let onImagesLoadedProgress = ( instance, image ) => {
+    let cell = this.getParentCell( image.img );
+    this.cellSizeChange( cell && cell.element );
+    if ( !this.options.freeScroll ) this.positionSliderAtSelected();
+  };
+  imagesLoaded( this.slider ).on( 'progress', onImagesLoadedProgress );
+};
+
+return Flickity;
+
+} ) );

@@ -24,6 +24,16 @@
     </div>
 </div>
 
+<div class="container-fluid">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-9 mb-5">
+                @livewire('news.form-publish')
+            </div>
+        </div>
+    </div>
+</div>
+
 @stop
 
 @section('pre_js')

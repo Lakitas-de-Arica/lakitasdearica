@@ -19,10 +19,10 @@ class CreateNewsTable extends Migration
             $table->string('slug');
             $table->string('image')->nullable();
             $table->date('date');
-            $table->text('introduction');
+            $table->text('introduction')->nullable();
             $table->longText('text');
             $table->string('link');
-            $table->boolean('publish')->default(true);
+            $table->boolean('publish')->default(false);
             $table->foreignIdFor(User::class)->nullable();
             $table->string('contact_name')->nullable();
             $table->string('contact_phone')->nullable();
