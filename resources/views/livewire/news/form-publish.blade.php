@@ -1,7 +1,6 @@
 <div>
 
-    <form wire:submit.prevent="submit" class="needs-validation form-publish" novalidate>
-
+    <form wire:submit.prevent="submit" class="needs-validation form-publish">
         <div class="card card-body p-5">
 
             <div class="mb-3">
@@ -61,11 +60,33 @@
                 @error('contact_phone') <div id="validationContactPhoneFeedback" class="invalid-feedback"> {{ $message }} </div> @enderror
             </div>
 
+            @if (session()->has('captcha'))
+                <div class="alert alert-danger">
+                    {{ session('captcha') }}
+                </div>
+            @endif
+            <div wire:ignore>
+                {!! NoCaptcha::renderJs() !!}
+                {!! NoCaptcha::display(['data-callback' => 'onCallback']) !!}
+            </div>
+
+            @error('recaptcha') <span class="text-danger"> {{ $message }} </span> @enderror
         </div>
         <div class="text-center mt-5">
             <button type="submit" class="btn btn-primary">Enviar noticia</button>
         </div>
-
     </form>
 
 </div>
+
+@push('scripts')
+    <script>
+        var onCallback = function() {
+            @this.recaptcha = grecaptcha.getResponse()
+        };
+
+        Livewire.on('resetReCaptcha', () => {
+            grecaptcha.reset();
+        });
+    </script>
+@endpush

@@ -5,6 +5,7 @@ namespace App\Http\Livewire\News;
 use Livewire\Component;
 use App\Contracts\New\NewInterface;
 use Livewire\WithFileUploads;
+use Illuminate\Support\Facades\Http;
 
 class FormPublish extends Component
 {
@@ -19,6 +20,7 @@ class FormPublish extends Component
     public $contact_name;
     public $contact_email;
     public $contact_phone;
+    public $recaptcha;
 
     public function boot(NewInterface $newService)
     {
@@ -34,17 +36,20 @@ class FormPublish extends Component
         'contact_name' => 'required|min:3|max:255',
         'contact_email' => 'required|email|min:3|max:255',
         'contact_phone' => 'required|min:3|max:13',
+        'recaptcha' => 'required|captcha'
     ];
 
     protected $messages = [
-        '*.required' => 'El campo es requerido',
         'date.date' => 'Formato de fecha no válido',
         'image.image' => 'Formato de archivo no válido (admitidos: jpg, png, gif)',
         'image.max' => 'El archivo es demasiado grande, tamaño máximo 3MB',
         'link.active_url' => 'Link no válido, incluir el prefijo https://',
         '*.min' => 'El campo debe tener al menos :min caracteres',
         '*.max' => 'El campo no debe exceder los :max caracteres',
-        'contact_email.email' => 'Email no válido'
+        'contact_email.email' => 'Email no válido',
+        'recaptcha.required' => 'Debes resolver el captcha',
+        'recaptcha.captcha' => 'Error al validar el captcha',
+        '*.required' => 'El campo es requerido',
     ];
 
     public function render()
@@ -54,13 +59,15 @@ class FormPublish extends Component
 
     public function updated($propertyName)
     {
-        $this->validateOnly($propertyName);
+        if ($propertyName !== 'recaptcha') {
+            $this->validateOnly($propertyName);
+        }
     }
 
     public function submit()
     {
-        $this->validate();
-
+        $this->emit('resetReCaptcha');
+/*
         $image = $this->image->store('news', 'public');
 
         $this->newService->store([
@@ -81,5 +88,6 @@ class FormPublish extends Component
         $this->title = '';
 
         return true;
+        */
     }
 }

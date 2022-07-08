@@ -39,6 +39,8 @@
 
         <script src="{{ mix('js/core.js') }}"></script>
 
+        @livewireScripts
+
         @yield('js')
 
         <script>
@@ -47,7 +49,5 @@
                 $('.close-menu').on('click',function(){ $('.data-menu').addClass('d-none'); });
             });
         </script>
-
-        @livewireScripts
     </body>
 </html>
