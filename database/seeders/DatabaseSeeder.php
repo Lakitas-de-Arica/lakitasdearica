@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use App\Models\News;
+use App\Models\Comparsa;
 class DatabaseSeeder extends Seeder
 {
     /**
@@ -18,5 +19,6 @@ class DatabaseSeeder extends Seeder
         ]);
 
         News::factory(5000)->create();
+        Comparsa::factory(5000)->create();
     }
 }

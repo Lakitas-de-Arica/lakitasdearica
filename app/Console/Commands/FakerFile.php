@@ -40,5 +40,8 @@ class FakerFile extends Command
     {
         Storage::disk('public')->makeDirectory('news');
         copy(storage_path('fakerfiles/new.jpg'), storage_path('app/public/news/new.jpg'));
+
+        Storage::disk('public')->makeDirectory('comparsa');
+        copy(storage_path('fakerfiles/comparsa.jpg'), storage_path('app/public/comparsa/comparsa.jpg'));
     }
 }

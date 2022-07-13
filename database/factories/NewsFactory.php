@@ -3,9 +3,12 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Str;
+use App\Services\New\NewService;
+
 class NewsFactory extends Factory
 {
+    protected $newService;
+
     /**
      * Define the model's default state.
      *
@@ -14,17 +17,23 @@ class NewsFactory extends Factory
     public function definition()
     {
         $title = $this->faker->sentence();
+        $this->newService = new NewService();
 
         return [
             'title' => $title,
-            'slug' => Str::slug($title, '-'),
-            'image' => 'new.jpg',
+            'slug' => $this->newService->generateSlug($title),
+            'image' => 'news/new.jpg',
             'date' => $this->faker->date('Y-m-d'),
-            'introduction' => implode('<br>', $this->faker->paragraphs(2)),
-            'text' => implode('<br>', $this->faker->paragraphs(5)),
+            'introduction' => $this->paragraphs(2),
+            'text' => $this->paragraphs(5),
             'link' => $this->faker->url(),
-            'user_id' => rand(1,2),
+            'created_user_id' => rand(1,2),
             'publish' => 1,
         ];
+    }
+
+    public function paragraphs($n)
+    {
+        return implode('<br>',$this->faker->paragraphs(5));
     }
 }

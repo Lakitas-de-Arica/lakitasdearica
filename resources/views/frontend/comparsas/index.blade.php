@@ -48,6 +48,12 @@
     </div>
 </div>
 
+<div class="container-fluid">
+    <div class="container">
+        @livewire('comparsa.show')
+    </div>
+</div>
+
 @stop
 
 @section('pre_js')

@@ -1,7 +1,7 @@
 @extends('layout.master')
 
 @section('title_1', 'Lakitas de Arica')
-@section('title_2', $new->title)
+@section('title_2', 'Noticias - ' . $new->title)
 
 @section('pre_css')
 @endsection
@@ -25,7 +25,7 @@
             </div>
 
             <div class="col-md-9 px-0 mt-5 text-center">
-                <img src="{{ asset('storage/news/'.$new->image) }}" class="img-fluid">
+                <img src="{{ asset('storage/'.$new->image) }}" class="img-fluid">
             </div>
 
             <div class="col-md-8 px-0 mt-5">

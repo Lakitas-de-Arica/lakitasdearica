@@ -16,8 +16,10 @@ class ComparsaController extends Controller
     {
         $comparsa = Comparsa::firstWhere('slug',$slug);
 
+        if (!$comparsa) abort(404);
+
         return view('frontend.comparsas.show')
-                ->with('new',$comparsa);
+                ->with('comparsa',$comparsa);
     }
 
     public function publish()

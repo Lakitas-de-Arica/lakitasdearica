@@ -1,7 +1,7 @@
 <div>
 
     <form wire:submit.prevent="submit" class="needs-validation form-publish">
-        <div class="card card-body p-5">
+        <div class="card card-body p-3 p-md-5">
 
             <div class="mb-3">
                 <label for="validationTitle" class="form-label">Título</label>
@@ -11,7 +11,7 @@
 
             <div class="mb-3">
                 <label for="validationDate" class="form-label">Fecha</label>
-                <input type="text" wire:model="date" class="form-control @error('date') is-invalid @enderror" id="validationDate" aria-describedby="validationDateFeedback">
+                <input type="text" wire:model="date" class="form-control @error('date') is-invalid @enderror datepicker" id="validationDate" aria-describedby="validationDateFeedback">
                 @error('date') <div id="validationDateFeedback" class="invalid-feedback"> {{ $message }} </div> @enderror
             </div>
 
@@ -30,7 +30,7 @@
                 </div>
                 @endif
 
-                <label for="validationImage" class="form-label">Adjuntar imágen</label>
+                <label for="validationImage" class="form-label">Adjuntar imagen</label>
                 <input wire:model="image" class="form-control @error('image') is-invalid @enderror" type="file" id="validationImage" aria-describedby="validationImageFeedback">
                 @error('image') <div id="validationImageFeedback" class="invalid-feedback"> {{ $message }} </div> @enderror
                 <div wire:loading wire:target="image">Cargando...</div>
@@ -60,11 +60,6 @@
                 @error('contact_phone') <div id="validationContactPhoneFeedback" class="invalid-feedback"> {{ $message }} </div> @enderror
             </div>
 
-            @if (session()->has('captcha'))
-                <div class="alert alert-danger">
-                    {{ session('captcha') }}
-                </div>
-            @endif
             <div wire:ignore>
                 {!! NoCaptcha::renderJs() !!}
                 {!! NoCaptcha::display(['data-callback' => 'onCallback']) !!}
@@ -80,6 +75,10 @@
 </div>
 
 @push('scripts')
+
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://npmcdn.com/flatpickr/dist/l10n/es.js"></script>
+
     <script>
         var onCallback = function() {
             @this.recaptcha = grecaptcha.getResponse()
@@ -87,6 +86,11 @@
 
         Livewire.on('resetReCaptcha', () => {
             grecaptcha.reset();
+        });
+
+        $(".datepicker").flatpickr({
+            dateFormat: "Y-m-d",
+            locale: "es"
         });
     </script>
 @endpush

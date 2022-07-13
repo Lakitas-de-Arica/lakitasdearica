@@ -24,6 +24,23 @@
     </div>
 </div>
 
+<div class="container-fluid">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-9 mb-5">
+
+                @if (session()->has('success'))
+                    <div class="alert alert-success">
+                        {{ session('success') }}
+                    </div>
+                @endif
+
+                @livewire('comparsa.form-publish')
+            </div>
+        </div>
+    </div>
+</div>
+
 @stop
 
 @section('pre_js')

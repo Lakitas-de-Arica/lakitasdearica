@@ -16,18 +16,20 @@ class CreateNewsTable extends Migration
         Schema::create('news', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->string('slug');
+            $table->string('slug')->unique();
             $table->string('image')->nullable();
             $table->date('date');
             $table->text('introduction')->nullable();
             $table->longText('text');
             $table->string('link');
-            $table->boolean('publish')->default(false);
-            $table->foreignIdFor(User::class)->nullable();
             $table->string('contact_name')->nullable();
             $table->string('contact_phone')->nullable();
             $table->string('contact_email')->nullable();
-            $table->boolean('contact_validation')->default(false);
+            $table->boolean('source_form')->default(false);
+            $table->boolean('publish')->default(false);
+            $table->foreignIdFor(User::class, 'created_user_id')->nullable();
+            $table->foreignIdFor(User::class, 'updated_user_id')->nullable();
+            $table->index(['slug']);
             $table->softDeletes();
             $table->timestamps();
         });

@@ -5,7 +5,6 @@ namespace App\Http\Livewire\News;
 use Livewire\Component;
 use App\Contracts\New\NewInterface;
 use Livewire\WithFileUploads;
-use Illuminate\Support\Facades\Http;
 
 class FormPublish extends Component
 {
@@ -21,11 +20,6 @@ class FormPublish extends Component
     public $contact_email;
     public $contact_phone;
     public $recaptcha;
-
-    public function boot(NewInterface $newService)
-    {
-        $this->newService = $newService;
-    }
 
     protected $rules = [
         'title' => 'required|min:3|max:255',
@@ -52,6 +46,11 @@ class FormPublish extends Component
         '*.required' => 'El campo es requerido',
     ];
 
+    public function boot(NewInterface $newService)
+    {
+        $this->newService = $newService;
+    }
+
     public function render()
     {
         return view('livewire.news.form-publish');
@@ -67,7 +66,9 @@ class FormPublish extends Component
     public function submit()
     {
         $this->emit('resetReCaptcha');
-/*
+
+        $this->validate();
+
         $image = $this->image->store('news', 'public');
 
         $this->newService->store([
@@ -83,11 +84,11 @@ class FormPublish extends Component
             'publish' => 0,
             'user_id' => null,
             'contact_validation' => 0,
+            'source_form' => 1
         ]);
 
-        $this->title = '';
+        session()->flash('success', 'Noticia enviada, revisaremos el registro y te notificaremos.');
 
-        return true;
-        */
+        return redirect()->route('news.publish');
     }
 }

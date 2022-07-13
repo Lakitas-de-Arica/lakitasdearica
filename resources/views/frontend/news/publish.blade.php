@@ -4,6 +4,7 @@
 @section('title_2', 'Publica tu noticia')
 
 @section('pre_css')
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 @endsection
 
 @section('css')
@@ -13,7 +14,7 @@
 @section('content')
 
 <div class="container-fluid mt-md-5 mt-0">
-    <div class="container py-5">
+    <div class="container pt-5 pb-md-5 pb-3">
         <div class="row pt-5 pb-3">
             <div class="col-md-12 text-center col-title-section">
                 <p>FORMULARIO</p>
@@ -28,6 +29,13 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-9 mb-5">
+
+                @if (session()->has('success'))
+                    <div class="alert alert-success">
+                        {{ session('success') }}
+                    </div>
+                @endif
+
                 @livewire('news.form-publish')
             </div>
         </div>
@@ -40,6 +48,5 @@
 @endsection
 
 @section('js')
-
     @stack('scripts')
 @endsection

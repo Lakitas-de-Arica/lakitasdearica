@@ -1,5 +1,5 @@
 <div class="col-md-4 new mb-5">
-    <div class="img" style="background-image: url('{{ asset('storage/news/'.$new->image) }}')"></div>
+    <div class="img" style="background-image: url('{{ asset('storage/'.$new->image) }}')"></div>
     <div class="p-3">
         <div class="title border-bottom-1">
             <a href="{{ $new->publicLink() }}">
