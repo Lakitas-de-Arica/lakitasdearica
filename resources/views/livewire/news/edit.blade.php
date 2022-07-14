@@ -73,7 +73,7 @@
 
                         <div class="mb-3">
                             <label for="validationPublish" class="form-label">Publicado</label>
-                            <select wire:model="publish" class="form-control @error('link') is-invalid @enderror" id="validationPublish" aria-describedby="validationPublishFeedback">
+                            <select wire:model="publish" class="form-control @error('publish') is-invalid @enderror" id="validationPublish" aria-describedby="validationPublishFeedback">
                                 <option value="1">Si</option>
                                 <option value="0">No</option>
                             </select>
@@ -82,7 +82,7 @@
 
                         <div class="mb-3">
                             <label for="validationSource" class="form-label">Fuente</label>
-                            <select wire:model="source_form" wire:change="updateSource" class="form-control @error('link') is-invalid @enderror" id="validationSource" aria-describedby="validationSourceFeedback">
+                            <select wire:model="source_form" wire:change="updateSource" class="form-control @error('source_form') is-invalid @enderror" id="validationSource" aria-describedby="validationSourceFeedback">
                                 <option value="1">Desde formulario web</option>
                                 <option value="0">Publicación interna</option>
                             </select>

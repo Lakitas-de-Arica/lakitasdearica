@@ -42,7 +42,7 @@ class ComparsaFactory extends Factory
             'contact_phone' => $this->faker->phoneNumber(),
             'contact_email' => $this->faker->safeEmail(),
             'contact' => 1,
-            'user_id' => rand(1,2),
+            'created_user_id' => rand(1,2),
             'publish' => 1,
         ];
     }

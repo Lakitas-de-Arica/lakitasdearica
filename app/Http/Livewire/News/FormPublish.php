@@ -72,19 +72,19 @@ class FormPublish extends Component
         $image = $this->image->store('news', 'public');
 
         $this->newService->store([
-            'title' => $this->title,
-            'date' => $this->date,
-            'introduction' => null,
-            'text' => $this->text,
-            'image' => $image,
-            'link' => $this->link,
-            'contact_name' => $this->contact_name,
-            'contact_email' => $this->contact_email,
-            'contact_phone' => $this->contact_phone,
-            'publish' => 0,
-            'user_id' => null,
-            'contact_validation' => 0,
-            'source_form' => 1
+            'title'              => $this->title,
+            'date'               => $this->date,
+            'introduction'       => null,
+            'text'               => $this->text,
+            'image'              => $image,
+            'link'               => $this->link,
+            'contact_name'       => $this->contact_name,
+            'contact_email'      => $this->contact_email,
+            'contact_phone'      => $this->contact_phone,
+            'publish'            => 0,
+            'created_user_id'    => null,
+            'updated_user_id'    => null,
+            'source_form'        => 1
         ]);
 
         session()->flash('success', 'Noticia enviada, revisaremos el registro y te notificaremos.');

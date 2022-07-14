@@ -34,7 +34,7 @@ class ComparsaService implements ComparsaInterface
         $comparsa->contact_email      = $data['contact_email'];
         $comparsa->contact_validation = $data['contact_validation'];
         $comparsa->source_form        = $data['source_form'];
-        $comparsa->user_id            = $data['user_id'];
+        $comparsa->created_user_id    = $data['created_user_id'];
         $comparsa->publish            = $data['publish'];
         $comparsa->save();
 
@@ -51,5 +51,40 @@ class ComparsaService implements ComparsaInterface
         };
 
         return $slug;
+    }
+
+    public function update($data, $id)
+    {
+        $comparsa = Comparsa::findOrFail($id);
+
+        $comparsa->slug = $data['name'] !== $comparsa->title? $this->generateSlug($data['name']) : $comparsa->slug;
+
+        $comparsa->name               = $data['name'];
+        $comparsa->image              = $data['image'];
+        $comparsa->date               = $data['date'];
+        $comparsa->location           = $data['location'];
+        $comparsa->members            = $data['members'];
+        $comparsa->extract            = $data['extract'];
+        $comparsa->text               = $data['text'];
+        $comparsa->text_1             = $data['text_1'];
+        $comparsa->text_2             = $data['text_2'];
+        $comparsa->text_3             = $data['text_3'];
+        $comparsa->text_4             = $data['text_4'];
+        $comparsa->text_5             = $data['text_5'];
+        $comparsa->text_6             = $data['text_6'];
+        $comparsa->link               = $data['link'];
+        $comparsa->web                = $data['web'];
+        $comparsa->facebook           = $data['facebook'];
+        $comparsa->instagram          = $data['instagram'];
+        $comparsa->contact_name       = $data['contact_name'];
+        $comparsa->contact_phone      = $data['contact_phone'];
+        $comparsa->contact_email      = $data['contact_email'];
+        $comparsa->contact_validation = $data['contact_validation'];
+        $comparsa->source_form        = $data['source_form'];
+        $comparsa->updated_user_id    = $data['updated_user_id'];
+        $comparsa->publish            = $data['publish'];
+        $comparsa->save();
+
+        return $comparsa;
     }
 }

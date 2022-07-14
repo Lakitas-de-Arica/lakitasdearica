@@ -31,11 +31,20 @@ Route::middleware(['auth','verified'])->group(function () {
     Route::prefix('admin')->group(function () {
 
         Route::get('/', 'Backend\AdminController@index')->name('admin');
-        Route::get('/noticias', 'Backend\AdminNewsController@index')->name('admin.news');
-        Route::get('/noticias/create', 'Backend\AdminNewsController@create')->name('admin.news.create');
-        Route::get('/noticias/{id}/edit', 'Backend\AdminNewsController@edit')->name('admin.news.edit');
-        Route::get('/noticias/{id}/delete', 'Backend\AdminNewsController@delete')->name('admin.news.delete');
-        Route::get('/comparsas', 'Backend\AdminComparsaController@index')->name('admin.comparsas');
+
+        Route::prefix('noticias')->group(function () {
+            Route::get('/', 'Backend\AdminNewsController@index')->name('admin.news');
+            Route::get('/create', 'Backend\AdminNewsController@create')->name('admin.news.create');
+            Route::get('/{id}/edit', 'Backend\AdminNewsController@edit')->name('admin.news.edit');
+            Route::get('/{id}/delete', 'Backend\AdminNewsController@delete')->name('admin.news.delete');
+        });
+
+        Route::prefix('comparsas')->group(function () {
+            Route::get('/', 'Backend\AdminComparsaController@index')->name('admin.comparsa');
+            Route::get('/create', 'Backend\AdminComparsaController@create')->name('admin.comparsa.create');
+            Route::get('/{id}/edit', 'Backend\AdminComparsaController@edit')->name('admin.comparsa.edit');
+            Route::get('/{id}/delete', 'Backend\AdminComparsaController@delete')->name('admin.comparsa.delete');
+        });
 
     });
 });

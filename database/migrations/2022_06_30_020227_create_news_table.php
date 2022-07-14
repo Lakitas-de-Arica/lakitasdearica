@@ -21,7 +21,7 @@ class CreateNewsTable extends Migration
             $table->date('date');
             $table->text('introduction')->nullable();
             $table->longText('text');
-            $table->string('link');
+            $table->string('link')->nullable();
             $table->string('contact_name')->nullable();
             $table->string('contact_phone')->nullable();
             $table->string('contact_email')->nullable();

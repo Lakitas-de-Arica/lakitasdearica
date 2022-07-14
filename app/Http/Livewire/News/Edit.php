@@ -32,7 +32,7 @@ class Edit extends Component
         'introduction' => 'nullable|min:20|max:65000',
         'text' => 'required|min:20|max:65000',
         'image' => 'nullable|image|max:3072',
-        'link' => 'nullable|active_url|min:3|max:255',
+        'link' => 'requiredIf:source_form,1|nullable|active_url|min:3|max:255',
         'contact_name' => 'requiredIf:source_form,1|nullable|min:3|max:255',
         'contact_email' => 'requiredIf:source_form,1|nullable|email|min:3|max:255',
         'contact_phone' => 'requiredIf:source_form,1|nullable|min:3|max:13'
@@ -84,6 +84,7 @@ class Edit extends Component
 
     public function updateSource()
     {
+        $this->link          = $this->source_form == 1? $this->new->link : null;
         $this->contact_name  = $this->source_form == 1? $this->new->contact_name : null;
         $this->contact_email = $this->source_form == 1? $this->new->contact_email : null;
         $this->contact_phone = $this->source_form == 1? $this->new->contact_phone : null;

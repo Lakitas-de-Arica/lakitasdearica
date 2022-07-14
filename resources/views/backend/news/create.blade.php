@@ -2,7 +2,8 @@
 
 @section('title', 'Noticias - ' . config('app.name'))
 
-@section('adminlte_css')
+@section('css')
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 @stop
 
 @section('content_header')
@@ -12,11 +13,7 @@
 @section('content')
     <div class="row">
         <div class="col-12">
-            <div class="card">
-                <div class="card-body">
-
-                </div>
-            </div>
+            @livewire('news.create')
         </div>
     </div>
 @stop
