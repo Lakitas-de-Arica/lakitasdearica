@@ -16,7 +16,7 @@ class AdminComparsaController extends Controller
     {
         $urlPrevious = url()->previous();
 
-        return view('backend.news.create')
+        return view('backend.comparsas.create')
                 ->with('urlPrevious', $urlPrevious);
     }
 

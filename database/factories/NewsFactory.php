@@ -34,6 +34,6 @@ class NewsFactory extends Factory
 
     public function paragraphs($n)
     {
-        return implode('<br>',$this->faker->paragraphs(5));
+        return implode('<br>',$this->faker->paragraphs($n));
     }
 }

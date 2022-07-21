@@ -18,7 +18,7 @@ class DatabaseSeeder extends Seeder
             UserAdmin::class
         ]);
 
-        News::factory(5000)->create();
-        Comparsa::factory(5000)->create();
+        News::factory(150)->create();
+        Comparsa::factory(150)->create();
     }
 }

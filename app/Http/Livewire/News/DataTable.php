@@ -7,8 +7,9 @@ use Rappasoft\LaravelLivewireTables\Views\Columns\BooleanColumn;
 use Rappasoft\LaravelLivewireTables\Views\Columns\LinkColumn;
 use Rappasoft\LaravelLivewireTables\Views\Columns\ButtonGroupColumn;
 use Rappasoft\LaravelLivewireTables\Views\Filters\SelectFilter;
-use Illuminate\Database\Eloquent\Builder;
 use Rappasoft\LaravelLivewireTables\Views\Column;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Str;
 use App\Models\News;
 
 class DataTable extends DataTableComponent
@@ -29,7 +30,10 @@ class DataTable extends DataTableComponent
                 ->sortable(),
             Column::make("Título", "title")
                 ->sortable()
-                ->searchable(),
+                ->searchable()
+                ->format(
+                    fn($value, $row, Column $column) => Str::limit($value, 40, ' ...')
+                ),
             Column::make("Fecha", "date")
                 ->sortable()
                 ->format(
@@ -45,7 +49,7 @@ class DataTable extends DataTableComponent
                 ->format(
                     fn($value, $row, Column $column) => $value->format('d-m-Y H:i:s')
                 ),
-            ButtonGroupColumn::make('Actions')
+            ButtonGroupColumn::make('Acciones')
                 ->attributes(function($row) {
                     return [
                         'class' => 'space-x-2',

@@ -32,7 +32,6 @@ class ComparsaService implements ComparsaInterface
         $comparsa->contact_name       = $data['contact_name'];
         $comparsa->contact_phone      = $data['contact_phone'];
         $comparsa->contact_email      = $data['contact_email'];
-        $comparsa->contact_validation = $data['contact_validation'];
         $comparsa->source_form        = $data['source_form'];
         $comparsa->created_user_id    = $data['created_user_id'];
         $comparsa->publish            = $data['publish'];
@@ -79,7 +78,6 @@ class ComparsaService implements ComparsaInterface
         $comparsa->contact_name       = $data['contact_name'];
         $comparsa->contact_phone      = $data['contact_phone'];
         $comparsa->contact_email      = $data['contact_email'];
-        $comparsa->contact_validation = $data['contact_validation'];
         $comparsa->source_form        = $data['source_form'];
         $comparsa->updated_user_id    = $data['updated_user_id'];
         $comparsa->publish            = $data['publish'];
