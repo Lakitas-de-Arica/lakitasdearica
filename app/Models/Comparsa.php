@@ -31,4 +31,9 @@ class Comparsa extends Model
     {
         return Str::replace(',', '<br>', $this->members);
     }
+
+    public function multimedia()
+    {
+        return $this->hasMany(Multimedia::class);
+    }
 }

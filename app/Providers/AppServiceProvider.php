@@ -8,6 +8,8 @@ use App\Contracts\New\NewInterface;
 use App\Services\New\NewService;
 use App\Contracts\Comparsa\ComparsaInterface;
 use App\Services\Comparsa\ComparsaService;
+use App\Contracts\Multimedia\MultimediaInterface;
+use App\Services\Multimedia\MultimediaService;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -20,6 +22,7 @@ class AppServiceProvider extends ServiceProvider
     {
         $this->app->bind(NewInterface::class, NewService::class);
         $this->app->bind(ComparsaInterface::class, ComparsaService::class);
+        $this->app->bind(MultimediaInterface::class, MultimediaService::class);
     }
 
     /**

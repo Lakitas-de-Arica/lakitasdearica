@@ -239,6 +239,11 @@ return [
             'text' => 'Comparsas',
             'url'  => 'admin/comparsas',
             'icon' => 'fas fa-fw fa-users',
+        ],
+        [
+            'text' => 'Multimedia',
+            'url'  => 'admin/multimedia',
+            'icon' => 'fas fa-fw fa-photo-video'
         ]
     ],
 

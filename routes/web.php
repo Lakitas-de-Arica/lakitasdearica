@@ -27,6 +27,9 @@ Route::get('/comparsas', 'ComparsaController@index')->name('comparsa');
 Route::get('/comparsas/publicar', 'ComparsaController@publish')->name('comparsa.publish');
 Route::get('/comparsas/{slug}', 'ComparsaController@show')->name('comparsa.show');
 
+Route::get('/multimedia', 'MultimediaController@index')->name('multimedia');
+Route::get('/multimedia/{slug}', 'MultimediaController@show')->name('multimedia.show');
+
 Route::middleware(['auth','verified'])->group(function () {
     Route::prefix('admin')->group(function () {
 
