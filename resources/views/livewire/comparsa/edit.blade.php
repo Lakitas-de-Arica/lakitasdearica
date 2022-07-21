@@ -14,7 +14,7 @@
                         </div>
 
                         <div class="mb-3">
-                            <label for="validationDate" class="form-label">Fecha</label>
+                            <label for="validationDate" class="form-label">Fecha formación</label>
                             <input type="text" wire:model="date" class="form-control @error('date') is-invalid @enderror datepicker" id="validationDate" aria-describedby="validationDateFeedback">
                             @error('date') <div id="validationDateFeedback" class="invalid-feedback"> {{ $message }} </div> @enderror
                         </div>

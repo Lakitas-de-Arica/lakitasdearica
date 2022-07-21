@@ -38,7 +38,6 @@ class CreateComparsasTable extends Migration
             $table->string('contact_phone')->nullable();
             $table->string('contact_email')->nullable();
             $table->boolean('source_form')->default(false);
-            $table->boolean('contact')->default(false);
             $table->boolean('publish')->default(false);
             $table->foreignIdFor(User::class, 'created_user_id')->nullable();
             $table->foreignIdFor(User::class, 'updated_user_id')->nullable();

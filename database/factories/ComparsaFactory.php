@@ -41,7 +41,7 @@ class ComparsaFactory extends Factory
             'contact_name'    => $this->faker->firstName(),
             'contact_phone'   => $this->faker->phoneNumber(),
             'contact_email'   => $this->faker->safeEmail(),
-            'contact'         => 1,
+            'source_form'     => 1,
             'created_user_id' => rand(1,2),
             'publish'         => 1,
         ];

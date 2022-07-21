@@ -110,7 +110,7 @@ class FormPublish extends Component
             'contact_email' => $this->contact_email,
             'contact_phone' => $this->contact_phone,
             'publish' => 0,
-            'user_id' => null,
+            'created_user_id' => null,
             'contact_validation' => 0,
             'source_form' => 1
         ]);

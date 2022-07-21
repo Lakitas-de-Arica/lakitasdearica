@@ -13,7 +13,7 @@
 @section('content')
     <div class="row">
         <div class="col-12">
-            @livewire('comparsa.create')
+            @livewire('comparsa.create', ['urlPrevious' => $urlPrevious])
         </div>
     </div>
 @stop

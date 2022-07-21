@@ -85,4 +85,9 @@ class ComparsaService implements ComparsaInterface
 
         return $comparsa;
     }
+
+    public function delete($id)
+    {
+        Comparsa::findOrFail($id)->delete();
+    }
 }
