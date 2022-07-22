@@ -256,6 +256,9 @@ footer a {
   line-height: 32px;
   color: #FFFFFF;
 }
+footer a:hover {
+  color: #FFFFFF;
+}
 @media (max-width: 576px) {
   footer a {
     font-size: 16px;
@@ -427,6 +430,39 @@ p {
   color: #000000;
 }
 .container-new p.text {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 28px;
+  color: #000000;
+}
+.container-multimedia h2.title {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 800;
+  font-size: 40px;
+  line-height: 60px;
+  text-transform: uppercase;
+}
+.container-multimedia p.description {
+  font-family: 'DM Sans';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 28px;
+  color: #000000;
+}
+.container-multimedia p {
+  font-family: 'DM Sans';
+  font-style: normal;
+}
+.container-multimedia p.date {
+  font-weight: 700;
+  font-size: 12px;
+  line-height: 20px;
+  text-transform: uppercase;
+  color: #000000;
+}
+.container-multimedia p.text {
   font-weight: 400;
   font-size: 16px;
   line-height: 28px;
@@ -606,7 +642,34 @@ p {
   line-height: 28px;
   color: #000000;
 }
+.sidebar-data-comparsa p a {
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 28px;
+  -webkit-text-decoration-line: underline;
+          text-decoration-line: underline;
+  color: #000000;
+  text-transform: none;
+}
 .sidebar-data-comparsa a {
   text-decoration: underline;
+}
+.link-previous-next {
+  font-family: 'DM Sans';
+  font-style: normal;
+}
+.link-previous-next .multimedia-comparsa {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 24px;
+  color: #000000;
+  text-transform: none;
+}
+.link-previous-next .multimedia-title {
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 28px;
+  color: #000000;
+  text-transform: none;
 }
 

@@ -28,10 +28,10 @@ class Multimedia extends Model
 
     public function generateEmbedVideo()
     {
-        if ($this->format !== 'YOUTUBE') return null;
+        if ($this->format !== 'VIDEO') return null;
 
         return preg_replace("/\s*[a-zA-Z\/\/:\.]*youtube.com\/watch\?v=([a-zA-Z0-9\-_]+)([a-zA-Z0-9\/\*\-\_\?\&\;\%\=\.]*)/i",
-                            "<iframe width=\"420\" height=\"315\" src=\"//www.youtube.com/embed/$1\" frameborder=\"0\" allowfullscreen></iframe>",
+                            "<iframe width=\"100%\" height=\"315\" src=\"//www.youtube.com/embed/$1\" frameborder=\"0\" allowfullscreen></iframe>",
                             $this->file);
     }
 
@@ -47,5 +47,40 @@ class Multimedia extends Model
         }
 
         return $this->image;
+    }
+
+    public function getFile()
+    {
+        switch ($this->format) {
+            case 'PDF':
+
+                return '<a href="'.asset('storage/'.$this->file).'" class="btn btn-primary" target="_blank">Descargar PDF</a>';
+
+                break;
+
+            case 'MP3':
+
+                return '<audio controls>
+                            <source src="'.asset('storage/'.$this->file).'" type="audio/mpeg">
+                            Su navegador no es compatible con el elemento de audio
+                        </audio>';
+
+                break;
+
+            case 'VIDEO':
+
+                return $this->generateEmbedVideo();
+
+                break;
+
+            case 'IMAGEN':
+
+                return '<img src="'.asset('storage/'.$this->file).'" class="img-fluid">';
+
+                break;
+
+            default:
+                return null;
+        }
     }
 }

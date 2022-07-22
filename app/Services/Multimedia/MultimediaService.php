@@ -67,4 +67,28 @@ class MultimediaService implements MultimediaInterface
     {
         return config('multimedia.formats');
     }
+
+    public function getPrevious(Multimedia $multimedia)
+    {
+        $previous = Multimedia::where('created_at','<',$multimedia->created_at)
+                        ->orderBy('created_at','desc')
+                        ->get()
+                        ->first();
+
+        if ($previous) return $previous;
+
+        return null;
+    }
+
+    public function getNext(Multimedia $multimedia)
+    {
+        $next = Multimedia::where('created_at','>',$multimedia->created_at)
+                        ->orderBy('created_at','asc')
+                        ->get()
+                        ->first();
+
+        if ($next) return $next;
+
+        return null;
+    }
 }

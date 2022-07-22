@@ -23,6 +23,39 @@
         <div class="col-md-8 pt-5">
             <h1 class="mb-5">{{ $comparsa->name }}</h1>
             <p>{!! $comparsa->text !!}</p>
+
+            @if ($comparsa->multimedia->first())
+                <div class="multimedia-comparsa multimedia">
+                    <h3 class="mt-5">CONTENIDO COMPARSA</h3>
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="img" style="height:230px; background-image: url('{{ asset('storage/'.$comparsa->multimedia->first()->publicImage()) }}')">
+                                <div class="format">{{ $comparsa->multimedia->first()->format }}</div>
+                            </div>
+                        </div>
+                        <div class="col-6 pt-4">
+                            <p class="date">
+                                {{ $comparsa->multimedia->first()->dateStringFormat() }}
+                            </p>
+                            <div class="title border-bottom-1">
+                                <a href="{{ $comparsa->multimedia->first()->publicLink() }}" class="fw-bold">
+                                    {{ $comparsa->multimedia->first()->title }}
+                                </a>
+                            </div>
+                            <div class="row pt-3">
+                                <div class="col-6">
+                                    <a href="{{ $comparsa->multimedia->first()->publicLink() }}">VER ARCHIVO</a>
+                                </div>
+                                <div class="col-6 text-end">
+                                    <a href="{{ $comparsa->multimedia->first()->publicLink() }}">
+                                        <img src="{{ asset('images/arrow-right.svg') }}" class="img-fluid">
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @endif
         </div>
         <div class="col-md-4 pt-5">
             <div class="sidebar-data-comparsa p-4">

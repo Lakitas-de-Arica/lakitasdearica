@@ -22,7 +22,7 @@ class Show extends Component
 
     public function render()
     {
-        $news = News::where('publish',1)->orderBy('date','desc');
+        $news = News::where('publish',1)->orderBy('created_at','desc');
 
         if ($this->paginate) {
             $news = $news->paginate($this->numberOfItems);

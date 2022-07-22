@@ -22,7 +22,7 @@ class Show extends Component
 
     public function render()
     {
-        $multimedias = Multimedia::where('publish',1)->orderBy('date','desc');
+        $multimedias = Multimedia::where('publish',1)->orderBy('created_at','desc');
 
         if ($this->paginate) {
             $multimedias = $multimedias->paginate($this->numberOfItems);

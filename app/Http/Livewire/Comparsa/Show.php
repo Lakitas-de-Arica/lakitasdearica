@@ -22,7 +22,7 @@ class Show extends Component
 
     public function render()
     {
-        $comparsas = Comparsa::where('publish',1)->orderBy('date','desc');
+        $comparsas = Comparsa::where('publish',1)->orderBy('created_at','desc');
 
         if ($this->paginate) {
             $comparsas = $comparsas->paginate($this->numberOfItems);

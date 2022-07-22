@@ -15,8 +15,8 @@
                     <a class="nav-link {{ (Request::is('/') ? 'active' : '') }}" aria-current="page" href="{{ route('home') }}">Inicio</a>
                     <a class="nav-link {{ (Request::is('introduccion') ? 'active' : '') }}" href="{{ route('introduction') }}">Introducción</a>
                     <a class="nav-link {{ (Request::is('historia') ? 'active' : '') }}" href="{{ route('history') }}">HISTORIA</a>
-                    <a class="nav-link {{ (Request::is('comparsas') ? 'active' : '') }}" href="{{ route('comparsa') }}">COMPARSAS</a>
-                    <a class="nav-link {{ (Request::is('multimedia') ? 'active' : '') }}" href="{{ route('multimedia') }}">MULTIMEDIA</a>
+                    <a class="nav-link {{ (Request::is('comparsas*') ? 'active' : '') }}" href="{{ route('comparsa') }}">COMPARSAS</a>
+                    <a class="nav-link {{ (Request::is('multimedia*') ? 'active' : '') }}" href="{{ route('multimedia') }}">MULTIMEDIA</a>
                     <a class="nav-link {{ (Request::is('contacto') ? 'active' : '') }}" href="{{ route('contact') }}">contacto</a>
                 </nav>
             </div>
