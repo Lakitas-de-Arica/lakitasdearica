@@ -38,7 +38,7 @@ class MultimediaFactory extends Factory
             'publish'         => 1,
             'gallery'         => $format == 'IMAGEN'? 1 : 0,
             'created_user_id' => rand(1,2),
-            'comparsa_id'     => rand(1,50),
+            'comparsa_id'     => rand(1,150),
             'created_at'      => $this->faker->date('Y-m-d H:i:s'),
         ];
     }

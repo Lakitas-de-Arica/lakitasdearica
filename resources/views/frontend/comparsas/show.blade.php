@@ -25,11 +25,11 @@
             <p>{!! $comparsa->text !!}</p>
 
             @if ($comparsa->multimedia->first())
-                <div class="multimedia-comparsa multimedia">
-                    <h3 class="mt-5">CONTENIDO COMPARSA</h3>
+                <div class="multimedia">
+                    <h3 class="mt-5 mb-4">CONTENIDO COMPARSA</h3>
                     <div class="row">
-                        <div class="col-6">
-                            <div class="img" style="height:230px; background-image: url('{{ asset('storage/'.$comparsa->multimedia->first()->publicImage()) }}')">
+                        <div class="col-5">
+                            <div class="img" style="height:174px; background-image: url('{{ asset('storage/'.$comparsa->multimedia->first()->publicImage()) }}')">
                                 <div class="format">{{ $comparsa->multimedia->first()->format }}</div>
                             </div>
                         </div>
@@ -37,7 +37,7 @@
                             <p class="date">
                                 {{ $comparsa->multimedia->first()->dateStringFormat() }}
                             </p>
-                            <div class="title border-bottom-1">
+                            <div class="title border-bottom-1" style="height:46px;">
                                 <a href="{{ $comparsa->multimedia->first()->publicLink() }}" class="fw-bold">
                                     {{ $comparsa->multimedia->first()->title }}
                                 </a>

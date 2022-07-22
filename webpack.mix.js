@@ -20,11 +20,13 @@ mix.js('resources/js/app.js', 'public/js')
 
     /** FLICKITY */
     .styles([
-        'node_modules/flickity/dist/flickity.css'
+        'node_modules/flickity/dist/flickity.css',
+        'node_modules/flickity-fullscreen/fullscreen.css'
     ], 'public/css/flickity.css')
 
     .scripts([
         'node_modules/flickity/dist/flickity.pkgd.js',
+        'node_modules/flickity-fullscreen/fullscreen.js'
     ], 'public/js/flickity.js')
     /** FLICKITY */
 

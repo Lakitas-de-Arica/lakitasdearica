@@ -7,7 +7,6 @@
 @endsection
 
 @section('css')
-
 @endsection
 
 @section('content')
@@ -40,6 +39,11 @@
                 </p>
             </div>
         </div>
+        <div class="row justify-content-center">
+            <div class="col-md-10">
+                @livewire('multimedia.gallery')
+            </div>
+        </div>
     </div>
 </div>
 
@@ -49,6 +53,5 @@
 @endsection
 
 @section('js')
-
     @stack('scripts')
 @endsection
