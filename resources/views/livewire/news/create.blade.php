@@ -21,14 +21,14 @@
 
                         <div class="mb-3">
 
-                            @if ($image)
+                            @if ($image AND !$errors->has('image'))
                             <div class="mb-3">
                                 <label>Visualización previa:</label><br>
                                 <img src="{{ $image->temporaryUrl() }}" class="img-fluid" style="max-width: 300px">
                             </div>
                             @endif
 
-                            <label for="validationImage" class="form-label">Actualizar imagen</label>
+                            <label for="validationImage" class="form-label">Imagen</label>
                             <input wire:model="image" class="form-control @error('image') is-invalid @enderror" type="file" id="validationImage" aria-describedby="validationImageFeedback">
                             @error('image') <div id="validationImageFeedback" class="invalid-feedback"> {{ $message }} </div> @enderror
                             <div wire:loading wire:target="image">Cargando...</div>

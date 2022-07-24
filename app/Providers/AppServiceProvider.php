@@ -10,6 +10,7 @@ use App\Contracts\Comparsa\ComparsaInterface;
 use App\Services\Comparsa\ComparsaService;
 use App\Contracts\Multimedia\MultimediaInterface;
 use App\Services\Multimedia\MultimediaService;
+use Illuminate\Support\Facades\Validator;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -33,5 +34,13 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         Carbon::setlocale('es_ES');
+
+        Validator::extend('youtube', function ($attribute, $value, $parameters, $validator) {
+            $validator->addReplacer('youtube', function ($message, $attribute, $rule, $parameters) {
+                return 'El link no pertenece a un video de Youtube';
+            });
+
+            return (bool) preg_match('/^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=|\?v=)([^#\&\?]*).*/',$value);
+        });
     }
 }

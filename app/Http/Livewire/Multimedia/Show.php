@@ -41,11 +41,11 @@ class Show extends Component
             $multimedias = $multimedias->where('format',$this->filtroformat);
         }
 
+        $fechas = $this->getFiltroDate($multimedias);
+
         if ($this->filtrodate !== "0") {
             $multimedias = $multimedias->where('date','like',$this->filtrodate.'%');
         }
-
-        $fechas = $this->getFiltroDate($multimedias);
 
         if ($this->paginate) {
             $multimedias = $multimedias->paginate($this->numberOfItems);

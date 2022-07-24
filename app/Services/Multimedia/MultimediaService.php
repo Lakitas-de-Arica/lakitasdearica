@@ -20,6 +20,7 @@ class MultimediaService implements MultimediaInterface
         $multimedia->description     = $data['description'];
         $multimedia->link            = $data['link'];
         $multimedia->publish         = $data['publish'];
+        $multimedia->gallery         = $data['gallery'];
         $multimedia->comparsa_id     = $data['comparsa_id'];
         $multimedia->created_user_id = $data['created_user_id'];
         $multimedia->save();
@@ -39,6 +40,7 @@ class MultimediaService implements MultimediaInterface
         $multimedia->description     = $data['description'];
         $multimedia->link            = $data['link'];
         $multimedia->publish         = $data['publish'];
+        $multimedia->gallery         = $data['gallery'];
         $multimedia->comparsa_id     = $data['comparsa_id'];
         $multimedia->updated_user_id = $data['updated_user_id'];
         $multimedia->save();

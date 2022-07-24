@@ -55,6 +55,15 @@ class DataTable extends DataTableComponent
                 ->format(
                     fn($value, $row, Column $column) => $value->format('d-m-Y H:i:s')
                 ),
+            LinkColumn::make('Multimedia')
+                    ->title(fn($row) => 'Archivos')
+                    ->location(fn($row) => route('admin.multimedia').'?table[filters][comparsas]='.$row->id)
+                    ->attributes(function($row) {
+                        return [
+                            'class' => 'mr-2',
+                            'style' => 'text-decoration: underline;'
+                        ];
+                    }),
             ButtonGroupColumn::make('Acciones')
                 ->attributes(function($row) {
                     return [

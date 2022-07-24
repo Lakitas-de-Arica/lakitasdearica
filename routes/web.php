@@ -49,5 +49,12 @@ Route::middleware(['auth','verified'])->group(function () {
             Route::get('/{id}/delete', 'Backend\AdminComparsaController@delete')->name('admin.comparsa.delete');
         });
 
+        Route::prefix('multimedia')->group(function () {
+            Route::get('/', 'Backend\AdminMultimediaController@index')->name('admin.multimedia');
+            Route::get('/create', 'Backend\AdminMultimediaController@create')->name('admin.multimedia.create');
+            Route::get('/{id}/edit', 'Backend\AdminMultimediaController@edit')->name('admin.multimedia.edit');
+            Route::get('/{id}/delete', 'Backend\AdminMultimediaController@delete')->name('admin.multimedia.delete');
+        });
+
     });
 });

@@ -23,7 +23,7 @@
 
             <div class="mb-3">
 
-                @if ($image)
+                @if ($image AND !$errors->has('image'))
                 <div class="mb-3">
                     <label>Visualización previa:</label><br>
                     <img src="{{ $image->temporaryUrl() }}" class="img-fluid">
