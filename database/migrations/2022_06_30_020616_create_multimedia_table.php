@@ -20,7 +20,7 @@ class CreateMultimediaTable extends Migration
             $table->string('title');
             $table->string('slug')->unique();
             $table->string('image')->nullable();
-            $table->string('date');
+            $table->date('date');
             $table->string('format');
             $table->string('file');
             $table->text('description')->nullable();

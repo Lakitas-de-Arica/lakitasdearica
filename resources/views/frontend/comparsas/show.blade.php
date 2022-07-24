@@ -37,12 +37,12 @@
                             <p class="date">
                                 {{ $comparsa->multimedia->first()->dateStringFormat() }}
                             </p>
-                            <div class="title border-bottom-1" style="height:46px;">
-                                <a href="{{ $comparsa->multimedia->first()->publicLink() }}" class="fw-bold">
+                            <div class="title border-bottom-1" style="height:56px;">
+                                <a href="{{ $comparsa->multimedia->first()->publicLink() }}" class="fw-bold" style="line-height: 17px;">
                                     {{ $comparsa->multimedia->first()->title }}
                                 </a>
                             </div>
-                            <div class="row pt-3">
+                            <div class="row pt-2">
                                 <div class="col-6">
                                     <a href="{{ $comparsa->multimedia->first()->publicLink() }}">VER ARCHIVO</a>
                                 </div>

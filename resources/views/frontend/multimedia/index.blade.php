@@ -14,7 +14,7 @@
 
 <div class="container-fluid mt-5">
     <div class="container py-5">
-        <div class="row pt-5 pb-3">
+        <div class="row pt-5 pb-0">
             <div class="col-md-12 text-center col-title-section">
                 <p>ARCHIVO</p>
                 <h2>MULTIMEDIA</h2>
@@ -35,6 +35,5 @@
 @endsection
 
 @section('js')
-
     @stack('scripts')
 @endsection
