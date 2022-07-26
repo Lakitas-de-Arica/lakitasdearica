@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Comparsas - ' . config('app.name'))
+@section('title', 'Multimedia - ' . config('app.name'))
 
 @section('css')
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
@@ -12,13 +12,13 @@
 @stop
 
 @section('content_header')
-    <h1 class="m-0 text-dark">Editar comparsa</h1>
+    <h1 class="m-0 text-dark">Editar multimedia</h1>
 @stop
 
 @section('content')
     <div class="row">
         <div class="col-12">
-            @livewire('comparsa.edit', ['comparsa' => $comparsa, 'urlPrevious' => $urlPrevious])
+            @livewire('multimedia.edit', ['multimedia' => $multimedia, 'urlPrevious' => $urlPrevious])
         </div>
     </div>
 @stop

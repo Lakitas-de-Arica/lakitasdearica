@@ -154,7 +154,7 @@
 
                         <div class="mt-5">
                             <a href="{{ $urlPrevious }}" class="btn btn-secondary float-left">Volver</a>
-                            <button type="submit" class="btn btn-primary float-right">Guardar cambios</button>
+                            <button type="submit" class="btn btn-primary float-right">Actualizar</button>
                         </div>
 
                     </div>
