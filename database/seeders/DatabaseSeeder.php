@@ -6,6 +6,7 @@ use Illuminate\Database\Seeder;
 use App\Models\News;
 use App\Models\Comparsa;
 use App\Models\Multimedia;
+use App\Models\Page;
 
 class DatabaseSeeder extends Seeder
 {
@@ -17,7 +18,8 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->call([
-            UserAdmin::class
+            UserAdmin::class,
+            PageSeeder::class
         ]);
 
         News::factory(150)->create();

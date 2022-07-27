@@ -244,6 +244,11 @@ return [
             'text' => 'Multimedia',
             'url'  => 'admin/multimedia',
             'icon' => 'fas fa-fw fa-photo-video'
+        ],
+        [
+            'text' => 'Páginas',
+            'url'  => 'admin/paginas',
+            'icon' => 'fas fa-fw fa-file-alt'
         ]
     ],
 

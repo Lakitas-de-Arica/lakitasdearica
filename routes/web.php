@@ -56,5 +56,12 @@ Route::middleware(['auth','verified'])->group(function () {
             Route::get('/{id}/delete', 'Backend\AdminMultimediaController@delete')->name('admin.multimedia.delete');
         });
 
+        Route::prefix('paginas')->group(function () {
+
+            Route::get('/', 'Backend\AdminPagesController@index')->name('admin.pages');
+            Route::get('/{page}/edit', 'Backend\AdminPagesController@edit')->name('admin.pages.edit');
+
+        });
+
     });
 });

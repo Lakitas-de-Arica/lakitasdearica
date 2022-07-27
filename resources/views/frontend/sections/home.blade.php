@@ -28,12 +28,7 @@
                     <img src="{{ asset('images/LakitasdeArica.png') }}" class="img-fluid my-5 d-none d-md-block">
                     <img src="{{ asset('images/LakitasdeArica-movil.png') }}" class="img-fluid my-5 d-md-none d-block">
                     <p class="my-3">
-                        Lakitas de Arica Los Mollo es una de las más antiguas y emblemáticas
-                        comparsas de lakas del extremo norte de Chile. Orgullosos embajadores
-                        del “estilo Jaiña” tanto dentro como fuera de la región de Arica y Parinacota,
-                        destacan por sus contagiosas cumbias, ejecutadas con precisión y maestría.
-                        Su variado repertorio mezcla tradición e innovación para seducir a un
-                        amplio público y amenizar cualquier ocasión
+                        {!! $page->text !!}
                     </p>
                     <p class="mt-5">
                         <a href="">

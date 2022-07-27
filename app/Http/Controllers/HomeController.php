@@ -3,26 +3,39 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Page;
 
 class HomeController extends Controller
 {
     public function home()
     {
-        return view('frontend.sections.home');
+        $page = Page::where('title','Portada')->first();
+
+        return view('frontend.sections.home')
+                ->with('page',$page);
     }
 
     public function introduction()
     {
-        return view('frontend.sections.introduction');
+        $page = Page::where('title','Introducción')->first();
+
+        return view('frontend.sections.introduction')
+                ->with('page',$page);
     }
 
     public function history()
     {
-        return view('frontend.sections.history');
+        $page = Page::where('title','Historia')->first();
+
+        return view('frontend.sections.history')
+                ->with('page',$page);
     }
 
     public function contact()
     {
-        return view('frontend.sections.contact');
+        $page = Page::where('title','Contacto')->first();
+
+        return view('frontend.sections.contact')
+                ->with('page',$page);
     }
 }
