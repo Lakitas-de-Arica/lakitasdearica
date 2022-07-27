@@ -31,6 +31,22 @@ class HomeController extends Controller
                 ->with('page',$page);
     }
 
+    public function comparsasHistoricas()
+    {
+        $page = Page::where('title','Comparsas históricas')->first();
+
+        return view('frontend.sections.comparsas-historicas')
+                ->with('page',$page);
+    }
+
+    public function viejosSopladores()
+    {
+        $page = Page::where('title','Viejos Sopladores')->first();
+
+        return view('frontend.sections.viejos-sopladores')
+                ->with('page',$page);
+    }
+
     public function contact()
     {
         $page = Page::where('title','Contacto')->first();

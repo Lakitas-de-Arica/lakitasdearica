@@ -24,10 +24,10 @@
 
                 <div class="row border-bottom-1 border-top-1 py-5 px-3 mt-5">
                     <div class="col-8">
-                        <a href="" class="link-bigger">Comparsas Históricas</a>
+                        <a href="{{ route('history.comparsashistoricas') }}" class="link-bigger">Comparsas Históricas</a>
                     </div>
                     <div class="col-4 text-end">
-                        <a href="" class="link-bigger">
+                        <a href="{{ route('history.comparsashistoricas') }}" class="link-bigger">
                             <img src="{{ asset('images/arrow-right.svg') }}" class="img-fluid">
                         </a>
                     </div>
@@ -35,10 +35,10 @@
 
                 <div class="row border-bottom-1 py-5 px-3">
                     <div class="col-8">
-                        <a href="" class="link-bigger">Viejos Sopladores</a>
+                        <a href="{{ route('history.viejossopladores') }}" class="link-bigger">Viejos Sopladores</a>
                     </div>
                     <div class="col-4 text-end">
-                        <a href="" class="link-bigger">
+                        <a href="{{ route('history.viejossopladores') }}" class="link-bigger">
                             <img src="{{ asset('images/arrow-right.svg') }}" class="img-fluid">
                         </a>
                     </div>
