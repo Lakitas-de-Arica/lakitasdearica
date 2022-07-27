@@ -25,6 +25,7 @@ class Create extends Component
     public $publish;
     public $gallery;
     public $comparsa = 0;
+    public $loadComparsa = false;
 
     protected $rules = [
         'comparsa' => 'not_in:0',
@@ -61,11 +62,13 @@ class Create extends Component
         $this->multimediaService = $multimediaService;
     }
 
-    public function mount($urlPrevious)
+    public function mount($urlPrevious, $comparsa_id = null)
     {
         $this->urlPrevious = $urlPrevious;
         $this->publish = 1;
         $this->gallery = 0;
+        $this->comparsa = $comparsa_id;
+        $this->loadComparsa = is_null($comparsa_id)? false : Comparsa::findOrFail($comparsa_id);
     }
 
     public function render()

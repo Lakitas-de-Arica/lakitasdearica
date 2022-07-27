@@ -13,7 +13,10 @@
 @section('content')
     <div class="row">
         <div class="col-12">
-            @livewire('multimedia.create', ['urlPrevious' => $urlPrevious])
+            @livewire('multimedia.create', [
+                'urlPrevious' => $urlPrevious,
+                'comparsa_id' => $comparsa_id
+            ])
         </div>
     </div>
 @stop

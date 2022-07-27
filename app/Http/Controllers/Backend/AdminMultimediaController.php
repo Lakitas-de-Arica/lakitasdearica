@@ -13,12 +13,14 @@ class AdminMultimediaController extends Controller
         return view('backend.multimedia.index');
     }
 
-    public function create()
+    public function create(Request $request)
     {
-        $urlPrevious = url()->previous();
+        $urlPrevious = $request->has('urlprevious')? $request->input('urlprevious') : url()->previous();
+        $comparsa_id = $request->has('comparsa')? $request->input('comparsa') : null;
 
         return view('backend.multimedia.create')
-                ->with('urlPrevious', $urlPrevious);
+                ->with('urlPrevious', $urlPrevious)
+                ->with('comparsa_id', $comparsa_id);
     }
 
     public function edit($id)

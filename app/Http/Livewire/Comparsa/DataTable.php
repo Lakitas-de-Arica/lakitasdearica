@@ -11,6 +11,7 @@ use Rappasoft\LaravelLivewireTables\Views\Column;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Str;
 use App\Models\Comparsa;
+use App\Models\Multimedia;
 
 class DataTable extends DataTableComponent
 {
@@ -56,7 +57,7 @@ class DataTable extends DataTableComponent
                     fn($value, $row, Column $column) => $value->format('d-m-Y H:i:s')
                 ),
             LinkColumn::make('Multimedia')
-                    ->title(fn($row) => 'Archivos')
+                    ->title(fn($row) => 'Archivos (' . Multimedia::where('comparsa_id',$row->id)->count() . ')')
                     ->location(fn($row) => route('admin.multimedia').'?table[filters][comparsas]='.$row->id)
                     ->attributes(function($row) {
                         return [
@@ -71,6 +72,15 @@ class DataTable extends DataTableComponent
                     ];
                 })
                 ->buttons([
+                    LinkColumn::make('Multimedia')
+                        ->title(fn($row) => 'Crear multimedia')
+                        ->location(fn($row) => route('admin.multimedia.create',['urlprevious' => route('admin.multimedia').'?table[filters][comparsas]='.$row->id, 'comparsa' => $row->id]))
+                        ->attributes(function($row) {
+                            return [
+                                'class' => 'mr-2',
+                                'style' => 'text-decoration: underline;'
+                            ];
+                        }),
                     LinkColumn::make('View')
                         ->title(fn($row) => 'Ver')
                         ->location(fn($row) => route('comparsa.show',['slug' => $row->slug]))

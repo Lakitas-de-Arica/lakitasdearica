@@ -3,7 +3,7 @@
         <div class="card">
             <div class="card-body">
 
-                <h2 class="mb-5">¿Deseas eliminar la comparsa: {{ $name }}?</h2>
+                <h2 class="mb-5">¿Deseas eliminar la comparsa: {{ $name }} y sus archivos multimedia?</h2>
 
                 <a href="{{ $urlPrevious }}" class="btn btn-secondary">Volver</a>
                 <button type="submit" class="btn btn-danger float-right">Eliminar comparsa</button>

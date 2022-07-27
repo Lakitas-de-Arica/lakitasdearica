@@ -7,16 +7,30 @@
                 <div class="card">
                     <div class="card-body">
 
-                        <div class="mb-3">
-                            <label for="validationComparsa" class="form-label">Comparsa</label>
-                            <select wire:model="comparsa" class="form-control @error('comparsa') is-invalid @enderror" id="validationComparsa" aria-describedby="validationComparsaFeedback">
-                                <option value="0">Seleccione...</option>
-                                @foreach($comparsas as $com)
-                                <option value="{{ $com->id }}">{{ $com->name }}</option>
-                                @endforeach
-                            </select>
-                            @error('comparsa') <div id="validationComparsaFeedback" class="invalid-feedback"> {{ $message }} </div> @enderror
-                        </div>
+                        @if(!is_null($comparsa) AND $loadComparsa)
+
+                            <h4><b>Comparsa: </b>{{ $loadComparsa->name }}</h4><br>
+
+                            <div class="mb-3 d-none">
+                                <label for="validationComparsa" class="form-label">Comparsa</label>
+                                <input type="text" wire:model="comparsa" class="form-control @error('comparsa') is-invalid @enderror" id="validationComparsa" aria-describedby="validationComparsaFeedback">
+                                @error('comparsa') <div id="validationComparsaFeedback" class="invalid-feedback"> {{ $message }} </div> @enderror
+                            </div>
+
+                        @else
+
+                            <div class="mb-3">
+                                <label for="validationComparsa" class="form-label">Comparsa</label>
+                                <select wire:model="comparsa" class="form-control @error('comparsa') is-invalid @enderror" id="validationComparsa" aria-describedby="validationComparsaFeedback">
+                                    <option value="0">Seleccione...</option>
+                                    @foreach($comparsas as $com)
+                                    <option value="{{ $com->id }}">{{ $com->name }}</option>
+                                    @endforeach
+                                </select>
+                                @error('comparsa') <div id="validationComparsaFeedback" class="invalid-feedback"> {{ $message }} </div> @enderror
+                            </div>
+
+                        @endif
 
                         <div class="mb-3">
                             <label for="validationTitle" class="form-label">Título</label>
