@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "25ef108d33b1f6fe71e7c8ad4e3893c7",
+    "content-hash": "d00993c7dfd43c7aefc520a20132b1d9",
     "packages": [
         {
             "name": "almasaeed2010/adminlte",
@@ -112,6 +112,72 @@
                 "source": "https://github.com/anhskohbo/no-captcha/tree/3.4.0"
             },
             "time": "2022-02-10T02:50:24+00:00"
+        },
+        {
+            "name": "appstract/laravel-options",
+            "version": "5.3.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/appstract/laravel-options.git",
+                "reference": "455e6380ef51a86dfee14cc17b73622ef3f0636f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/appstract/laravel-options/zipball/455e6380ef51a86dfee14cc17b73622ef3f0636f",
+                "reference": "455e6380ef51a86dfee14cc17b73622ef3f0636f",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/database": "^6.0|^7.0|^8.0|^9.0",
+                "illuminate/support": "^6.0|^7.0|^8.0|^9.0",
+                "php": ">=7.2.5"
+            },
+            "require-dev": {
+                "orchestra/database": "^4.0|^5.0|^6.0",
+                "orchestra/testbench": "^4.0|^5.0|^6.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Appstract\\Options\\OptionsServiceProvider"
+                    ],
+                    "aliases": {
+                        "Option": "Appstract\\Options\\OptionFacade"
+                    }
+                }
+            },
+            "autoload": {
+                "files": [
+                    "src/helpers.php"
+                ],
+                "psr-4": {
+                    "Appstract\\Options\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Gijs Jorissen",
+                    "email": "gijs@appstract.nl",
+                    "homepage": "https://appstract.nl",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Global options loaded from the database",
+            "homepage": "https://github.com/appstract/laravel-options",
+            "keywords": [
+                "appstract",
+                "laravel-options"
+            ],
+            "support": {
+                "issues": "https://github.com/appstract/laravel-options/issues",
+                "source": "https://github.com/appstract/laravel-options/tree/5.3.0"
+            },
+            "time": "2022-02-12T21:28:51+00:00"
         },
         {
             "name": "asm89/stack-cors",

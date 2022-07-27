@@ -7,6 +7,7 @@ use Livewire\WithFileUploads;
 use App\Contracts\Multimedia\MultimediaInterface;
 use App\Models\Comparsa;
 use App\Models\Multimedia;
+use Illuminate\Validation\Validator;
 
 class Edit extends Component
 {
@@ -32,8 +33,8 @@ class Edit extends Component
     public $link;
     public $publish;
     public $gallery;
-    public $gallery_history_1;
-    public $gallery_history_2;
+    public $gallery_history_ch;
+    public $gallery_history_vs;
     public $comparsa;
 
     protected $rules = [
@@ -73,20 +74,20 @@ class Edit extends Component
 
     public function mount(Multimedia $multimedia, $urlPrevious)
     {
-        $this->urlPrevious       = $urlPrevious;
-        $this->multimedia        = $multimedia;
-        $this->title             = $multimedia->title;
-        $this->date              = $multimedia->date->format('Y-m-d');
-        $this->imageTemporary    = $multimedia->image;
-        $this->format            = $multimedia->format;
-        $this->description       = $multimedia->description;
-        $this->file              = $multimedia->file;
-        $this->link              = $multimedia->link;
-        $this->publish           = $multimedia->publish;
-        $this->gallery           = $multimedia->gallery;
-        $this->gallery_history_1 = $multimedia->gallery_history_1;
-        $this->gallery_history_2 = $multimedia->gallery_history_2;
-        $this->comparsa          = $multimedia->comparsa_id;
+        $this->urlPrevious        = $urlPrevious;
+        $this->multimedia         = $multimedia;
+        $this->title              = $multimedia->title;
+        $this->date               = $multimedia->date->format('Y-m-d');
+        $this->imageTemporary     = $multimedia->image;
+        $this->format             = $multimedia->format;
+        $this->description        = $multimedia->description;
+        $this->file               = $multimedia->file;
+        $this->link               = $multimedia->link;
+        $this->publish            = $multimedia->publish;
+        $this->gallery            = $multimedia->gallery;
+        $this->gallery_history_ch = $multimedia->gallery_history_ch;
+        $this->gallery_history_vs = $multimedia->gallery_history_vs;
+        $this->comparsa           = $multimedia->comparsa_id;
 
         $this->filePdf    = null;
         $this->fileVideo  = null;
@@ -118,6 +119,44 @@ class Edit extends Component
     {
         $this->validate();
 
+        $this->withValidator(function (Validator $validator) {
+            $validator->after(function ($validator) {
+
+                $d = $validator->getData();
+
+                switch ($d['format']) {
+                    case 'PDF':
+
+                        if (is_null($d['filePdf']) AND is_null($d['filePdfTemporary'])) {
+                            $validator->errors()->add('filePdf', 'El archivo es requerido');
+                        }
+
+                        break;
+                    case 'MP3':
+
+                        if (is_null($d['fileMp3']) AND is_null($d['fileMp3Temporary'])) {
+                            $validator->errors()->add('fileMp3', 'El archivo es requerido');
+                        }
+
+                        break;
+                    case 'VIDEO':
+
+                        if (is_null($d['fileVideo']) AND is_null($d['fileVideoTemporary'])) {
+                            $validator->errors()->add('fileVideo', 'El link es requerido');
+                        }
+
+                        break;
+                    case 'IMAGEN':
+
+                        if (is_null($d['fileImagen']) AND is_null($d['fileImagenTemporary'])) {
+                            $validator->errors()->add('fileImagen', 'El archivo es requerido');
+                        }
+
+                    break;
+                }
+            });
+        })->validate();
+
         $image = $this->image? $this->image->store('multimedia', 'public') : null;
 
         if ($this->format == 'PDF') {
@@ -139,8 +178,8 @@ class Edit extends Component
             'description'       => $this->description,
             'link'              => $this->link,
             'gallery'           => $this->gallery,
-            'gallery_history_1' => $this->gallery_history_1,
-            'gallery_history_2' => $this->gallery_history_2,
+            'gallery_history_ch' => $this->gallery_history_ch,
+            'gallery_history_vs' => $this->gallery_history_vs,
             'publish'           => $this->publish,
             'comparsa_id'       => $this->comparsa,
             'updated_user_id'   => auth()->user()->id,

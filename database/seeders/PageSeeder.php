@@ -45,14 +45,14 @@ class PageSeeder extends Seeder
 
         $page = new Page();
         $page->title = 'Comparsas históricas';
-        $page->route = 'history';
+        $page->route = 'history.comparsashistoricas';
         $page->text = $faker->paragraphs(3, true);
         $page->gallery = 1;
         $page->save();
 
         $page = new Page();
         $page->title = 'Viejos Sopladores';
-        $page->route = 'history';
+        $page->route = 'history.viejossopladores';
         $page->text = $faker->paragraphs(2, true);
         $page->gallery = 1;
         $page->save();

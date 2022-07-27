@@ -11,18 +11,20 @@ class MultimediaService implements MultimediaInterface
     public function store($data)
     {
         $multimedia = new Multimedia();
-        $multimedia->title           = $data['title'];
-        $multimedia->slug            = $this->generateSlug($data['title']);
-        $multimedia->image           = $data['image'];
-        $multimedia->date            = $data['date'];
-        $multimedia->format          = $data['format'];
-        $multimedia->file            = $data['file'];
-        $multimedia->description     = $data['description'];
-        $multimedia->link            = $data['link'];
-        $multimedia->publish         = $data['publish'];
-        $multimedia->gallery         = $data['gallery'];
-        $multimedia->comparsa_id     = $data['comparsa_id'];
-        $multimedia->created_user_id = $data['created_user_id'];
+        $multimedia->title             = $data['title'];
+        $multimedia->slug              = $this->generateSlug($data['title']);
+        $multimedia->image             = $data['image'];
+        $multimedia->date              = $data['date'];
+        $multimedia->format            = $data['format'];
+        $multimedia->file              = $data['file'];
+        $multimedia->description       = $data['description'];
+        $multimedia->link              = $data['link'];
+        $multimedia->publish           = $data['publish'];
+        $multimedia->gallery           = $data['gallery'];
+        $multimedia->gallery_history_ch = $data['gallery_history_ch'];
+        $multimedia->gallery_history_vs = $data['gallery_history_vs'];
+        $multimedia->comparsa_id       = $data['comparsa_id'];
+        $multimedia->created_user_id   = $data['created_user_id'];
         $multimedia->save();
 
         return $multimedia;
@@ -31,18 +33,20 @@ class MultimediaService implements MultimediaInterface
     public function update($data, $id)
     {
         $multimedia = Multimedia::findOrFail($id);
-        $multimedia->slug            = $data['title'] !== $multimedia->title? $this->generateSlug($data['title']) : $multimedia->slug;
-        $multimedia->title           = $data['title'];
-        $multimedia->image           = $data['image'];
-        $multimedia->date            = $data['date'];
-        $multimedia->format          = $data['format'];
-        $multimedia->file            = $data['file'];
-        $multimedia->description     = $data['description'];
-        $multimedia->link            = $data['link'];
-        $multimedia->publish         = $data['publish'];
-        $multimedia->gallery         = $data['gallery'];
-        $multimedia->comparsa_id     = $data['comparsa_id'];
-        $multimedia->updated_user_id = $data['updated_user_id'];
+        $multimedia->slug              = $data['title'] !== $multimedia->title? $this->generateSlug($data['title']) : $multimedia->slug;
+        $multimedia->title             = $data['title'];
+        $multimedia->image             = $data['image'];
+        $multimedia->date              = $data['date'];
+        $multimedia->format            = $data['format'];
+        $multimedia->file              = $data['file'];
+        $multimedia->description       = $data['description'];
+        $multimedia->link              = $data['link'];
+        $multimedia->publish           = $data['publish'];
+        $multimedia->gallery           = $data['gallery'];
+        $multimedia->gallery_history_ch = $data['gallery_history_ch'];
+        $multimedia->gallery_history_vs = $data['gallery_history_vs'];
+        $multimedia->comparsa_id       = $data['comparsa_id'];
+        $multimedia->updated_user_id   = $data['updated_user_id'];
         $multimedia->save();
 
         return $multimedia;

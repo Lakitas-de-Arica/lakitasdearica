@@ -62,7 +62,11 @@ class DataTable extends DataTableComponent
                 ->sortable(),
             BooleanColumn::make("Publicado", "publish")
                 ->sortable(),
-            BooleanColumn::make("Gelería", "gallery")
+            BooleanColumn::make("Galería", "gallery")
+                ->sortable(),
+            BooleanColumn::make("CH", "gallery_history_ch")
+                ->sortable(),
+            BooleanColumn::make("VS", "gallery_history_vs")
                 ->sortable(),
             Column::make("Actualizado", "updated_at")
                 ->sortable(),

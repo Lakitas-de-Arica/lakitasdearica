@@ -24,8 +24,8 @@ class Create extends Component
     public $link;
     public $publish;
     public $gallery;
-    public $gallery_history_1;
-    public $gallery_history_2;
+    public $gallery_history_ch;
+    public $gallery_history_vs;
     public $comparsa = 0;
     public $loadComparsa = false;
 
@@ -69,8 +69,8 @@ class Create extends Component
         $this->urlPrevious = $urlPrevious;
         $this->publish = 1;
         $this->gallery = 0;
-        $this->gallery_history_1 = 0;
-        $this->gallery_history_2 = 0;
+        $this->gallery_history_ch = 0;
+        $this->gallery_history_vs = 0;
         $this->comparsa = $comparsa_id;
         $this->loadComparsa = is_null($comparsa_id)? false : Comparsa::findOrFail($comparsa_id);
     }
@@ -105,19 +105,19 @@ class Create extends Component
         }
 
         $this->multimediaService->store([
-            'title'             => $this->title,
-            'date'              => $this->date,
-            'format'            => $this->format,
-            'image'             => $image,
-            'file'              => $file,
-            'description'       => $this->description,
-            'link'              => $this->link,
-            'gallery'           => $this->gallery,
-            'gallery_history_1' => $this->gallery_history_1,
-            'gallery_history_2' => $this->gallery_history_2,
-            'publish'           => $this->publish,
-            'comparsa_id'       => $this->comparsa,
-            'created_user_id'   => auth()->user()->id,
+            'title'              => $this->title,
+            'date'               => $this->date,
+            'format'             => $this->format,
+            'image'              => $image,
+            'file'               => $file,
+            'description'        => $this->description,
+            'link'               => $this->link,
+            'gallery'            => $this->gallery,
+            'gallery_history_ch' => $this->gallery_history_ch,
+            'gallery_history_vs' => $this->gallery_history_vs,
+            'publish'            => $this->publish,
+            'comparsa_id'        => $this->comparsa,
+            'created_user_id'    => auth()->user()->id,
         ]);
 
         session()->flash('success', 'Archivo multimedia creado');

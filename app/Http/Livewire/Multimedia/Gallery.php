@@ -9,7 +9,7 @@ class Gallery extends Component
 {
     public function render()
     {
-        $multimedia = Multimedia::where('gallery',1)->orderBy('date','desc')->take(10)->get();
+        $multimedia = Multimedia::where('gallery',1)->where('publish',1)->orderBy('date','desc')->take(10)->get();
 
         return view('livewire.multimedia.gallery')
                 ->with('multimedia',$multimedia);

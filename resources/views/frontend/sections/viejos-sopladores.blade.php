@@ -14,7 +14,7 @@
 
 <div class="container-fluid mt-md-5 mt-0">
     <div class="container py-5">
-        <div class="row">
+        <div class="row mt-5 mt-md-0">
             <div class="col mb-0">
                 <a href="{{ route('history') }}">
                     <img src="{{ asset('images/arrow-left.svg') }}" class="img-fluid me-4">
@@ -40,8 +40,14 @@
                 </div>
 
             </div>
-            <div class="col-md-6">
-
+            <div class="col-md-6 ps-0 ps-md-5 mt-5 mt-md-0">
+                @foreach($multimedia as $m)
+                <div class="row">
+                    <div class="col ps-3 pe-3 ps-md-5 pe-md-0 pb-3">
+                    {!! $m->getFile() !!}
+                    </div>
+                </div>
+                @endforeach
             </div>
         </div>
     </div>

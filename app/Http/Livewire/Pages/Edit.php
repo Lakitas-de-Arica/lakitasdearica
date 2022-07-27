@@ -11,6 +11,8 @@ class Edit extends Component
     public $title;
     public $text;
     public $gallery;
+    public $nGalleryHistoryCh;
+    public $nGalleryHistoryVs;
 
     public function render()
     {
@@ -28,10 +30,13 @@ class Edit extends Component
 
     public function mount(Page $page)
     {
-        $this->page    = $page;
-        $this->title   = $page->title;
-        $this->text    = $page->text;
-        $this->gallery = $page->gallery;
+        $this->page              = $page;
+        $this->title             = $page->title;
+        $this->text              = $page->text;
+        $this->gallery           = $page->gallery;
+        $this->nGalleryHistoryCh = option('nGalleryHistoryCh',4);
+        $this->nGalleryHistoryVs = option('nGalleryHistoryVs',4);
+
     }
 
     public function updated($propertyName)
@@ -46,6 +51,9 @@ class Edit extends Component
         $this->page->text = $this->text;
         $this->page->gallery = $this->gallery;
         $this->page->save();
+
+        option(['nGalleryHistoryCh' => $this->nGalleryHistoryCh]);
+        option(['nGalleryHistoryVs' => $this->nGalleryHistoryVs]);
 
         session()->flash('success', 'Página actualizada');
 

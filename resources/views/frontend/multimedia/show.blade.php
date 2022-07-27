@@ -14,7 +14,7 @@
 
 <div class="container-fluid mt-md-5 mt-0 container-multimedia">
     <div class="container py-5">
-        <div class="row">
+        <div class="row mt-5 mt-md-0">
             <div class="col mb-5">
                 <a href="{{ $urlPrevious }}">
                     <img src="{{ asset('images/arrow-left.svg') }}" class="img-fluid me-4">

@@ -22,14 +22,42 @@
                         </div>
 
                         @if($gallery !== 0)
-                        <div class="mb-3">
-                            <label for="validationGallery" class="form-label">Mostrar galería</label>
-                            <select wire:model="gallery" class="form-control @error('gallery') is-invalid @enderror" id="validationGallery" aria-describedby="validationGalleryFeedback">
-                                <option value="1">Si</option>
-                                <option value="2">No</option>
-                            </select>
-                            @error('gallery') <div id="validationGalleryFeedback" class="invalid-feedback"> {{ $message }} </div> @enderror
-                        </div>
+                            <div class="mb-3">
+                                <label for="validationGallery" class="form-label">Mostrar galería</label>
+                                <select wire:model="gallery" class="form-control @error('gallery') is-invalid @enderror" id="validationGallery" aria-describedby="validationGalleryFeedback">
+                                    <option value="1">Si</option>
+                                    <option value="2">No</option>
+                                </select>
+                                @error('gallery') <div id="validationGalleryFeedback" class="invalid-feedback"> {{ $message }} </div> @enderror
+                            </div>
+
+                            @if($page->route == 'history.comparsashistoricas')
+
+                                <div class="mb-3">
+                                    <label for="validationGalleryCh" class="form-label">Cantidad imágenes en galería</label>
+                                    <select wire:model="nGalleryHistoryCh" class="form-control @error('nGalleryHistoryCh') is-invalid @enderror" id="validationGalleryCh" aria-describedby="validationGalleryChFeedback">
+                                        @for($i=1;$i<=10;$i++)
+                                        <option value="{{ $i }}">{{ $i }}</option>
+                                        @endfor
+                                    </select>
+                                    @error('nGalleryHistoryCh') <div id="validationGalleryChFeedback" class="invalid-feedback"> {{ $message }} </div> @enderror
+                                </div>
+
+                            @endif
+
+                            @if($page->route == 'history.viejossopladores')
+
+                                <div class="mb-3">
+                                    <label for="validationGalleryVs" class="form-label">Cantidad imágenes en galería</label>
+                                    <select wire:model="nGalleryHistoryVs" class="form-control @error('nGalleryHistoryVs') is-invalid @enderror" id="validationGalleryVs" aria-describedby="validationGalleryVsFeedback">
+                                        @for($i=1;$i<=10;$i++)
+                                        <option value="{{ $i }}">{{ $i }}</option>
+                                        @endfor
+                                    </select>
+                                    @error('nGalleryHistoryVs') <div id="validationGalleryVsFeedback" class="invalid-feedback"> {{ $message }} </div> @enderror
+                                </div>
+
+                            @endif
                         @endif
 
                     </div>
