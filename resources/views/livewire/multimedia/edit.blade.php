@@ -32,19 +32,19 @@
 
                         <div class="mb-3">
 
+                            @if($imageTemporary)
+                                <div class="mb-3">
+                                    <label>Visualización previa:</label><br>
+                                    <img src="{{ asset('storage/'.$imageTemporary) }}" class="img-fluid" style="max-width: 300px">
+                                </div>
+                            @else
+
                             @if ($image AND !$errors->has('image'))
                             <div class="mb-3">
                                 <label>Visualización previa:</label><br>
                                 <img src="{{ $image->temporaryUrl() }}" class="img-fluid" style="max-width: 300px">
                             </div>
-                            @else
-
-                                @if($imageTemporary)
-                                    <div class="mb-3">
-                                        <label>Visualización previa:</label><br>
-                                        <img src="{{ asset('storage/'.$imageTemporary) }}" class="img-fluid" style="max-width: 300px">
-                                    </div>
-                                @endif
+                            @endif
 
                             @endif
 
@@ -68,6 +68,9 @@
 
                         @if ($format == 'PDF')
                             <div class="mb-3 border border-radius p-3">
+
+                                @if ($filePdfTemporary) {!! $multimedia->getFile() !!} <br><br> @endif
+
                                 <label for="validationPdf" class="form-label">Archivo PDF @if ($filePdf AND !$errors->has('filePdf')) <span class="badge badge-info ml-3">Archivo cargado</span> @endif </label>
                                 <input wire:model="filePdf" class="form-control @error('filePdf') is-invalid @enderror" type="file" id="validationPdf" aria-describedby="validationPdfFeedback">
                                 @error('filePdf') <div id="validationPdfFeedback" class="invalid-feedback"> {{ $message }} </div> @enderror
@@ -78,7 +81,7 @@
                         @if ($format == 'MP3')
                             <div class="mb-3 border border-radius p-3">
 
-                                @if ($fileMp3Temporary) {!! $multimedia->getFile() !!} <br> @endif
+                                @if ($fileMp3Temporary) {!! $multimedia->getFile() !!} <br><br> @endif
 
                                 <label for="validationMp3" class="form-label">Archivo MP3 @if ($fileMp3 AND !$errors->has('fileMp3')) <span class="badge badge-info ml-3">Archivo cargado</span> @endif </label>
                                 <input wire:model="fileMp3" class="form-control @error('fileMp3') is-invalid @enderror" type="file" id="validationMp3" aria-describedby="validationMp3Feedback">
@@ -89,6 +92,9 @@
 
                         @if ($format == 'VIDEO')
                             <div class="mb-3 border border-radius p-3">
+
+                                @if ($fileVideoTemporary) {!! $multimedia->getFile() !!} <br><br> @endif
+
                                 <label for="validationVideo" class="form-label">Link Youtube</label>
                                 <input type="text" wire:model="fileVideo" class="form-control @error('fileVideo') is-invalid @enderror" id="validationVideo" aria-describedby="validationVideoFeedback">
                                 @error('fileVideo') <div id="validationVideoFeedback" class="invalid-feedback"> {{ $message }} </div> @enderror

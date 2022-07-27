@@ -6,6 +6,7 @@ use Livewire\Component;
 use Livewire\WithFileUploads;
 use App\Contracts\Multimedia\MultimediaInterface;
 use App\Models\Comparsa;
+use App\Models\Multimedia;
 
 class Edit extends Component
 {
@@ -17,7 +18,8 @@ class Edit extends Component
     public $date;
     public $image;
     public $imageTemporary;
-    public $format = 0;
+    public $format;
+    public $file;
     public $filePdf;
     public $filePdfTemporary;
     public $fileImagen;
@@ -30,7 +32,7 @@ class Edit extends Component
     public $link;
     public $publish;
     public $gallery;
-    public $comparsa = 0;
+    public $comparsa;
 
     protected $rules = [
         'comparsa' => 'not_in:0',
@@ -40,10 +42,10 @@ class Edit extends Component
         'format' => 'not_in:0',
         'image' => 'nullable|image|max:3072',
         'link' => 'nullable|active_url|min:3|max:255',
-        'fileImagen' => 'requiredIf:format,IMAGEN|nullable|image|max:3072',
-        'fileMp3' => 'requiredIf:format,MP3|nullable|mimes:mp3|max:102400',
-        'filePdf' => 'requiredIf:format,PDF|nullable|mimes:pdf|max:3072',
-        'fileVideo' => 'requiredIf:format,VIDEO|nullable|active_url|youtube'
+        'fileImagen' => 'nullable|image|max:3072',
+        'fileMp3' => 'nullable|mimes:mp3|max:102400',
+        'filePdf' => 'nullable|mimes:pdf|max:3072',
+        'fileVideo' => 'nullable|active_url|youtube'
     ];
 
     protected $messages = [
@@ -67,19 +69,25 @@ class Edit extends Component
         $this->multimediaService = $multimediaService;
     }
 
-    public function mount($multimedia, $urlPrevious)
+    public function mount(Multimedia $multimedia, $urlPrevious)
     {
         $this->urlPrevious    = $urlPrevious;
-        $this->$multimedia    = $multimedia;
+        $this->multimedia     = $multimedia;
         $this->title          = $multimedia->title;
-        $this->date           = $multimedia->date;
+        $this->date           = $multimedia->date->format('Y-m-d');
         $this->imageTemporary = $multimedia->image;
         $this->format         = $multimedia->format;
         $this->description    = $multimedia->description;
+        $this->file           = $multimedia->file;
         $this->link           = $multimedia->link;
         $this->publish        = $multimedia->publish;
         $this->gallery        = $multimedia->gallery;
-        $this->comparsa       = $multimedia->comparsa;
+        $this->comparsa       = $multimedia->comparsa_id;
+
+        $this->filePdf    = null;
+        $this->fileVideo  = null;
+        $this->fileMp3    = null;
+        $this->fileImagen = null;
 
         switch ($this->format) {
             case 'PDF': $this->filePdfTemporary = $multimedia->file; break;
@@ -109,16 +117,16 @@ class Edit extends Component
         $image = $this->image? $this->image->store('multimedia', 'public') : null;
 
         if ($this->format == 'PDF') {
-            $file = $this->filePdf->store('multimedia', 'public');
+            $file = (is_null($this->filePdf))? $this->file : $this->filePdf->store('multimedia', 'public');
         } elseif ($this->format == 'MP3') {
-            $file = $this->fileMp3->store('multimedia', 'public');
+            $file = (is_null($this->fileMp3))? $this->file : $this->fileMp3->store('multimedia', 'public');
         } elseif ($this->format == 'VIDEO') {
-            $file = $this->fileVideo;
+            $file = (is_null($this->fileVideo))? $this->file : $this->fileVideo;
         } elseif ($this->format == 'IMAGEN') {
-            $file = $this->fileImagen->store('multimedia', 'public');
+            $file = (is_null($this->fileImagen))? $this->file : $this->fileImagen->store('multimedia', 'public');
         }
 
-        $this->multimediaService->store([
+        $this->multimediaService->update([
             'title'           => $this->title,
             'date'            => $this->date,
             'format'          => $this->format,
@@ -129,10 +137,10 @@ class Edit extends Component
             'gallery'         => $this->gallery,
             'publish'         => $this->publish,
             'comparsa_id'     => $this->comparsa,
-            'created_user_id' => auth()->user()->id,
-        ]);
+            'updated_user_id' => auth()->user()->id,
+        ], $this->multimedia->id);
 
-        session()->flash('success', 'Archivo multimedia creado');
+        session()->flash('success', 'Archivo multimedia actualizado');
 
         return redirect($this->urlPrevious);
     }
