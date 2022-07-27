@@ -27,19 +27,21 @@ class MultimediaFactory extends Factory
         $format = $this->multimediaService->getFormats()[rand(0,3)];
 
         return [
-            'title'           => $title,
-            'slug'            => $this->multimediaService->generateSlug($title),
-            'image'           => $image[rand(0,1)],
-            'date'            => $this->faker->date('Y-m-d'),
-            'format'          => $format,
-            'file'            => $this->getFile($format),
-            'description'     => $this->paragraphs(2),
-            'link'            => $this->faker->url(),
-            'publish'         => 1,
-            'gallery'         => $format == 'IMAGEN'? 1 : 0,
-            'created_user_id' => rand(1,2),
-            'comparsa_id'     => rand(1,150),
-            'created_at'      => $this->faker->date('Y-m-d H:i:s'),
+            'title'             => $title,
+            'slug'              => $this->multimediaService->generateSlug($title),
+            'image'             => $image[rand(0,1)],
+            'date'              => $this->faker->date('Y-m-d'),
+            'format'            => $format,
+            'file'              => $this->getFile($format),
+            'description'       => $this->paragraphs(2),
+            'link'              => $this->faker->url(),
+            'publish'           => 1,
+            'gallery'           => $format == 'IMAGEN'? 1: 0,
+            'gallery_history_1' => $format == 'IMAGEN'? 1: 0,
+            'gallery_history_2' => $format == 'IMAGEN'? 1: 0,
+            'created_user_id'   => rand(1,2),
+            'comparsa_id'       => rand(1,150),
+            'created_at'        => $this->faker->date('Y-m-d H:i:s'),
         ];
     }
 

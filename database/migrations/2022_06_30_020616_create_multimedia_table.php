@@ -27,6 +27,8 @@ class CreateMultimediaTable extends Migration
             $table->string('link')->nullable();
             $table->boolean('publish')->default(false);
             $table->boolean('gallery')->default(false);
+            $table->boolean('gallery_history_1')->default(false);
+            $table->boolean('gallery_history_2')->default(false);
             $table->foreignIdFor(Comparsa::class);
             $table->foreignIdFor(User::class, 'created_user_id')->nullable();
             $table->foreignIdFor(User::class, 'updated_user_id')->nullable();

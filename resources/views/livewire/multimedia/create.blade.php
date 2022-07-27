@@ -156,6 +156,24 @@
                             </select>
                             @error('gallery') <div id="validationSourceFeedback" class="invalid-feedback"> {{ $message }} </div> @enderror
                         </div>
+
+                        <div class="mb-3">
+                            <label for="validationSource1" class="form-label">Mostrar en comparsas históricas</label>
+                            <select wire:model="gallery_history_1" class="form-control @error('gallery_history_1') is-invalid @enderror" id="validationSource1" aria-describedby="validationSource1Feedback">
+                                <option value="1">Sí</option>
+                                <option value="0">No</option>
+                            </select>
+                            @error('gallery_history_1') <div id="validationSource1Feedback" class="invalid-feedback"> {{ $message }} </div> @enderror
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="validationSource2" class="form-label">Mostrar en viejos sopladores</label>
+                            <select wire:model="gallery_history_2" class="form-control @error('gallery_history_2') is-invalid @enderror" id="validationSource2" aria-describedby="validationSource2Feedback">
+                                <option value="1">Sí</option>
+                                <option value="0">No</option>
+                            </select>
+                            @error('gallery_history_2') <div id="validationSource2Feedback" class="invalid-feedback"> {{ $message }} </div> @enderror
+                        </div>
                         @endif
 
                         <div class="mt-5">

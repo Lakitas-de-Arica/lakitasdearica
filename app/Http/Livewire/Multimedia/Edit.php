@@ -32,6 +32,8 @@ class Edit extends Component
     public $link;
     public $publish;
     public $gallery;
+    public $gallery_history_1;
+    public $gallery_history_2;
     public $comparsa;
 
     protected $rules = [
@@ -71,18 +73,20 @@ class Edit extends Component
 
     public function mount(Multimedia $multimedia, $urlPrevious)
     {
-        $this->urlPrevious    = $urlPrevious;
-        $this->multimedia     = $multimedia;
-        $this->title          = $multimedia->title;
-        $this->date           = $multimedia->date->format('Y-m-d');
-        $this->imageTemporary = $multimedia->image;
-        $this->format         = $multimedia->format;
-        $this->description    = $multimedia->description;
-        $this->file           = $multimedia->file;
-        $this->link           = $multimedia->link;
-        $this->publish        = $multimedia->publish;
-        $this->gallery        = $multimedia->gallery;
-        $this->comparsa       = $multimedia->comparsa_id;
+        $this->urlPrevious       = $urlPrevious;
+        $this->multimedia        = $multimedia;
+        $this->title             = $multimedia->title;
+        $this->date              = $multimedia->date->format('Y-m-d');
+        $this->imageTemporary    = $multimedia->image;
+        $this->format            = $multimedia->format;
+        $this->description       = $multimedia->description;
+        $this->file              = $multimedia->file;
+        $this->link              = $multimedia->link;
+        $this->publish           = $multimedia->publish;
+        $this->gallery           = $multimedia->gallery;
+        $this->gallery_history_1 = $multimedia->gallery_history_1;
+        $this->gallery_history_2 = $multimedia->gallery_history_2;
+        $this->comparsa          = $multimedia->comparsa_id;
 
         $this->filePdf    = null;
         $this->fileVideo  = null;
@@ -127,17 +131,19 @@ class Edit extends Component
         }
 
         $this->multimediaService->update([
-            'title'           => $this->title,
-            'date'            => $this->date,
-            'format'          => $this->format,
-            'image'           => $image,
-            'file'            => $file,
-            'description'     => $this->description,
-            'link'            => $this->link,
-            'gallery'         => $this->gallery,
-            'publish'         => $this->publish,
-            'comparsa_id'     => $this->comparsa,
-            'updated_user_id' => auth()->user()->id,
+            'title'             => $this->title,
+            'date'              => $this->date,
+            'format'            => $this->format,
+            'image'             => $image,
+            'file'              => $file,
+            'description'       => $this->description,
+            'link'              => $this->link,
+            'gallery'           => $this->gallery,
+            'gallery_history_1' => $this->gallery_history_1,
+            'gallery_history_2' => $this->gallery_history_2,
+            'publish'           => $this->publish,
+            'comparsa_id'       => $this->comparsa,
+            'updated_user_id'   => auth()->user()->id,
         ], $this->multimedia->id);
 
         session()->flash('success', 'Archivo multimedia actualizado');
