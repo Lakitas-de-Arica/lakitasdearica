@@ -9,48 +9,8 @@
 
                         <div class="mb-3">
                             <label for="validationTitle" class="form-label">Título</label>
-                            <input type="text" wire:model="title" class="form-control @error('title') is-invalid @enderror" id="validationTitle" aria-describedby="validationTitleFeedback">
+                            <input type="text" wire:model="title" class="form-control @error('title') is-invalid @enderror" id="validationTitle" aria-describedby="validationTitleFeedback" disabled>
                             @error('title') <div id="validationTitleFeedback" class="invalid-feedback"> {{ $message }} </div> @enderror
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="validationDate" class="form-label">Fecha</label>
-                            <input type="text" wire:model="date" class="form-control @error('date') is-invalid @enderror datepicker" id="validationDate" aria-describedby="validationDateFeedback">
-                            @error('date') <div id="validationDateFeedback" class="invalid-feedback"> {{ $message }} </div> @enderror
-                        </div>
-
-                        <div class="mb-3">
-
-                            @if ($image)
-                            <div class="mb-3">
-                                <label>Visualización previa:</label><br>
-                                <img src="{{ $image->temporaryUrl() }}" class="img-fluid" style="max-width: 300px">
-                            </div>
-                            @else
-
-                                @if ($current_image)
-
-                                    <div class="mb-3">
-                                        <label>Visualización previa:</label><br>
-                                        <img src="{{ asset('storage/'.$current_image) }}" class="img-fluid" style="max-width: 300px">
-                                    </div>
-
-                                @endif
-
-                            @endif
-
-                            <label for="validationImage" class="form-label">Actualizar imagen</label>
-                            <input wire:model="image" class="form-control @error('image') is-invalid @enderror" type="file" id="validationImage" aria-describedby="validationImageFeedback">
-                            @error('image') <div id="validationImageFeedback" class="invalid-feedback"> {{ $message }} </div> @enderror
-                            <div wire:loading wire:target="image">Cargando...</div>
-                        </div>
-
-                        <div class="mb-3">
-                            <div wire:ignore>
-                                <label for="validationIntroduction" class="form-label">Introducción</label>
-                                <textarea wire:model="introduction" class="form-control" id="validationIntroduction">{!! $introduction !!}</textarea>
-                            </div>
-                            @error('introduction') <div class="text-danger"><small>{{ $message }}</small></div> @enderror
                         </div>
 
                         <div class="mb-3">
@@ -60,6 +20,17 @@
                             </div>
                             @error('text') <div class="text-danger"><small>{{ $message }}</small></div> @enderror
                         </div>
+
+                        @if($gallery !== 0)
+                        <div class="mb-3">
+                            <label for="validationGallery" class="form-label">Mostrar galería</label>
+                            <select wire:model="gallery" class="form-control @error('gallery') is-invalid @enderror" id="validationGallery" aria-describedby="validationGalleryFeedback">
+                                <option value="1">Si</option>
+                                <option value="2">No</option>
+                            </select>
+                            @error('gallery') <div id="validationGalleryFeedback" class="invalid-feedback"> {{ $message }} </div> @enderror
+                        </div>
+                        @endif
 
                     </div>
                 </div>
@@ -71,7 +42,7 @@
                     </div>
                     <div class="card-body">
 
-                        <div class="mt-5">
+                        <div class="">
                             <a href="{{ route('admin.pages') }}" class="btn btn-secondary float-left">Volver</a>
                             <button type="submit" class="btn btn-primary float-right">Actualizar</button>
                         </div>
@@ -87,39 +58,9 @@
 
 @push('js')
 
-    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-    <script src="https://npmcdn.com/flatpickr/dist/l10n/es.js"></script>
     <script src="https://cdn.ckeditor.com/ckeditor5/34.2.0/classic/ckeditor.js"></script>
 
     <script>
-        $(".datepicker").flatpickr({
-            dateFormat: "Y-m-d",
-            locale: "es",
-            defaultDate: "{{ $date }}"
-        });
-
-        ClassicEditor
-            .create( document.querySelector( '#validationIntroduction' ), {
-                toolbar: [ 'heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', 'blockQuote' ],
-                heading: {
-                    options: [
-                        { model: 'paragraph', title: 'Paragraph', class: 'ck-heading_paragraph' },
-                        { model: 'heading1', view: 'h1', title: 'Heading 1', class: 'ck-heading_heading1' },
-                        { model: 'heading2', view: 'h2', title: 'Heading 2', class: 'ck-heading_heading2' }
-                    ]
-                }
-            } )
-            .then( editor => {
-                editor.model.document.on('change:data', () => {
-
-                    @this.set('introduction', editor.getData());
-
-                })
-            } )
-            .catch( error => {
-                console.error( error );
-            } );
-
         ClassicEditor
             .create( document.querySelector( '#validationText' ), {
                 toolbar: [ 'heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', 'blockQuote' ],
@@ -141,5 +82,6 @@
             .catch( error => {
                 console.error( error );
             } );
+
     </script>
 @endpush

@@ -45,7 +45,7 @@ class Edit extends Component
 
         $this->page->text = $this->text;
         $this->page->gallery = $this->gallery;
-        $this->save();
+        $this->page->save();
 
         session()->flash('success', 'Página actualizada');
 
