@@ -22,8 +22,8 @@ class DatabaseSeeder extends Seeder
             PageSeeder::class
         ]);
 
-        News::factory(150)->create();
-        Comparsa::factory(150)->create();
-        Multimedia::factory(700)->create();
+        //News::factory(150)->create();
+        //Comparsa::factory(150)->create();
+        //Multimedia::factory(700)->create();
     }
 }
