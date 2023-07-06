@@ -31,7 +31,7 @@
                         {!! $page->text !!}
                     </p>
                     <p class="mt-5">
-                        <a href="">
+                        <a href="{{ route('history') }}">
                             CONOCE MÁS
                             <i class="fa-solid fa-circle-plus ms-3"></i>
                         </a>

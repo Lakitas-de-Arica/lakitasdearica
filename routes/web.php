@@ -16,12 +16,12 @@ Route::prefix('password')->group(function () {
 });
 
 Route::get('/', 'HomeController@home')->name('home');
-Route::get('/introduccion', 'HomeController@introduction')->name('introduction');
+Route::get('/proyecto', 'HomeController@introduction')->name('introduction');
 Route::get('/historia', 'HomeController@history')->name('history');
 Route::get('/historia/comparsas-historicas', 'HomeController@comparsasHistoricas')->name('history.comparsashistoricas');
 Route::get('/historia/viejos-sopladores', 'HomeController@viejosSopladores')->name('history.viejossopladores');
 
-Route::get('/contacto', 'HomeController@contact')->name('contact');
+Route::get('/creditos-y-links', 'HomeController@contact')->name('contact');
 Route::get('/noticias', 'NewsController@index')->name('news');
 Route::get('/noticias/publicar', 'NewsController@publish')->name('news.publish');
 Route::get('/noticias/{slug}', 'NewsController@show')->name('news.show');
