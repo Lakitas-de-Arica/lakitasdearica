@@ -91,19 +91,16 @@
     <script>
         ClassicEditor
             .create( document.querySelector( '#validationText' ), {
-                //toolbar: [ 'heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', 'blockQuote' ],
-                /*toolbar: {
+                toolbar: {
                     items: [
-                        'undo', 'redo',
                         '|', 'heading',
                         '|', 'fontsize', 'fontColor', 'fontBackgroundColor',
                         '|', 'bold', 'italic', 'strikethrough', 'subscript', 'superscript', 'code',
-                        '|', 'alignment',
-                        'link', 'uploadImage', 'blockQuote',
+                        '|', 'alignment', 'link', 'blockQuote',
                         '|', 'bulletedList', 'numberedList', 'todoList', 'outdent', 'indent'
                     ],
                     shouldNotGroupWhenFull: true
-                },
+                },/*
                 heading: {
                     options: [
                         { model: 'paragraph', title: 'Paragraph', class: 'ck-heading_paragraph' },
