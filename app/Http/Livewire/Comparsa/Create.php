@@ -42,7 +42,7 @@ class Create extends Component
         'text' => 'required|min:20|max:65000',
         'image' => 'required|image|max:3072',
         'location' => 'nullable|min:5|max:65000',
-        'members' => 'required|min:3|max:65000',
+        'members' => 'nullable|min:3|max:65000',
         'text_1' => 'nullable|min:20|max:65000',
         'text_2' => 'nullable|min:20|max:65000',
         'text_3' => 'nullable|min:20|max:65000',
