@@ -86,7 +86,7 @@
 
 @push('js')
 
-    <script src="https://cdn.ckeditor.com/ckeditor5/34.2.0/classic/ckeditor.js"></script>
+    <script src="https://cdn.ckeditor.com/ckeditor5/39.0.2/classic/ckeditor.js"></script>
 
     <script>
         ClassicEditor
@@ -98,20 +98,19 @@
                         '|', 'heading',
                         '|', 'fontsize', 'fontColor', 'fontBackgroundColor',
                         '|', 'bold', 'italic', 'strikethrough', 'subscript', 'superscript', 'code',
-                        '-', // break point
                         '|', 'alignment',
                         'link', 'uploadImage', 'blockQuote',
                         '|', 'bulletedList', 'numberedList', 'todoList', 'outdent', 'indent'
                     ],
                     shouldNotGroupWhenFull: true
-                },
+                },/*
                 heading: {
                     options: [
                         { model: 'paragraph', title: 'Paragraph', class: 'ck-heading_paragraph' },
                         { model: 'heading1', view: 'h1', title: 'Heading 1', class: 'ck-heading_heading1' },
                         { model: 'heading2', view: 'h2', title: 'Heading 2', class: 'ck-heading_heading2' }
                     ]
-                }
+                }*/
             } )
             .then( editor => {
                 editor.model.document.on('change:data', () => {
