@@ -24,7 +24,7 @@ class Comparsa extends Model
 
     public function dateStringFormat()
     {
-        return Carbon::parse($this->date)->translatedFormat('j F Y');
+        return Carbon::parse($this->date)->translatedFormat('Y');
     }
 
     public function membersListFormat()
