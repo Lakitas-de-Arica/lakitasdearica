@@ -76,8 +76,10 @@
                 <p class="mb-0">Nombre de contacto</p>
                 <p class="fw-bold">{{ $comparsa->contact_name }}</p>
 
+                @if($comparsa->contact_email)
                 <p class="mb-0">Email</p>
                 <p class="fw-bold">{{ $comparsa->contact_email }}</p>
+                @endif
 
                 <p class="mb-0">Teléfono</p>
                 <p class="fw-bold">{{ $comparsa->contact_phone }}</p>
