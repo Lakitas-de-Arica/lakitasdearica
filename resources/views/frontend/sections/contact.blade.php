@@ -19,7 +19,7 @@
                 <p>CRËDITOS Y LINKS</p>
                 <h2 class="mb-5">CONTACTO</h2>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-6 text-page">
                 {!! $page->text !!}
             </div>
         </div>
