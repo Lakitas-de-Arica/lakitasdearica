@@ -6,7 +6,7 @@
                     <div class="col-md-4 offset-md-8 mt-auto px-0">
                         <div class="data-comparsa p-5 mt-auto mb-md-5 me-md-5 mx-3 mb-3">
                             <h4>{{ $comparsa->name }}</h4>
-                            <p>{{ $comparsa->extract }}</p>
+                            <p>{{ Str::limit($comparsa->extract, 300) }}</p>
 
                             <div class="row">
                                 <div class="col-8">
