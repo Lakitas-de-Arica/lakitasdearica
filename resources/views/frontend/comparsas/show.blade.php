@@ -65,8 +65,10 @@
                 <p class="mb-0">Fecha formación</p>
                 <p class="fw-bold">{{ $comparsa->dateStringFormat() }}</p>
 
+                @if($comparsa->location)
                 <p class="mb-0">Localidad o barrio</p>
                 <p class="fw-bold">{{ $comparsa->location }}</p>
+                @endif
 
                 <p class="mb-0">Integrantes</p>
                 <p class="fw-bold">{!! $comparsa->membersListFormat() !!}</p>
