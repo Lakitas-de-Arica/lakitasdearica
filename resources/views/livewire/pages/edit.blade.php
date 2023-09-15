@@ -92,7 +92,7 @@
         ClassicEditor
             .create( document.querySelector( '#validationText' ), {
                 //toolbar: [ 'heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', 'blockQuote' ],
-                toolbar: {
+                /*toolbar: {
                     items: [
                         'undo', 'redo',
                         '|', 'heading',
@@ -103,7 +103,7 @@
                         '|', 'bulletedList', 'numberedList', 'todoList', 'outdent', 'indent'
                     ],
                     shouldNotGroupWhenFull: true
-                },/*
+                },
                 heading: {
                     options: [
                         { model: 'paragraph', title: 'Paragraph', class: 'ck-heading_paragraph' },
