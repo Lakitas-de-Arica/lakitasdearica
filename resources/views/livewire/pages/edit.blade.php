@@ -104,7 +104,7 @@
                         '|', 'bulletedList', 'numberedList', 'todoList', 'outdent', 'indent'
                     ],
                     shouldNotGroupWhenFull: true
-                }
+                },
                 heading: {
                     options: [
                         { model: 'paragraph', title: 'Paragraph', class: 'ck-heading_paragraph' },
