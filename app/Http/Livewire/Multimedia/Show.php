@@ -67,6 +67,7 @@ class Show extends Component
         $dateArray = Array();
 
         foreach ($mul as $m) {
+            if(is_null($m->date)) { continue; }
             $dateArray[$m->date->format('Y-m')] = ucfirst(Carbon::parse($m->date)->translatedFormat('F Y'));
         }
 
