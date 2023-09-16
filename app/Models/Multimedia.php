@@ -43,7 +43,11 @@ class Multimedia extends Model
     public function publicImage()
     {
         if (is_null($this->image)) {
-            return $this->comparsa->image;
+            if($this->comparsa) {
+                return $this->comparsa->image;
+            } else {
+                return 'temp-file.jpg';
+            }
         }
 
         return $this->image;
