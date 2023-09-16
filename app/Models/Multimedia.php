@@ -23,7 +23,7 @@ class Multimedia extends Model
 
     public function dateStringFormat()
     {
-        return Carbon::parse($this->date)->translatedFormat('j F Y');
+        return is_null($this->date)? null : Carbon::parse($this->date)->translatedFormat('j F Y');
     }
 
     public function generateEmbedVideo()
