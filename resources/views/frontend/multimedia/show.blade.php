@@ -56,11 +56,13 @@
                         @if (!is_null($next))
                         <div class="row">
                             <div class="col-10">
+                                @if($next->comparsa)
                                 <div class="text-truncate">
                                     <a href="{{ $next->publicLink() }}" class="multimedia-comparsa">
                                         {{ $next->comparsa->name }}
                                     </a>
                                 </div>
+                                @endif
                                 <div class="text-truncate">
                                     <a href="{{ $next->publicLink() }}" class="multimedia-title">
                                         {{ $next->title }}
@@ -81,12 +83,12 @@
             <div class="col-md-4 px-0">
                 <div class="sidebar-data-comparsa p-4">
                     @if($multimedia->comparsa)
-                    <p class="mb-0">Agrupación</p>
-                    <p class="fw-bold">
-                        <a href="{{ $multimedia->comparsa->publicLink() }}">
-                            {{ $multimedia->comparsa->name }}
-                        </a>
-                    </p>
+                        <p class="mb-0">Agrupación</p>
+                        <p class="fw-bold">
+                            <a href="{{ $multimedia->comparsa->publicLink() }}">
+                                {{ $multimedia->comparsa->name }}
+                            </a>
+                        </p>
                     @endif
 
                     <p class="mb-0">Titulo del material</p>

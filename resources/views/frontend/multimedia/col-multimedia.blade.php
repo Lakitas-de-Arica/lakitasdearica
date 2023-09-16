@@ -8,9 +8,9 @@
         </p>
         <div class="name-comparsa text-truncate">
             @if($multimedia->comparsa)
-            <a href="{{ $multimedia->comparsa->publicLink() }}">
-                {{ $multimedia->comparsa->name }}
-            </a>
+                <a href="{{ $multimedia->comparsa->publicLink() }}">
+                    {{ $multimedia->comparsa->name }}
+                </a>
             @endif
         </div>
         <div class="title border-bottom-1">
