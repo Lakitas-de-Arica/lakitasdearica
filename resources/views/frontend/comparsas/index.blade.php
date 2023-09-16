@@ -19,12 +19,8 @@
                 <p>CATÁLOGO</p>
                 <h2 class="mb-5">Comparsas</h2>
                 <p>
-                    Pellentesque vitae mauris ullamcorper, vulputate erat id, pulvinar eros.
-                    Aliquam finibus bibendum metus, eu fermentum nibh eleifend at. Maecenas
-                    at gravida sapien, et rhoncus dui. Etiam quis hendrerit ligula. Maecenas
-                    sagittis feugiat lectus vel accumsan. Donec nulla diam, blandit at lectus vitae,
-                    viverra laoreet tellus. Vestibulum rutrum, est ac blandit dignissim,
-                    odio orci faucibus nibh, et dapibus velit mi sed leo.
+                    Esta sección contiene información sobre comparsas de lakitas ariqueñas que se encuentran actualmente activas. En ella se encuentran datos básicos de cada agrupación, como su fecha de formación, director, caporal y links a sus plataformas digitales, además de una breve reseña de cada conjunto musical, material audiovisual y los medios para contactarlos.
+                    No pretende ser un catastro exhaustivo sino que se trata de un espacio que estará constantemente en construcción, ampliándose a medida que nuevas comparsas aporten sus datos al catálogo.
                 </p>
             </div>
             <div class="col-md-6">
