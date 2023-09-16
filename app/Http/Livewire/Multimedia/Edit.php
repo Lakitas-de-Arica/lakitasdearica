@@ -45,10 +45,10 @@ class Edit extends Component
         'format' => 'not_in:0',
         'image' => 'nullable|image|max:3072',
         'link' => 'nullable|active_url|min:3|max:255',
-        'fileImagen' => 'requiredIf:format,IMAGEN|nullable|image|max:102400',
-        'fileMp3' => 'requiredIf:format,MP3|nullable|mimes:mp3,wav|max:102400',
-        'filePdf' => 'requiredIf:format,PDF|nullable|mimes:pdf|max:102400',
-        'fileVideo' => 'requiredIf:format,VIDEO|nullable|active_url|youtube'
+        'fileImagen' => 'nullable|image|max:102400',
+        'fileMp3' => 'nullable|mimes:mp3,wav|max:102400',
+        'filePdf' => 'nullable|mimes:pdf|max:102400',
+        'fileVideo' => 'nullable|active_url|youtube'
     ];
 
     protected $messages = [
