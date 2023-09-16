@@ -40,7 +40,7 @@ class Edit extends Component
     protected $rules = [
         'comparsa' => 'nullable',
         'title' => 'required|min:3|max:255',
-        'date' => 'required|date',
+        'date' => 'nullable|date',
         'description' => 'nullable|min:20|max:65000',
         'format' => 'not_in:0',
         'image' => 'nullable|image|max:3072',
