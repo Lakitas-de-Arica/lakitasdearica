@@ -56,7 +56,7 @@ class DataTable extends DataTableComponent
             Column::make("Fecha", "date")
                 ->sortable()
                 ->format(
-                    fn($value, $row, Column $column) => $value->format('d-m-Y')
+                    fn($value, $row, Column $column) => is_null($value)? null : $value->format('d-m-Y')
                 ),
             Column::make("Formato", "format")
                 ->sortable(),
