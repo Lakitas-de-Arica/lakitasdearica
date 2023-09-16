@@ -30,9 +30,9 @@ class Create extends Component
     public $loadComparsa = false;
 
     protected $rules = [
-        'comparsa' => 'not_in:0',
+        'comparsa' => 'nullable',
         'title' => 'required|min:3|max:255',
-        'date' => 'required|date',
+        'date' => 'nullable|date',
         'description' => 'nullable|min:20|max:65000',
         'format' => 'not_in:0',
         'image' => 'nullable|image|max:3072',
@@ -116,7 +116,7 @@ class Create extends Component
             'gallery_history_ch' => $this->gallery_history_ch,
             'gallery_history_vs' => $this->gallery_history_vs,
             'publish'            => $this->publish,
-            'comparsa_id'        => $this->comparsa,
+            'comparsa_id'        => $this->comparsa == 0? null : $this->comparsa,
             'created_user_id'    => auth()->user()->id,
         ]);
 
