@@ -38,11 +38,13 @@
                                 </a>
                             </div>
                             <div class="col-10">
+                                @if($previous->comparsa)
                                 <div class="text-truncate">
                                     <a href="{{ $previous->publicLink() }}" class="multimedia-comparsa">
                                         {{ $previous->comparsa->name }}
                                     </a>
                                 </div>
+                                @endif
                                 <div class="text-truncate">
                                     <a href="{{ $previous->publicLink() }}" class="multimedia-title">
                                         {{ $previous->title }}
