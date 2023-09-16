@@ -5,19 +5,58 @@
     $theme = $component->getTheme();
 @endphp
 
- <div
-    {{ $attributes->merge($this->getComponentWrapperAttributes()) }}
+<div x-data="{
+    @if ($component->isFilterLayoutSlideDown()) filtersOpen: $wire.filterSlideDownDefaultVisible, @endif
+    paginationCurrentCount: $wire.entangle('paginationCurrentCount'),
+    paginationTotalItemCount: $wire.entangle('paginationTotalItemCount'),
+    paginationCurrentItems: $wire.entangle('paginationCurrentItems'),
+    alwaysShowBulkActions: {{ $component->getHideBulkActionsWhenEmptyStatus() ? 'false' : 'true' }},
+    selectedItems: $wire.entangle('selected').defer,
+    @if ($component->showBulkActionsDropdownAlpine())
+    toggleSelectAll() {
+        if (this.paginationTotalItemCount == this.selectedItems.length) {
+            this.clearSelected();
+        } else {
+            this.setAllSelected();
+        }
+    },
+    setAllSelected() {
+        $wire.setAllSelected();
+    },
+    clearSelected() {
+        $wire.clearSelected();
+    },
+    selectAllOnPage() {
+        let tempSelectedItems = this.selectedItems;
+        const iterator = this.paginationCurrentItems.values();
+        for (const value of iterator) {
+            tempSelectedItems.push(value.toString());
+        }
+        this.selectedItems = [...new Set(tempSelectedItems)];
+    },
+    @else
+    toggleSelectAll() {
+        return;
+    },
+    setAllSelected() {
+        return;
+    },
+    clearSelected() {
+        return;
+    },
+    selectAllOnPage() {
+        return;
+    },
 
-    @if ($component->hasRefresh())
-        wire:poll{{ $component->getRefreshOptions() }}
     @endif
+}">
+    <div {{ $attributes->merge($this->getComponentWrapperAttributes()) }}
+        @if ($component->hasRefresh()) wire:poll{{ $component->getRefreshOptions() }} @endif
+        @if ($component->isFilterLayoutSlideDown()) wire:ignore.self @endif>
 
-    @if ($component->isFilterLayoutSlideDown())
-        x-data="{ filtersOpen: false }"
-    @endif
->
-     @include('livewire-tables::includes.debug')
-     @include('livewire-tables::includes.offline')
+        @include('livewire-tables::includes.debug')
+        @include('livewire-tables::includes.offline')
 
-     {{ $slot }}
+        {{ $slot }}
+    </div>
 </div>
