@@ -38,7 +38,7 @@ class Edit extends Component
     public $comparsa;
 
     protected $rules = [
-        'comparsa' => 'not_in:0',
+        'comparsa' => 'nullable',
         'title' => 'required|min:3|max:255',
         'date' => 'required|date',
         'description' => 'nullable|min:20|max:65000',
@@ -181,7 +181,7 @@ class Edit extends Component
             'gallery_history_ch' => $this->gallery_history_ch,
             'gallery_history_vs' => $this->gallery_history_vs,
             'publish'           => $this->publish,
-            'comparsa_id'       => $this->comparsa,
+            'comparsa_id'       => $this->comparsa == 0? null : $this->comparsa,
             'updated_user_id'   => auth()->user()->id,
         ], $this->multimedia->id);
 
