@@ -80,12 +80,14 @@
 
             <div class="col-md-4 px-0">
                 <div class="sidebar-data-comparsa p-4">
+                    @if($multimedia->comparsa)
                     <p class="mb-0">Agrupación</p>
                     <p class="fw-bold">
                         <a href="{{ $multimedia->comparsa->publicLink() }}">
                             {{ $multimedia->comparsa->name }}
                         </a>
                     </p>
+                    @endif
 
                     <p class="mb-0">Titulo del material</p>
                     <p class="fw-bold">{{ $multimedia->title }}</p>
