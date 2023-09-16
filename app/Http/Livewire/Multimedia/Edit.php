@@ -77,7 +77,7 @@ class Edit extends Component
         $this->urlPrevious        = $urlPrevious;
         $this->multimedia         = $multimedia;
         $this->title              = $multimedia->title;
-        $this->date               = $multimedia->date->format('Y-m-d');
+        $this->date               = $multimedia->date? $multimedia->date->format('Y-m-d') : null;
         $this->imageTemporary     = $multimedia->image;
         $this->format             = $multimedia->format;
         $this->description        = $multimedia->description;
