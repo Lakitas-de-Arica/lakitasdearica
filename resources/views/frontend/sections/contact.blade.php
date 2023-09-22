@@ -20,6 +20,36 @@
                 <h2 class="mb-5">CONTACTO</h2>
             </div>
             <div class="col-md-6 text-page">
+                <p>
+                    Proyecto financiado por el Fondo Nacional de Desarrollo Cultural y de las Artes, Convocatoria 2021
+                </p>
+                <div class="row pb-5">
+                    <div class="col-12">
+                        <img src="{{ asset('images/min.png') }}">
+                    </div>
+                    <div class="col">
+                        <img src="{{ asset('images/museo.png') }}">
+                    </div>
+                    <div class="col">
+                        <img src="{{ asset('images/universidad-uta.png') }}">
+                    </div>
+                    <div class="col">
+                        <img src="{{ asset('images/radio-uta.png') }}">
+                    </div>
+                    <div class="col">
+                        <img src="{{ asset('images/radio-andina.png') }}">
+                    </div>
+                    <div class="col">
+                        <img src="{{ asset('images/muni-arica.png') }}">
+                    </div>
+                    <div class="col">
+                        <img src="{{ asset('images/atm.png') }}">
+                    </div>
+                    <div class="col">
+                        <img src="{{ asset('images/LogoIECTA.png') }}">
+                    </div>
+                </div>
+
                 {!! $page->text !!}
             </div>
         </div>
