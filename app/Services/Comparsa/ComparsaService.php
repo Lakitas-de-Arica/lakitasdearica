@@ -56,7 +56,7 @@ class ComparsaService implements ComparsaInterface
     {
         $comparsa = Comparsa::findOrFail($id);
 
-        $comparsa->slug = trim($data['name']) === $comparsa->title? $comparsa->slug : $this->generateSlug($data['name']);
+        $comparsa->slug = trim($data['name']) === $comparsa->name? $comparsa->slug : $this->generateSlug($data['name']);
 
         $comparsa->name               = $data['name'];
         $comparsa->image              = $data['image'];
