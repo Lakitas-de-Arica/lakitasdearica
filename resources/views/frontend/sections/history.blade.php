@@ -15,9 +15,10 @@
 <div class="container-fluid mt-md-5 mt-0">
     <div class="container py-5">
         <div class="row pt-5 pb-3 justify-content-center">
-            <div class="col-md-4 text-start col-title-section">
+            <div class="col-md-4 text-start col-title-section pe-2 pe-lg-5">
                 <p>LAKITAS DE ARICA</p>
-                <h2 class="mb-5">Historia</h2>
+                <h2 class="mb-2">Historia</h2>
+                <img src="{{ asset('images/compania_aica_laspenas_2.jpeg') }}" class="img-fluid mb-4">
             </div>
             <div class="col-md-6">
                 {!! $page->text !!}

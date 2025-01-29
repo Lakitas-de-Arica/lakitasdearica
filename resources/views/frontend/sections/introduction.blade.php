@@ -25,7 +25,7 @@
         @if($page->gallery == 1)
         <div class="row justify-content-center">
             <div class="col-md-10">
-                @livewire('multimedia.gallery')
+                @livewire('multimedia.gallery-intro')
             </div>
         </div>
         @endif
