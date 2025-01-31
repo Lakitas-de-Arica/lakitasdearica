@@ -94,8 +94,8 @@
                 toolbar: {
                     items: [
                         '|', 'heading',
-                        '|', 'fontsize', 'fontColor',
-                        '|', 'bold', 'italic', 'strikethrough', 'subscript', 'superscript', 'code',
+                        '|', 'fontColor',
+                        '|', 'bold', 'italic', 'codeBlock',
                         '|', 'alignment', 'link', 'blockQuote',
                         '|', 'bulletedList', 'numberedList', 'todoList', 'outdent', 'indent'
                     ],
