@@ -80,5 +80,7 @@ class Show extends Component
         if ($propertyName == 'filtrocomparsa' OR $propertyName == 'filtroformat' ) {
             $this->filtrodate = "0";
         }
+
+        $this->resetPage();
     }
 }

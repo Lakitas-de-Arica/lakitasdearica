@@ -12,6 +12,24 @@ class Multimedia extends Model
     use HasFactory;
     use SoftDeletes;
 
+    protected $fillable = [
+        'title',
+        'slug',
+        'image',
+        'date',
+        'format',
+        'file',
+        'description',
+        'link',
+        'publish',
+        'gallery',
+        'gallery_history_ch',
+        'gallery_history_vs',
+        'comparsa_id',
+        'created_user_id',
+        'updated_user_id'
+    ];
+
     protected $casts = [
         'date' => 'date'
     ];
@@ -62,6 +80,12 @@ class Multimedia extends Model
 
                 break;
 
+            case 'DOC':
+
+                return '<a href="'.asset('storage/'.$this->file).'" class="btn btn-primary" target="_blank">Descargar DOC</a>';
+
+                break;
+
             case 'MP3':
 
                 return '<audio controls>
@@ -70,6 +94,16 @@ class Multimedia extends Model
                         </audio>';
 
                 break;
+
+            case 'WAV':
+
+                return '<audio controls>
+                            <source src="'.asset('storage/'.$this->file).'" type="audio/wav">
+                            Su navegador no es compatible con el elemento de audio
+                        </audio>';
+
+                break;
+
 
             case 'VIDEO':
 

@@ -102,6 +102,8 @@ class Create extends Component
             $file = $this->fileVideo;
         } elseif ($this->format == 'IMAGEN') {
             $file = $this->fileImagen->store('multimedia', 'public');
+        } elseif ($this->format == 'WAV') {
+            $file = $this->fileImagen->store('multimedia', 'public');
         }
 
         $this->multimediaService->store([
