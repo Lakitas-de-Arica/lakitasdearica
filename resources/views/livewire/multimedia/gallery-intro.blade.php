@@ -34,10 +34,6 @@
         }
     </style>
 
-    <h3 class="mt-5 mb-4">
-        Galería de imágenes
-    </h3>
-
     <div class="swiper mySwiper2">
         <div class="swiper-wrapper">
             @foreach($multimedia as $m)
