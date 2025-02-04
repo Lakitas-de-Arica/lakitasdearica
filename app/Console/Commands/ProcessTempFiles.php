@@ -25,74 +25,107 @@ class ProcessTempFiles extends Command
         parent::__construct();
     }
 
-    /**
-     * Execute the console command.
-     *
-     * @return int
-     */
     public function handle()
     {
-        $sourcePath = resource_path('temp-files');
-        $destinationPath = 'public/multimedia';
-        
-        if (!is_dir($sourcePath)) {
-            $this->error("El directorio {$sourcePath} no existe.");
-            return;
-        }
+        //Eliminar todos los registros de la tabla multimedia
+        Multimedia::truncate();
 
-        $folders = array_diff(scandir($sourcePath), ['.', '..']);
-    
-        foreach ($folders as $folder) {
-            $folderPath = "$sourcePath/$folder";
-            
-            if (!is_dir($folderPath)) {
-                continue;
-            }
-            
-            $comparsa = $folder !== 'Otros' ? Comparsa::where('name', $folder)->first() : null;
-            $files = array_diff(scandir($folderPath), ['.', '..']);
-            
-            foreach ($files as $file) {
-                $filePath = "$folderPath/$file";
-                
-                if (!is_file($filePath)) {
+        $basePath = resource_path('temp-files');
+        $directories = File::directories($basePath);
+
+        foreach ($directories as $directory) {
+            $comparsaName = basename($directory);
+
+            if ($comparsaName === 'Otros') {
+                $comparsaId = null;
+            } else {
+                $comparsa = Comparsa::where('name', $comparsaName)->first();
+                if (!$comparsa) {
+                    $this->error("Comparsa not found: $comparsaName");
                     continue;
                 }
-                
-                $extension = pathinfo($file, PATHINFO_EXTENSION);
-                $title = pathinfo($file, PATHINFO_FILENAME);
-                $slug = Str::slug($title . '-' . Str::random(8));
-                $newFileName = Str::random(40) . ".{$extension}";
-                
-                // Definir el formato del archivo
-                $format = match ($extension) {
-                    'pdf' => 'PDF',
-                    'mp3' => 'MP3',
-                    'wav' => 'WAV',
-                    'JPG', 'jpg', 'jpeg', 'png', 'gif' => 'IMAGEN',
-                    default => strtoupper($extension)
-                };
+                $comparsaId = $comparsa->id;
+            }
 
-                // Copiar archivo a storage/app/public/multimedia
-                $storedPath = "multimedia/{$newFileName}";
-                Storage::disk('public')->put($storedPath, file_get_contents($filePath));
-                
-                // Crear registro en la base de datos
-                Multimedia::create([
-                    'title' => $title,
-                    'slug' => $slug,
-                    'image' => in_array($extension, ['JPG', 'jpg', 'jpeg', 'png', 'gif']) ? $storedPath : null,
-                    'format' => $format,
-                    'file' => $storedPath,
-                    'comparsa_id' => $comparsa?->id,
-                    'publish' => true,
-                    'created_user_id' => 1,
-                ]);
-                
-                $this->info("Importado: {$file} -> {$storedPath}");
+            $this->processDirectory($directory, $comparsaId);
+        }
+
+        $this->info('Multimedia files processed successfully.');
+    }
+
+    protected function processDirectory($directory, $comparsaId)
+    {
+        $files = File::allFiles($directory);
+
+        foreach ($files as $file) {
+            $fileName = $file->getFilename();
+            $filePath = $file->getPathname();
+            $fileExtension = $file->getExtension();
+            $fileTitle = $this->generateTitle($file);
+            $fileFormat = $this->getFileFormat($fileExtension);
+            $fileSize = $file->getSize(); // Obtener el tamaño del archivo en bytes
+
+            // Definir la carpeta de destino según el tamaño del archivo
+            $storageFolder = ($fileSize > 100 * 1024 * 1024) ? 'large-files' : 'multimedia';
+
+            // Usar el nombre original del archivo si está en la carpeta large-files
+            $storageFileName = ($storageFolder === 'large-files') ? $fileName : Str::random(40) . '.' . $fileExtension;
+            $storagePath = $storageFolder . '/' . $storageFileName;
+
+            // Copiar el archivo a la carpeta correspondiente
+            Storage::disk('public')->put($storagePath, File::get($filePath));
+
+            // Crear el registro en la base de datos
+            $multimedia = new Multimedia();
+            $multimedia->title = $fileTitle;
+            $multimedia->slug = Str::slug($fileTitle);
+            $multimedia->format = $fileFormat;
+            $multimedia->file = $storagePath;
+            $multimedia->comparsa_id = $comparsaId;
+            $multimedia->publish = true;
+            $multimedia->created_user_id = 1;
+            $multimedia->save();
+
+            // Si es una imagen, duplicar la ruta en el campo `image`
+            if (in_array($fileExtension, ['jpg', 'jpeg', 'png', 'gif'])) {
+                $multimedia->image = $storagePath;
+                $multimedia->save();
+            }
+
+            // Mostrar un mensaje informativo si el archivo es grande
+            if ($fileSize > 100 * 1024 * 1024) {
+                $this->info("Archivo grande copiado: $fileName ($fileSize bytes)");
+                $this->info("Ruta del archivo: $filePath");
             }
         }
-        
-        $this->info('Importación completada.');
+    }
+
+    protected function generateTitle($file)
+    {
+        $path = $file->getRelativePath();
+        $fileName = $file->getFilenameWithoutExtension();
+        return $path ? "$path - $fileName" : $fileName;
+    }
+
+    protected function getFileFormat($extension)
+    {
+        switch ($extension) {
+            case 'pdf':
+                return 'PDF';
+            case 'mp3':
+                return 'MP3';
+            case 'wav':
+                return 'WAV';
+            case 'doc':
+            case 'docx':
+                return 'DOC';
+            case 'jpg':
+            case 'jpeg':
+            case 'png':
+            case 'gif':
+                return 'IMAGEN';
+            default:
+                return 'OTRO';
+        }
     }
 }
