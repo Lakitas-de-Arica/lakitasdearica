@@ -34,11 +34,7 @@
         }
     </style>
 
-    <h3 class="mt-5 mb-4">
-        Galería de imágenes
-    </h3>
-
-    <div class="swiper mySwiper">
+    <div class="swiper mySwiper2">
         <div class="swiper-wrapper">
             @foreach($multimedia as $m)
                 <div class="swiper-slide"><img src="{{ $m }}" /></div>
@@ -54,7 +50,7 @@
     <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
 
     <script>
-        var swiper = new Swiper(".mySwiper", {
+        var swiper = new Swiper(".mySwiper2", {
             slidesPerView: 1,
             spaceBetween: 30,
             loop: true,

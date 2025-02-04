@@ -53,9 +53,9 @@
 
                 <p class="mb-0">Contactos</p>
                 <p class="fw-bold">
-                    <a href="{{ $comparsa->web }}" target="_blank" class="fw-bold me-2">Web</a>
-                    <a href="{{ $comparsa->facebook }}" target="_blank" class="fw-bold me-2">Facebook</a>
-                    <a href="{{ $comparsa->instagram }}" target="_blank" class="fw-bold">Instagram</a>
+                    @if($comparsa->web) <a href="{{ $comparsa->web }}" target="_blank" class="fw-bold me-2">Web</a> @endif
+                    @if($comparsa->facebook) <a href="{{ $comparsa->facebook }}" target="_blank" class="fw-bold me-2">Facebook</a> @endif
+                    @if($comparsa->instagram) <a href="{{ $comparsa->instagram }}" target="_blank" class="fw-bold">Instagram</a> @endif
                 </p>
             </div>
 
