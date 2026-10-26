@@ -50,6 +50,18 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Session Serialization
+    |--------------------------------------------------------------------------
+    |
+    | This option controls how session data is serialized when stored. Using
+    | "php" maintains compatibility with existing session data during upgrades.
+    |
+    */
+
+    'serialization' => 'php',
+
+    /*
+    |--------------------------------------------------------------------------
     | Session File Location
     |--------------------------------------------------------------------------
     |

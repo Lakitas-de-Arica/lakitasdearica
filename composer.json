@@ -5,14 +5,14 @@
     "keywords": ["framework", "laravel"],
     "license": "MIT",
     "require": {
-        "php": "~8.4.0",
+        "php": "^8.5",
         "anhskohbo/no-captcha": "^3.4",
         "appstract/laravel-options": "^8.0",
         "guzzlehttp/guzzle": "^7.0.1",
         "jeroennoten/laravel-adminlte": "^3.8",
-        "laravel/framework": "^12.0",
+        "laravel/framework": "^13.0",
         "laravel/sanctum": "^4.0",
-        "laravel/tinker": "^2.5",
+        "laravel/tinker": "^3.0",
         "livewire/livewire": "^3.4",
         "rappasoft/laravel-livewire-tables": "^3.0"
     },
@@ -62,7 +62,7 @@
         "preferred-install": "dist",
         "sort-packages": true,
         "platform": {
-            "php": "8.4.27"
+            "php": "8.5.12"
         }
     },
     "minimum-stability": "stable",
