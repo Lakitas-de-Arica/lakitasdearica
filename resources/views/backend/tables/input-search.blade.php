@@ -1,6 +1,6 @@
 <div class="mb-3 mb-md-0 input-group">
     <input
-        wire:model.debounce="columnSearch.{{ $field }}"
+        wire:model.live.debounce="columnSearch.{{ $field }}"
         placeholder="Search {{ ucfirst($field) }}"
         type="text"
         class="form-control"

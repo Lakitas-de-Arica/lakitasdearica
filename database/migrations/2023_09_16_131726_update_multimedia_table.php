@@ -16,7 +16,7 @@ class UpdateMultimediaTable extends Migration
     {
         Schema::table('multimedia', function (Blueprint $table) {
             $table->date('date')->nullable()->change();
-            $table->foreignIdFor(Comparsa::class)->nullable()->change();
+            $table->foreignIdFor(Comparsa::class)->unsigned()->nullable()->change();
         });
     }
 

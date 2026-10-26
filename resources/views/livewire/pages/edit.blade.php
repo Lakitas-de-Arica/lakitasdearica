@@ -9,14 +9,14 @@
 
                         <div class="mb-3">
                             <label for="validationTitle" class="form-label">Título</label>
-                            <input type="text" wire:model="title" class="form-control @error('title') is-invalid @enderror" id="validationTitle" aria-describedby="validationTitleFeedback" disabled>
+                            <input type="text" wire:model.live="title" class="form-control @error('title') is-invalid @enderror" id="validationTitle" aria-describedby="validationTitleFeedback" disabled>
                             @error('title') <div id="validationTitleFeedback" class="invalid-feedback"> {{ $message }} </div> @enderror
                         </div>
 
                         <div class="mb-3">
                             <div wire:ignore>
                                 <label for="validationText" class="form-label">Texto</label>
-                                <textarea wire:model="text" class="form-control" id="validationText">{!! $text !!}</textarea>
+                                <textarea wire:model.live="text" class="form-control" id="validationText">{!! $text !!}</textarea>
                             </div>
                             @error('text') <div class="text-danger"><small>{{ $message }}</small></div> @enderror
                         </div>
@@ -24,7 +24,7 @@
                         @if($gallery !== 0)
                             <div class="mb-3">
                                 <label for="validationGallery" class="form-label">Mostrar galería</label>
-                                <select wire:model="gallery" class="form-control @error('gallery') is-invalid @enderror" id="validationGallery" aria-describedby="validationGalleryFeedback">
+                                <select wire:model.live="gallery" class="form-control @error('gallery') is-invalid @enderror" id="validationGallery" aria-describedby="validationGalleryFeedback">
                                     <option value="1">Si</option>
                                     <option value="2">No</option>
                                 </select>
@@ -35,7 +35,7 @@
 
                                 <div class="mb-3">
                                     <label for="validationGalleryCh" class="form-label">Cantidad imágenes en galería</label>
-                                    <select wire:model="nGalleryHistoryCh" class="form-control @error('nGalleryHistoryCh') is-invalid @enderror" id="validationGalleryCh" aria-describedby="validationGalleryChFeedback">
+                                    <select wire:model.live="nGalleryHistoryCh" class="form-control @error('nGalleryHistoryCh') is-invalid @enderror" id="validationGalleryCh" aria-describedby="validationGalleryChFeedback">
                                         @for($i=1;$i<=10;$i++)
                                         <option value="{{ $i }}">{{ $i }}</option>
                                         @endfor
@@ -49,7 +49,7 @@
 
                                 <div class="mb-3">
                                     <label for="validationGalleryVs" class="form-label">Cantidad imágenes en galería</label>
-                                    <select wire:model="nGalleryHistoryVs" class="form-control @error('nGalleryHistoryVs') is-invalid @enderror" id="validationGalleryVs" aria-describedby="validationGalleryVsFeedback">
+                                    <select wire:model.live="nGalleryHistoryVs" class="form-control @error('nGalleryHistoryVs') is-invalid @enderror" id="validationGalleryVs" aria-describedby="validationGalleryVsFeedback">
                                         @for($i=1;$i<=10;$i++)
                                         <option value="{{ $i }}">{{ $i }}</option>
                                         @endfor

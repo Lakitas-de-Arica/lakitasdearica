@@ -65,7 +65,7 @@ class FormPublish extends Component
 
     public function submit()
     {
-        $this->emit('resetReCaptcha');
+        $this->dispatch('resetReCaptcha');
 
         $this->validate();
 

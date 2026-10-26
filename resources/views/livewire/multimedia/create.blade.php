@@ -13,7 +13,7 @@
 
                             <div class="mb-3 d-none">
                                 <label for="validationComparsa" class="form-label">Comparsa</label>
-                                <input type="text" wire:model="comparsa" class="form-control @error('comparsa') is-invalid @enderror" id="validationComparsa" aria-describedby="validationComparsaFeedback">
+                                <input type="text" wire:model.live="comparsa" class="form-control @error('comparsa') is-invalid @enderror" id="validationComparsa" aria-describedby="validationComparsaFeedback">
                                 @error('comparsa') <div id="validationComparsaFeedback" class="invalid-feedback"> {{ $message }} </div> @enderror
                             </div>
 
@@ -21,7 +21,7 @@
 
                             <div class="mb-3">
                                 <label for="validationComparsa" class="form-label">Comparsa</label>
-                                <select wire:model="comparsa" class="form-control @error('comparsa') is-invalid @enderror" id="validationComparsa" aria-describedby="validationComparsaFeedback">
+                                <select wire:model.live="comparsa" class="form-control @error('comparsa') is-invalid @enderror" id="validationComparsa" aria-describedby="validationComparsaFeedback">
                                     <option value="0">Seleccione...</option>
                                     @foreach($comparsas as $com)
                                     <option value="{{ $com->id }}">{{ $com->name }}</option>
@@ -34,13 +34,13 @@
 
                         <div class="mb-3">
                             <label for="validationTitle" class="form-label">Título</label>
-                            <input type="text" wire:model="title" class="form-control @error('title') is-invalid @enderror" id="validationTitle" aria-describedby="validationTitleFeedback">
+                            <input type="text" wire:model.live="title" class="form-control @error('title') is-invalid @enderror" id="validationTitle" aria-describedby="validationTitleFeedback">
                             @error('title') <div id="validationTitleFeedback" class="invalid-feedback"> {{ $message }} </div> @enderror
                         </div>
 
                         <div class="mb-3">
                             <label for="validationDate" class="form-label">Fecha</label>
-                            <input type="text" wire:model="date" class="form-control @error('date') is-invalid @enderror datepicker" id="validationDate" aria-describedby="validationDateFeedback">
+                            <input type="text" wire:model.live="date" class="form-control @error('date') is-invalid @enderror datepicker" id="validationDate" aria-describedby="validationDateFeedback">
                             @error('date') <div id="validationDateFeedback" class="invalid-feedback"> {{ $message }} </div> @enderror
                         </div>
 
@@ -54,7 +54,7 @@
                             @endif
 
                             <label for="validationImage" class="form-label">Imagen</label>
-                            <input wire:model="image" class="form-control @error('image') is-invalid @enderror" type="file" id="validationImage" aria-describedby="validationImageFeedback">
+                            <input wire:model.live="image" class="form-control @error('image') is-invalid @enderror" type="file" id="validationImage" aria-describedby="validationImageFeedback">
                             @error('image') <div id="validationImageFeedback" class="invalid-feedback"> {{ $message }} </div> @enderror
                             <div wire:loading wire:target="image">Cargando...</div>
 
@@ -62,7 +62,7 @@
 
                         <div class="mb-3">
                             <label for="validationFormat" class="form-label">Formato</label>
-                            <select wire:model="format" class="form-control @error('format') is-invalid @enderror" id="validationFormat" aria-describedby="validationFormatFeedback">
+                            <select wire:model.live="format" class="form-control @error('format') is-invalid @enderror" id="validationFormat" aria-describedby="validationFormatFeedback">
                                 <option value="0">Seleccione...</option>
                                 @foreach(config('multimedia.formats') as $f)
                                 <option value="{{ $f }}">{{ $f }}</option>
@@ -74,7 +74,7 @@
                         @if ($format == 'PDF')
                             <div class="mb-3 border border-radius p-3">
                                 <label for="validationPdf" class="form-label">Archivo PDF @if ($filePdf AND !$errors->has('filePdf')) <span class="badge badge-info ml-3">Archivo cargado</span> @endif </label>
-                                <input wire:model="filePdf" class="form-control @error('filePdf') is-invalid @enderror" type="file" id="validationPdf" aria-describedby="validationPdfFeedback">
+                                <input wire:model.live="filePdf" class="form-control @error('filePdf') is-invalid @enderror" type="file" id="validationPdf" aria-describedby="validationPdfFeedback">
                                 @error('filePdf') <div id="validationPdfFeedback" class="invalid-feedback"> {{ $message }} </div> @enderror
                                 <div wire:loading wire:target="filePdf">Cargando...</div>
                             </div>
@@ -83,7 +83,7 @@
                         @if ($format == 'MP3')
                             <div class="mb-3 border border-radius p-3">
                                 <label for="validationMp3" class="form-label">Archivo MP3 @if ($fileMp3 AND !$errors->has('fileMp3')) <span class="badge badge-info ml-3">Archivo cargado</span> @endif </label>
-                                <input wire:model="fileMp3" class="form-control @error('fileMp3') is-invalid @enderror" type="file" id="validationMp3" aria-describedby="validationMp3Feedback">
+                                <input wire:model.live="fileMp3" class="form-control @error('fileMp3') is-invalid @enderror" type="file" id="validationMp3" aria-describedby="validationMp3Feedback">
                                 @error('fileMp3') <div id="validationMp3Feedback" class="invalid-feedback"> {{ $message }} </div> @enderror
                                 <div wire:loading wire:target="fileMp3">Cargando...</div>
                             </div>
@@ -92,7 +92,7 @@
                         @if ($format == 'VIDEO')
                             <div class="mb-3 border border-radius p-3">
                                 <label for="validationVideo" class="form-label">Link Youtube</label>
-                                <input type="text" wire:model="fileVideo" class="form-control @error('fileVideo') is-invalid @enderror" id="validationVideo" aria-describedby="validationVideoFeedback">
+                                <input type="text" wire:model.live="fileVideo" class="form-control @error('fileVideo') is-invalid @enderror" id="validationVideo" aria-describedby="validationVideoFeedback">
                                 @error('fileVideo') <div id="validationVideoFeedback" class="invalid-feedback"> {{ $message }} </div> @enderror
                             </div>
                         @endif
@@ -108,7 +108,7 @@
                                 @endif
 
                                 <label for="validationFileImagen" class="form-label">Archivo imagen</label>
-                                <input wire:model="fileImagen" class="form-control @error('fileImagen') is-invalid @enderror" type="file" id="validationFileImagen" aria-describedby="validationFileImagenFeedback">
+                                <input wire:model.live="fileImagen" class="form-control @error('fileImagen') is-invalid @enderror" type="file" id="validationFileImagen" aria-describedby="validationFileImagenFeedback">
                                 @error('fileImagen') <div id="validationFileImagenFeedback" class="invalid-feedback"> {{ $message }} </div> @enderror
                                 <div wire:loading wire:target="fileImagen">Cargando...</div>
 
@@ -117,14 +117,14 @@
 
                         <div class="mb-3">
                             <label for="validationLink" class="form-label">Link</label>
-                            <input type="text" wire:model="link" class="form-control @error('link') is-invalid @enderror" id="validationLink" aria-describedby="validationLinkFeedback">
+                            <input type="text" wire:model.live="link" class="form-control @error('link') is-invalid @enderror" id="validationLink" aria-describedby="validationLinkFeedback">
                             @error('link') <div id="validationLinkFeedback" class="invalid-feedback"> {{ $message }} </div> @enderror
                         </div>
 
                         <div class="mb-3">
                             <div wire:ignore>
                                 <label for="validationDescription" class="form-label">Descripción</label>
-                                <textarea wire:model="description" class="form-control" id="validationDescription">{!! $description !!}</textarea>
+                                <textarea wire:model.live="description" class="form-control" id="validationDescription">{!! $description !!}</textarea>
                             </div>
                             @error('description') <div class="text-danger"><small>{{ $message }}</small></div> @enderror
                         </div>
@@ -140,7 +140,7 @@
 
                         <div class="mb-3">
                             <label for="validationPublish" class="form-label">Publicado</label>
-                            <select wire:model="publish" class="form-control @error('publish') is-invalid @enderror" id="validationPublish" aria-describedby="validationPublishFeedback">
+                            <select wire:model.live="publish" class="form-control @error('publish') is-invalid @enderror" id="validationPublish" aria-describedby="validationPublishFeedback">
                                 <option value="1">Si</option>
                                 <option value="0">No</option>
                             </select>
@@ -150,7 +150,7 @@
                         @if ($format == 'IMAGEN')
                         <div class="mb-3">
                             <label for="validationSource" class="form-label">Mostrar en galería</label>
-                            <select wire:model="gallery" class="form-control @error('gallery') is-invalid @enderror" id="validationSource" aria-describedby="validationSourceFeedback">
+                            <select wire:model.live="gallery" class="form-control @error('gallery') is-invalid @enderror" id="validationSource" aria-describedby="validationSourceFeedback">
                                 <option value="1">Sí</option>
                                 <option value="0">No</option>
                             </select>
@@ -159,7 +159,7 @@
 
                         <div class="mb-3">
                             <label for="validationSource1" class="form-label">Mostrar en comparsas históricas</label>
-                            <select wire:model="gallery_history_ch" class="form-control @error('gallery_history_ch') is-invalid @enderror" id="validationSource1" aria-describedby="validationSource1Feedback">
+                            <select wire:model.live="gallery_history_ch" class="form-control @error('gallery_history_ch') is-invalid @enderror" id="validationSource1" aria-describedby="validationSource1Feedback">
                                 <option value="1">Sí</option>
                                 <option value="0">No</option>
                             </select>
@@ -168,7 +168,7 @@
 
                         <div class="mb-3">
                             <label for="validationSource2" class="form-label">Mostrar en viejos sopladores</label>
-                            <select wire:model="gallery_history_vs" class="form-control @error('gallery_history_vs') is-invalid @enderror" id="validationSource2" aria-describedby="validationSource2Feedback">
+                            <select wire:model.live="gallery_history_vs" class="form-control @error('gallery_history_vs') is-invalid @enderror" id="validationSource2" aria-describedby="validationSource2Feedback">
                                 <option value="1">Sí</option>
                                 <option value="0">No</option>
                             </select>
